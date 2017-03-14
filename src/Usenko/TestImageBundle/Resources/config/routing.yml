@@ -1,0 +1,7 @@
+usenko_test_image_homepage:
+    path:     /
+    defaults: { _controller: UsenkoTestImageBundle:Default:index }
+
+usenko_test_image_new:
+    path: /image/new/
+    defaults: { _controller: UsenkoTestImageBundle:Default:new }

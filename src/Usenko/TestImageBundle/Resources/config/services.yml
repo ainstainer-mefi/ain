@@ -1,0 +1,4 @@
+services:
+#    usenko_test_image.example:
+#        class: Usenko\TestImageBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
