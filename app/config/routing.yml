@@ -1,3 +1,7 @@
+usenko_test_image:
+    resource: "@UsenkoTestImageBundle/Resources/config/routing.yml"
+    prefix:   /
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation

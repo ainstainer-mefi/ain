@@ -7,3 +7,6 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    app.image_uploader:
+        class: Usenko\TestImageBundle\FileUploader
+        arguments: ['%image_directory%']
