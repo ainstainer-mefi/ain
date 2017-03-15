@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Cruds list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Logofile</th>
+                <th>Userrole</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for crud in cruds %}
+            <tr>
+                <td><a href="{{ path('crud_show', { 'id': crud.id }) }}">{{ crud.id }}</a></td>
+                <td>{{ crud.firstName }}</td>
+                <td>{{ crud.lastName }}</td>
+                <td>{{ crud.logoFile }}</td>
+                <td>{{ crud.userRole }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('crud_show', { 'id': crud.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('crud_edit', { 'id': crud.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('crud_new') }}">Create a new crud</a>
+        </li>
+    </ul>
+{% endblock %}

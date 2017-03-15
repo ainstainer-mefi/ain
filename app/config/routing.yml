@@ -1,3 +1,7 @@
+rest_api_test:
+    resource: "@RestApiTestBundle/Resources/config/routing.yml"
+    prefix:   /
+
 usenko_test_image:
     resource: "@UsenkoTestImageBundle/Resources/config/routing.yml"
     prefix:   /

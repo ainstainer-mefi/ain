@@ -1,0 +1,20 @@
+rest_api_test_crud:
+    resource: "@RestApiTestBundle/Resources/config/routing/crud.yml"
+    prefix:   /crud
+
+rest_api_test_homepage:
+    path:     /
+    defaults: { _controller: RestApiTestBundle:Default:index }
+
+rest_api_test_user:
+    path: /user/
+    defaults: { _controller: RestApiTestBundle:User:index }
+
+rest_api_test_user_id:
+    path: /user/id/
+    defaults: { _controller: RestApiTestBundle:User:id }
+
+rest_api_test_user_post:
+    path: /user/post/
+    defaults: { _controller: RestApiTestBundle:User:post }
+

@@ -1,0 +1,4 @@
+services:
+#    rest_api_test.example:
+#        class: RestApi\TestBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

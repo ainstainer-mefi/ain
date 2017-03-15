@@ -1,0 +1,24 @@
+crud_index:
+    path:     /
+    defaults: { _controller: "RestApiTestBundle:Crud:index" }
+    methods:  GET
+
+crud_show:
+    path:     /{id}/show
+    defaults: { _controller: "RestApiTestBundle:Crud:show" }
+    methods:  GET
+
+crud_new:
+    path:     /new
+    defaults: { _controller: "RestApiTestBundle:Crud:new" }
+    methods:  [GET, POST]
+
+crud_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "RestApiTestBundle:Crud:edit" }
+    methods:  [GET, POST, PUT]
+
+crud_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "RestApiTestBundle:Crud:delete" }
+    methods:  DELETE

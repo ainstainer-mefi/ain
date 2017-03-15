@@ -31,7 +31,12 @@
         "twig/twig": "^1.0||^2.0",
         "kriswallsmith/buzz": ">=0.9",
         "hwi/oauth-bundle": "^0.5.3",
-        "friendsofsymfony/user-bundle": "~2.0@dev"
+        "friendsofsymfony/user-bundle": "~2.0@dev",
+        "vich/uploader-bundle": "^1.5",
+        "friendsofsymfony/rest-bundle": "^2.1",
+        "jms/serializer-bundle": "^1.2",
+        "nelmio/cors-bundle": "^1.5",
+        "kunalvarma05/dropbox-php-sdk": "^0.2.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
