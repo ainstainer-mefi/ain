@@ -1,3 +1,15 @@
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation
+homepage:
+    path:      /
+    defaults:  { _controller: AppBundle:Default:index }
+
+#api_login_check:
+#    path: /api/login_check
+
+token_authentication:
+    path: /api/token-authentication
+    defaults:  { _controller: AppBundle:Authentication:tokenAuthentication }
+
+
+secure_resource:
+    path:      /api/secure-resource
+    defaults:  { _controller: AppBundle:Default:secureResource }
