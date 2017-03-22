@@ -7,6 +7,13 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
+    google:
+        app_name: 'ain-test'
+        redirect_url: 'http://localhost:3000'
+        scopes: ['profile','email','https://www.googleapis.com/auth/drive','https://mail.google.com/','https://www.googleapis.com/auth/gmail.compose']
+        credentials_path : "%kernel.root_dir%/../var/google-keys/.credentials/all.json"
+        client_secret_path : "%kernel.root_dir%/../var/google-keys/client_secret.json"
+        client_secret_path_web : "%kernel.root_dir%/../var/google-keys/client_secret_web.json"
 
 framework:
     #esi:             ~

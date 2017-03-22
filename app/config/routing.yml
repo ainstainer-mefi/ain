@@ -5,9 +5,9 @@ homepage:
 #api_login_check:
 #    path: /api/login_check
 
-token_authentication:
-    path: /api/token-authentication
-    defaults:  { _controller: AppBundle:Authentication:tokenAuthentication }
+authentication:
+    path: /api/authentication
+    defaults:  { _controller: AppBundle:Authentication:authentication }
 
 
 secure_resource:

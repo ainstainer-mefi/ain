@@ -4,13 +4,14 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class User implements JWTUserInterface, \Serializable
 {
@@ -58,13 +59,33 @@ class User implements JWTUserInterface, \Serializable
 	 */
     private $role;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="token", type="string", length=6000, unique=false, nullable = true)
+     */
+    private $token;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="token", type="string", length=6000, unique=false)
+     * @ORM\Column(name="google_access_token", type="string", length=255, unique=false, nullable = true)
      */
-    private $token;
+    private $google_access_token;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="google_id_token", type="string", length=3000, unique=false, nullable = true)
+     */
+    private $google_id_token;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="google_access_token_expires_in", type="datetime", nullable = true)
+     */
+    private $google_access_token_expires_in;
 
     /**
      * Get id
@@ -174,14 +195,12 @@ class User implements JWTUserInterface, \Serializable
 
     public function getSalt()
     {
-        // you *may* need a real salt depending on your encoder
-        // see section on salt below
         return null;
     }
 
     public function getRoles()
     {
-        return array('ROLE_ADMIN');
+        return [$this->role];
     }
 
     public function eraseCredentials()
@@ -204,6 +223,59 @@ class User implements JWTUserInterface, \Serializable
         $this->token = $token;
     }
 
+    /**
+     * @return string
+     */
+    public function getGoogleAccessToken()
+    {
+        return $this->google_access_token;
+    }
+
+    /**
+     * @param string $google_access_token
+     */
+    public function setGoogleAccessToken($google_access_token)
+    {
+        $this->google_access_token = $google_access_token;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGoogleIdToken()
+    {
+        return $this->google_id_token;
+    }
+
+    /**
+     * @param string $google_id_token
+     */
+    public function setGoogleIdToken($google_id_token)
+    {
+        $this->google_id_token = $google_id_token;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getGoogleAccessTokenExpiresIn()
+    {
+        return $this->google_access_token_expires_in;
+    }
+
+    /**
+     * @param \int $google_access_token_expires_in
+     */
+    public function setGoogleAccessTokenExpiresIn($google_access_token_expires_in)
+    {
+        $this->google_access_token_expires_in = new \DateTime(date('Y-m-d H:i:s', $google_access_token_expires_in));
+    }
+
+    public function __construct()
+    {
+        $this->isActive = true;
+    }
+
     public static function createFromPayload($username, array $payload)
     {
 
@@ -212,35 +284,13 @@ class User implements JWTUserInterface, \Serializable
     /** @see \Serializable::serialize() */
     public function serialize()
     {
-        return serialize(array(
-            $this->id,
-            $this->username,
-            $this->password,
-            // see section on salt below
-            // $this->salt,
-        ));
+        return serialize([$this->id, $this->username, $this->password]);
     }
 
     /** @see \Serializable::unserialize() */
     public function unserialize($serialized)
     {
-        list (
-            $this->id,
-            $this->username,
-            $this->password,
-            // see section on salt below
-            // $this->salt
-            ) = unserialize($serialized);
+        list ($this->id, $this->username, $this->password,) = unserialize($serialized);
     }
-
-
-    public function __construct()
-    {
-        $this->isActive = true;
-        // may not be needed, see section on salt below
-        // $this->salt = md5(uniqid(null, true));
-    }
-
-
 }
 

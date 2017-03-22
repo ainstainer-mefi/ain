@@ -7,3 +7,8 @@ services:
     app.jwt_token_authenticator:
             class: AppBundle\Security\JwtAuthenticator
             arguments: ['@doctrine.orm.entity_manager', '@lexik_jwt_authentication.encoder']
+
+    app.google_user:
+                class: AppBundle\Services\GoogleUserAuthenticator
+                arguments:
+                    - '@service_container'

@@ -27,7 +27,10 @@ class JwtAuthenticator extends AbstractGuardAuthenticator
 
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        return new JsonResponse('Auth header required', 401);
+        return new JsonResponse([
+            'message' => 'Auth header required'
+        ], 401);
+
     }
 
     public function getCredentials(Request $request)

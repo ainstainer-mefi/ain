@@ -7,15 +7,18 @@ security:
         database_users:
             entity:
                 class: AppBundle:User
-
-
     firewalls:
         # Custom authentication firewall for all request thats starts from /api
-        api:
-            pattern: ^/api/(?!token)
-            guard:
-                authenticators:
-                    - app.jwt_token_authenticator
+         login:
+              pattern:  ^/api/authentication
+              stateless: false
+              anonymous: true
+         api:
+              pattern: ^/api
+              stateless: false
+              guard:
+                  authenticators:
+                      - app.jwt_token_authenticator
 
         # Here you handle regular form authentication
 #        main:
@@ -25,9 +28,9 @@ security:
 #                    - app.form_login_authenticator
 
     access_control:
-        - { path: /api/token-authentication, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api, roles: [ROLE_ADMIN, ROLE_USER, ROLE_API_USER] }
-#        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/authentication, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api, roles: [IS_AUTHENTICATED_FULLY ] }
         - { path: ^/(css|js), roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/(_wdt|_profiler), roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/, roles: ROLE_USER }
+#        - { path: ^/, roles: ROLE_USER }
