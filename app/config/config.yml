@@ -89,6 +89,8 @@ fos_rest:
       enabled: true
     view:
       view_response_listener: true
+      mime_types:
+          json: ['application/json; charset=UTF-8', 'application/json']
     serializer:
         serialize_null: true
     body_converter:
@@ -103,7 +105,9 @@ jms_serializer:
     property_naming:
         separator:  _
         lower_case: true
-
+    visitors:
+        json:
+          options: 320 # json_encode options bitmask
     metadata:
         cache: file
         debug: "%kernel.debug%"

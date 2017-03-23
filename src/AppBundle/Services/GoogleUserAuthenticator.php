@@ -56,6 +56,7 @@ class GoogleUserAuthenticator
     public function verifyIdToken($id_token)
     {
         $client = new \Google_Client();
+        $client->setAuthConfig($this->getClientSecretFilePath());
         return $client->verifyIdToken($id_token);
     }
 

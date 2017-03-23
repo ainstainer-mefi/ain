@@ -69,17 +69,10 @@ class User implements JWTUserInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="google_access_token", type="string", length=255, unique=false, nullable = true)
+     * @ORM\Column(name="google_access_token", type="string", length=5000, unique=false, nullable = true)
      */
     private $google_access_token;
 
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="google_refresh_token", type="string", length=255, unique=false, nullable = true)
-     */
-    private $google_refresh_token;
 
     /**
      * @var string
@@ -88,14 +81,7 @@ class User implements JWTUserInterface, \Serializable
      */
     private $google_id_token;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="google_access_token_expires_in", type="datetime", nullable = true)
-     */
-    private $google_access_token_expires_in;
-
-    /**
+      /**
      * Get id
      *
      * @return int
@@ -270,38 +256,6 @@ class User implements JWTUserInterface, \Serializable
     public function setGoogleIdToken($google_id_token)
     {
         $this->google_id_token = $google_id_token;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getGoogleAccessTokenExpiresIn()
-    {
-        return $this->google_access_token_expires_in;
-    }
-
-    /**
-     * @param \int $google_access_token_expires_in
-     */
-    public function setGoogleAccessTokenExpiresIn($google_access_token_expires_in)
-    {
-        $this->google_access_token_expires_in = new \DateTime(date('Y-m-d H:i:s', $google_access_token_expires_in));
-    }
-
-    /**
-     * @return string
-     */
-    public function getGoogleRefreshToken()
-    {
-        return $this->google_refresh_token;
-    }
-
-    /**
-     * @param string $google_refresh_token
-     */
-    public function setGoogleRefreshToken($google_refresh_token)
-    {
-        $this->google_refresh_token = $google_refresh_token;
     }
 
     public function __construct()

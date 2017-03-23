@@ -34,7 +34,7 @@ class AuthenticationController extends BaseApiController
 
         #todo need refactoring
         if (empty($tokenPayload['hd']) || $tokenPayload['hd'] != 'ainstainer.de'){
-            throw $this->createNotFoundException('Email domain is not supported');
+            //throw $this->createNotFoundException('Email domain is not supported');
         }
 
         $email = $tokenPayload['email'];
@@ -48,21 +48,25 @@ class AuthenticationController extends BaseApiController
 
 
         if(!$user) { // create new user
+
             $user = new User();
             $user->setEmail($email);
             $user->setRole('ROLE_USER');
+            $user->setGoogleAccessToken(json_encode($tokenData,JSON_UNESCAPED_SLASHES));
+
+        } else {
+
+            $jsonTokenPayload = json_decode($user->getGoogleAccessToken(),true);
+            $tokenData['refresh_token'] = $jsonTokenPayload['refresh_token'];
+            $user->setGoogleAccessToken(json_encode($tokenData,JSON_UNESCAPED_SLASHES));
+
         }
 
 
         /**Save user data*/
-        $user->setToken($apiToken);
-        $user->setGoogleAccessToken($tokenData['access_token']);
+        //$user->setToken($apiToken);
         $user->setGoogleIdToken($tokenData['id_token']);
-        $user->setGoogleAccessTokenExpiresIn($tokenData['created'] + $tokenData['expires_in']);
         $user->setUsername($tokenPayload['name']);
-        if( !empty($tokenData['refresh_token']) ) {
-            $user->setGoogleRefreshToken($tokenData['refresh_token']);
-        }
 
         $em->persist($user);
         $em->flush();
