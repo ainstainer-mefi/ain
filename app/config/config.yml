@@ -12,7 +12,7 @@ parameters:
         redirect_url: '%google.redirect_url%'
         scopes: ['profile','email','https://www.googleapis.com/auth/drive','https://mail.google.com/','https://www.googleapis.com/auth/gmail.compose']
         credentials_path : "%kernel.root_dir%/../var/google-keys/credentials.json"
-        client_secret_path : "%kernel.root_dir%/../var/google-keys/client_secret.json"
+        client_secret_path : "%kernel.root_dir%/../var/google-keys/client_server.json"
         client_secret_path_web : "%kernel.root_dir%/../var/google-keys/client_web.json"
 
 framework:
