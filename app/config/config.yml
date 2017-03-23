@@ -107,7 +107,7 @@ jms_serializer:
         lower_case: true
     visitors:
         json:
-          options: 320 # json_encode options bitmask
+          options:  [JSON_UNESCAPED_SLASHES, JSON_UNESCAPED_UNICODE] # json_encode options bitmask
     metadata:
         cache: file
         debug: "%kernel.debug%"
