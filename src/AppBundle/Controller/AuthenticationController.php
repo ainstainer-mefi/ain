@@ -2,31 +2,25 @@
 
 namespace AppBundle\Controller;
 
-use KofeinStyle\Helper\Dumper;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use AppBundle\Entity\User;
+
+
 use Symfony\Component\HttpFoundation\Request;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use FOS\RestBundle\Controller\Annotations\View;
 
 /**
  * AuthenticationController
  *
  */
-class AuthenticationController extends Controller
+class AuthenticationController extends BaseApiController
 {
-    /**
-     * Just to demonstrate authentication result
-     *
-     * @return JsonResponse
-     */
-    public function pingAction()
-    {
-        return new JsonResponse();
-    }
 
     public function authenticationAction(Request $request)
     {
 
         $authCode = $request->get('auth_code');
+
         if(!$authCode) {
             throw $this->createNotFoundException('Auth code is empty');
         }
@@ -38,34 +32,50 @@ class AuthenticationController extends Controller
             throw $this->createNotFoundException('Google email_verified error.');
         }
 
-        $email = $tokenPayload['email'];
-
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('AppBundle:User')->findOneBy(['email' => $email]);
-
-        if(!$user) {
-            throw $this->createNotFoundException();
+        #todo need refactoring
+        if (empty($tokenPayload['hd']) || $tokenPayload['hd'] != 'ainstainer.de'){
+            throw $this->createNotFoundException('Email domain is not supported');
         }
 
-        // Use LexikJWTAuthenticationBundle to create JWT token that hold only information about user name
-        $encodeAdditionalData = ['email' => $user->getEmail()];
-        $token = $this->get('lexik_jwt_authentication.encoder')->encode($encodeAdditionalData);
+        $email = $tokenPayload['email'];
 
-        /**Save use data*/
-        $user->setToken($token);
+        // Use LexikJWTAuthenticationBundle to create JWT token that hold only information about user name
+        $encodeAdditionalData = ['email' => $email];
+        $apiToken = $this->get('lexik_jwt_authentication.encoder')->encode($encodeAdditionalData);
+
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('AppBundle:User')->loadUserByEmail($email);
+
+
+        if(!$user) { // create new user
+            $user = new User();
+            $user->setEmail($email);
+            $user->setRole('ROLE_USER');
+        }
+
+
+        /**Save user data*/
+        $user->setToken($apiToken);
         $user->setGoogleAccessToken($tokenData['access_token']);
         $user->setGoogleIdToken($tokenData['id_token']);
         $user->setGoogleAccessTokenExpiresIn($tokenData['created'] + $tokenData['expires_in']);
+        $user->setUsername($tokenPayload['name']);
+        if( !empty($tokenData['refresh_token']) ) {
+            $user->setGoogleRefreshToken($tokenData['refresh_token']);
+        }
+
         $em->persist($user);
         $em->flush();
 
-        // Return generated token
-        return new JsonResponse(
-            [
-                'api_token' => $token,
-                //'access_token' => $tokenData['access_token'],
-                'id_token' => $tokenData['id_token'],
-            ]);
+
+        $result = [
+            'apiToken' => $apiToken,
+            'id_token' => $tokenData['id_token'],
+        ];
+
+
+        return $this->handleView($this->view($result, 200));
+
 
     }
 }

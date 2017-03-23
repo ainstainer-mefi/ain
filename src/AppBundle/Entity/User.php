@@ -36,7 +36,7 @@ class User implements JWTUserInterface, \Serializable
      *
      * @ORM\Column(name="password", type="string", length=64)
      */
-    private $password;
+    private $password = '';
 
     /**
      * @var string
@@ -72,6 +72,14 @@ class User implements JWTUserInterface, \Serializable
      * @ORM\Column(name="google_access_token", type="string", length=255, unique=false, nullable = true)
      */
     private $google_access_token;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="google_refresh_token", type="string", length=255, unique=false, nullable = true)
+     */
+    private $google_refresh_token;
 
     /**
      * @var string
@@ -203,6 +211,15 @@ class User implements JWTUserInterface, \Serializable
         return [$this->role];
     }
 
+    /**
+     * @param string $role
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+    }
+
+
     public function eraseCredentials()
     {
     }
@@ -269,6 +286,22 @@ class User implements JWTUserInterface, \Serializable
     public function setGoogleAccessTokenExpiresIn($google_access_token_expires_in)
     {
         $this->google_access_token_expires_in = new \DateTime(date('Y-m-d H:i:s', $google_access_token_expires_in));
+    }
+
+    /**
+     * @return string
+     */
+    public function getGoogleRefreshToken()
+    {
+        return $this->google_refresh_token;
+    }
+
+    /**
+     * @param string $google_refresh_token
+     */
+    public function setGoogleRefreshToken($google_refresh_token)
+    {
+        $this->google_refresh_token = $google_refresh_token;
     }
 
     public function __construct()

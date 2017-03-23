@@ -12,6 +12,10 @@
 /var/sessions/*
 !var/sessions/.gitkeep
 !var/SymfonyRequirements.php
+!/var/google-keys
+/var/google-keys/*
+!/var/jwt
+/var/jwt/*
 /vendor/
 /web/bundles/
 .idea/

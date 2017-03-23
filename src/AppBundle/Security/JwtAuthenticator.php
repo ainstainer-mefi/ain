@@ -3,6 +3,7 @@
 namespace AppBundle\Security;
 
 use Doctrine\ORM\EntityManager;
+use KofeinStyle\Helper\Dumper;
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\DefaultEncoder as JWTEncoder;
 use Lexik\Bundle\JWTAuthenticationBundle\TokenExtractor\AuthorizationHeaderTokenExtractor;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,11 +19,13 @@ class JwtAuthenticator extends AbstractGuardAuthenticator
 {
     private $em;
     private $jwtEncoder;
+    private $isDebug;
 
-    public function __construct(EntityManager $em, JWTEncoder $jwtEncoder)
+    public function __construct(EntityManager $em, JWTEncoder $jwtEncoder, $isDebug = false)
     {
         $this->em = $em;
         $this->jwtEncoder = $jwtEncoder;
+        $this->isDebug = $isDebug;
     }
 
     public function start(Request $request, AuthenticationException $authException = null)
@@ -56,7 +59,13 @@ class JwtAuthenticator extends AbstractGuardAuthenticator
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        $data = $this->jwtEncoder->decode($credentials);
+
+        if($this->isDebug && strpos($credentials,'@ainstainer.de') !== false) {
+            $data = ['email' => trim($credentials)];
+        } else {
+            $data = $this->jwtEncoder->decode($credentials);
+        }
+
 
         if(!$data){
             return;
@@ -64,8 +73,7 @@ class JwtAuthenticator extends AbstractGuardAuthenticator
 
         $email = $data['email'];
 
-        $user = $this->em->getRepository('AppBundle:User')
-            ->findOneBy(['email' => $email]);
+        $user = $this->em->getRepository('AppBundle:User')->loadUserByEmail($email);
 
         if(!$user){
             return;
