@@ -3,13 +3,15 @@
 namespace RestApi\TestBundle\Controller;
 
 use RestApi\TestBundle\Entity\Crud;
-//use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\View\View;
+use Kunnu\Dropbox\Dropbox;
+use Kunnu\Dropbox\DropboxApp;
+use Kunnu\Dropbox\DropboxFile;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 /**
  * Crud controller.
@@ -18,8 +20,36 @@ use FOS\RestBundle\View\View;
 class CrudController extends FOSRestController
 {
     /**
+     * Get list of users
+     *
+     * Return list of users in json format. For example:
+     *
+     * [
+            {
+            "id": 1,
+            "first_name": "User1",
+            "last_name": "User1",
+            "logo_file": "logo file 1",
+            "user_role": "test role"
+            },
+            {
+            "id": 2,
+            "first_name": "Postman1",
+            "last_name": "Postman1",
+            "logo_file": "Postman1",
+            "user_role": "Postman1"
+            }
+     * ]
      * @Rest\Get("/crud")
      *
+     * @ApiDoc(
+     *     description="Return all users from database in json format",
+     *     output="json",
+     *     statusCodes={
+     *          200="Returned when successful",
+     *          404="There are no users exist",
+     *     }
+     * )
      */
     public function indexAction()
     {
@@ -38,8 +68,54 @@ class CrudController extends FOSRestController
     }
 
     /**
-     * Creates a new crud entity.
+     * Creates a new user.
      * @Rest\Post("/crud/")
+     * @ApiDoc(
+     *     description="Create a new user, return json with message",
+     *     requirements = {
+                {
+     *              "name"="id",
+     *              "dataType"="integer",
+     *              "requirement"="\w+",
+     *              "description"="id user in table in database(user_id)",
+     *          }
+     *     },
+     *     parameters={
+                {
+     *              "name"="firstname",
+     *              "dataType"="text",
+     *              "required"=true,
+     *              "format"="POST",
+     *              "description"="First Name",
+     *          },
+     *          {
+     *               "name"="lastname",
+     *               "dataType"="text",
+     *               "required"=true,
+     *               "format"="POST",
+     *               "description"="Last Name",
+     *          },
+     *          {
+     *               "name"="logo",
+     *               "dataType"="file",
+     *               "required"=true,
+     *               "format"="POST, multipart-form/data",
+     *               "description"="File",
+     *          },
+     *          {
+     *               "name"="role",
+     *               "dataType"="text",
+     *               "required"=true,
+     *               "format"="POST",
+     *               "description"="User Role",
+     *          }
+     *     },
+     *     statusCodes={
+     *               200="User Added Successfully",
+     *               404="Logo not found",
+     *               406="NULL VALUES ARE NOT ALLOWED",
+     *     }
+     * )
      */
     public function newAction(Request $request)
     {
@@ -101,7 +177,32 @@ class CrudController extends FOSRestController
 //    public function showAction(Crud $crud)
     /**
      * @Rest\Get("/crud/{id}")
-    */
+     *
+     * Get one user
+     *
+     * Return user data in json format
+     * @Rest\Post("/crud/")
+     * @ApiDoc(
+     *     description="Create a new user, return json with message",
+     *     requirements = {
+                {
+     *              "name"="id",
+     *              "dataType"="integer",
+     *              "requirement"="\w+",
+     *              "description"="id user in table in database(user_id)",
+     *          }
+     *     },
+     *     tags={
+     *         "stable",
+     *         "deprecated" = "#ff0000"
+     *     },
+     *     statusCodes={
+     *               200="Return when successful",
+     *               404="User not found",
+     *     },
+     *     views = { "dropbox" }
+     * )
+     */
     public function showAction($id)
     {
 //        $deleteForm = $this->createDeleteForm($crud);
@@ -226,5 +327,44 @@ class CrudController extends FOSRestController
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+    public function uploadAction(Request $request)
+    {
+        $file = $request->files->get('logo');
+
+        $app = new DropboxApp("wcwba5zjgd4rjrp", "eyfcllmr67seqvh", "vW6C5Ld39LAAAAAAAAAAC5HfqtHEuEiUKb1aHUtXGVirWGpkz4J9k8EOYKoTA9JP");
+
+        $dropbox = new Dropbox($app);
+
+
+        $dropboxFile = new DropboxFile($file);
+
+        $upload = $dropbox->upload($dropboxFile, "/TestFile.jpg", ['autorename' => true]);
+
+        return $upload->getName();
+    }
+
+    public function listAction()
+    {
+//        $app = new DropboxApp("fvq003tpulp927p", "duz37u6eh66jswo", "vW6C5Ld39LAAAAAAAAAAFCygLTjk1lGiJRflE6oShr0Nko3bPXGtXzqUl5r62jtN");
+//
+//        $dropbox = new Dropbox($app);
+//
+//        $listFolderContents = $dropbox->listFolder("/");
+//
+//        $items = $listFolderContents->getItems();
+//
+//        return $items->all();
+         $list = $this->get('rest_api_test.file');
+
+         return $list->listByUser('Maks@ainstainer.de');
+    }
+
+    public function linksAction()
+    {
+        $list = $this->get('rest_api_test.file');
+
+        return $list->listLinks();
     }
 }

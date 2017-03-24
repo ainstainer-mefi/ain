@@ -11,7 +11,7 @@ crud_show:
 crud_new:
     path:     /new
     defaults: { _controller: "RestApiTestBundle:Crud:new" }
-    methods:  [GET, POST]
+    methods:  POST
 
 crud_edit:
     path:     /{id}/edit
@@ -22,3 +22,18 @@ crud_delete:
     path:     /{id}/delete
     defaults: { _controller: "RestApiTestBundle:Crud:delete" }
     methods:  DELETE
+
+crud_upload:
+    path: /upload
+    defaults: { _controller: "RestApiTestBundle:Crud:upload" }
+    methods: POST
+
+crud_list:
+    path: /list
+    defaults: { _controller: "RestApiTestBundle:Crud:list" }
+    methods: [GET, POST]
+
+crud_list_links:
+    path: /links
+    defaults: { _controller: "RestApiTestBundle:Crud:links" }
+    methods: [GET, POST]
