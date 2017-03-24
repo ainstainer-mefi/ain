@@ -1,3 +1,15 @@
+rest_api_test:
+    resource: "@RestApiTestBundle/Resources/config/routing.yml"
+    prefix:   /
+
+usenko_test_image:
+    resource: "@UsenkoTestImageBundle/Resources/config/routing.yml"
+    prefix:   /
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /ainstainer/doc
