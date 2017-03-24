@@ -4,11 +4,14 @@ parameters:
 #    parameter_name: value
 
 services:
-    app.jwt_token_authenticator:
-        class: AppBundle\Security\JwtAuthenticator
-        arguments: ['@doctrine.orm.entity_manager', '@lexik_jwt_authentication.encoder','%kernel.debug%']
+  app.jwt_token_authenticator:
+    class: AppBundle\Security\JwtAuthenticator
+    arguments: ['@doctrine.orm.entity_manager', '@lexik_jwt_authentication.encoder','%kernel.debug%']
 
-    app.google_user:
-      class: AppBundle\Services\GoogleUserAuthenticator
-      arguments:
-          - '@service_container'
+  app.google_user.auth:
+    class: AppBundle\Services\GoogleUserAuthenticator
+    arguments: ['@service_container']
+
+  app.google_user.mail:
+      class: AppBundle\Services\GoogleUserMail
+      arguments: ['@service_container']

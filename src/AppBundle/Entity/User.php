@@ -235,6 +235,15 @@ class User implements JWTUserInterface, \Serializable
     }
 
     /**
+     * @return string
+     */
+    public function getGoogleAccessTokenDecoded()
+    {
+        return json_decode($this->google_access_token, true);
+    }
+
+
+    /**
      * @param string $google_access_token
      */
     public function setGoogleAccessToken($google_access_token)

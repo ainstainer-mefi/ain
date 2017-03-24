@@ -25,8 +25,8 @@ class AuthenticationController extends BaseApiController
             throw $this->createNotFoundException('Auth code is empty');
         }
 
-        $tokenData = $this->get('app.google_user')->getAccessTokenWithAuthCode($authCode);
-        $tokenPayload = $this->get('app.google_user')->verifyIdToken($tokenData['id_token']);
+        $tokenData = $this->get('app.google_user.auth')->getAccessTokenWithAuthCode($authCode);
+        $tokenPayload = $this->get('app.google_user.auth')->verifyIdToken($tokenData['id_token']);
 
         if (empty($tokenPayload['email_verified']) || !$tokenPayload['email_verified']){
             throw $this->createNotFoundException('Google email_verified error.');

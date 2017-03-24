@@ -16,9 +16,10 @@ class UserController extends FOSRestController
 {
     public function secureResourceAction(Request $request)
     {
-        $data = [$this->getUser()->getUsername(),json_decode($this->getUser()->getGoogleAccessToken(),1)] ;
-
-
-        return $this->handleView($this->view($data, 200));
+        //$data = [$this->getUser()->getUsername(),json_decode($this->getUser()->getGoogleAccessToken(),1)] ;
+        //ain - eyJhbGciOiJSUzI1NiJ9.eyJlbWFpbCI6Im1heGltLmVmaW1vdkBhaW5zdGFpbmVyLmRlIiwiZXhwIjoxNDkwMzQ5OTg1LCJpYXQiOjE0OTAzNDYzODV9.s-aIlxSdcIsTmWGkWtjUxokS_nKawoVhGld5VPgnjMyDpWHyOziYcjZPy6gvsvSE8UEJfKBTpxkhI9LDqnXzCv2vHf67Uz1OIPsfVlMB8Oz4k8ZrtVanY1dYN9D-p1gC-eEGwzhfslRcv4BxCerInbDPH-pp121TzG3vh3ozE6wyzRpVNaHka_Wqtj75XiDcmOnZI2hd1ExcjNrIifoL1DObVfA-AT8aYV8u_1q-nGz5oLdf44bHUVuqu2aW4dQykbv1RYQyHBuHXqZ2VI-_zPgJUq6BecmjcR6R70OF_GSg1r-VTe3iyvPJWJGbfwEilLd1paDRMx_pZK4Htkg-_RISRbds0jHDeC7mg1zQ4u5vrd6cNLBrl91sNGPURsfEzgAt5tLvchRCNmNoCdxGaX60Gc-JxEVwmnnZAPsHBxMhe_c-HJDa9vRhU9RasJ7DEBy3rjDK-fTPMALGvY56Rn6abW2PpfZeIfb6ks0mUCMZmgK3gkII1FtzljjxXgGYasxYekkEOJkgjZO7T2JghS_YEXDrxMlk5QO9RgVLM0eQURgmsznePAlQSuNUBJz-lrNYGr4StzW7JlGVBvUUm8LUSBY1W_prQa5N8AnW5tRgRVQMyEa92YnWD89yl84eSbHsjWhvLavYwsSMa6x0XzgmA5eapH2lb16Jlyo9qXk
+//eyJhbGciOiJSUzI1NiJ9.eyJlbWFpbCI6ImVmaW1vdm1ha3NpbUBnbWFpbC5jb20iLCJleHAiOjE0OTAzNTIzNzQsImlhdCI6MTQ5MDM0ODc3NH0.CuFmiQpZ3bgEaLdqP0KMcZYhv9WovcNh7GKy_wVDRDFSzy0ARxKLJTfFUxH50i9Zyql6raKNA_Q_8eRfG1N8oXijhoc8kdZ9UH4D3sanRZhneLhs5V4gDFL9I28l7cHNbIa98KZQDo1VMB2jpPruWQl3iXnHQaMr9P5X9ZaJ9PxnuN0EMlVUxUCd9rX89x_7v2s8mSfYAPp4ueBI23ZWsWnLfO2WZwH-6EjEwopgfoUqRojgM6lQJ00wxyDyfY1D8S9lIlGWoaV6FLhksCKF7VnSOrUJqcdp-NUcaLlsNFtUfSGQePxdieIxRD5CCwOcw3xeLPEnV1iygg6hZ8yaJjmOGZL6JBdzk3yF20gGPTeT2Mbnfr1IkoOR_z750hy9nU8iP1zX15yFY_w3yuE2uVIKdVuLP2NAL68V0AVBxvZLdJtS3YwcsiQpkEuX7y-A1px8YZMkJ6krnKNr-5VzWgzLKW6G1qis3-j1ZgxxKutjNUdEU5nk5qoH5g0zf2KaiB0P3pUZF_yNony6ag5ViZNaY9Ri-i8w1XbRDD-GpiInBxlgH1S6daRShkV7Frt5kuKko6X8M0f5opy7XCZWC7iLUXcUIvAJ5fw2jf5_b3WLa1vWUJeG0WDDzGH0CxZeeC0Qdn_kKsohgs2TocuSNwArA9D76pLMJg1LKTLgKK4
+        $this->get('app.google_user.mail')->send($this->getUser());
+        return $this->handleView($this->view(1, 200));
     }
 }

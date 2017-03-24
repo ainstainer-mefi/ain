@@ -3,28 +3,10 @@
 namespace AppBundle\Services;
 
 use KofeinStyle\Helper\Dumper;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class GoogleUserAuthenticator
+
+class GoogleUserAuthenticator extends BaseGoogleUserService
 {
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
-
-    protected $googleParams = [];
-
-
-
-    /**
-     * Parser constructor.
-     * @param ContainerInterface|null $container
-     */
-    public function __construct(ContainerInterface $container = null)
-    {
-        $this->container = $container;
-        $this->googleParams =  $this->container->getParameter('google');
-    }
 
     /**
      * @param string $authCode
@@ -60,38 +42,5 @@ class GoogleUserAuthenticator
         return $client->verifyIdToken($id_token);
     }
 
-    /**
-     * @return mixed
-     * @throws \Exception
-     */
-    private function getClientSecretFilePath()
-    {
-        if (empty($this->googleParams['client_secret_path_web'])) {
-            throw new \Exception('Google client secret path web can\'t be empty');
-        }
 
-        return $this->googleParams['client_secret_path_web'];
-    }
-
-    /**
-     * @return string
-     * @throws \Exception
-     */
-    private function getScopes()
-    {
-        if (empty($this->googleParams['scopes'])) {
-            throw new \Exception('Google scopes can\'t be empty');
-        }
-
-        return implode(' ', $this->googleParams['scopes']);
-    }
-
-    private function getRedirectUrl()
-    {
-        if (empty($this->googleParams['redirect_url'])) {
-            throw new \Exception('Google redirect_url can\'t be empty');
-        }
-
-        return $this->googleParams['redirect_url'];
-    }
 }
