@@ -18,3 +18,30 @@ rest_api_test_user_post:
     path: /user/post/
     defaults: { _controller: RestApiTestBundle:User:post }
 
+rest_api_test_google:
+    path: /google
+    defaults: { _controller: RestApiTestBundle:Default:google }
+
+rest_api_test_upload:
+    path: /upload
+    defaults: { _controller: RestApiTestBundle:Default:upload }
+
+rest_api_test_delete:
+    path: /delete
+    defaults: { _controller: RestApiTestBundle:Default:delete }
+
+rest_api_test_getpermissions:
+    path: /getpermissions
+    defaults: { _controller: RestApiTestBundle:Default:getpermissions }
+
+rest_api_test_deletepermission:
+    path: /deletepermission
+    defaults: { _controller: RestApiTestBundle:Default:deletepermission }
+
+rest_api_test_anyonepermission:
+    path: /anyone
+    defaults: { _controller: RestApiTestBundle:Default:anyonepermission }
+
+rest_api_test_domainpermission:
+    path: /domain
+    defaults: { _controller: RestApiTestBundle:Default:domainpermission }
