@@ -1,4 +1,7 @@
 ain
 ===
 
-A Symfony project created on February 27, 2017, 11:29 am.
+Generate the SSH keys for Auth:
+    
+    $ openssl genrsa -out var/jwt/private.pem -aes256 4096
+    $ openssl rsa -pubout -in var/jwt/private.pem -out var/jwt/public.pem

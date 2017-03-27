@@ -30,14 +30,18 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "twig/twig": "^1.0||^2.0",
         "kriswallsmith/buzz": ">=0.9",
-        "hwi/oauth-bundle": "^0.5.3",
-        "friendsofsymfony/user-bundle": "~2.0@dev"
+        "lexik/jwt-authentication-bundle": "^2.2",
+        "google/apiclient":"^2.0",
+        "friendsofsymfony/rest-bundle": "^2.1",
+        "jms/serializer-bundle": "^1.2",
+        "nelmio/cors-bundle": "^1.5"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
         "symfony/phpunit-bridge": "^3.0",
         "kofeinstyle/helpers" : "dev-master",
-        "doctrine/doctrine-fixtures-bundle": "^2.3"
+        "doctrine/doctrine-fixtures-bundle": "^2.3",
+        "nelmio/api-doc-bundle": "^2.13.1"
     },
     "scripts": {
         "symfony-scripts": [
@@ -46,7 +50,8 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
+            "AppBundle\\Composer\\ScriptHandler::build"
         ],
         "post-install-cmd": [
             "@symfony-scripts"

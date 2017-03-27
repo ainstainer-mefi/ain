@@ -4,6 +4,18 @@ parameters:
 #    parameter_name: value
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+  app.jwt_authentication.encoder:
+    class: AppBundle\Security\Encoder\DefaultEncoder
+    arguments: ['@lexik_jwt_authentication.jws_provider.default']
+
+  app.jwt_token_authenticator:
+    class: AppBundle\Security\JwtAuthenticator
+    arguments: ['@doctrine.orm.entity_manager', '@app.jwt_authentication.encoder','@lexik_jwt_authentication.jwt_manager','%kernel.debug%']
+
+  app.google_user.auth:
+    class: AppBundle\Services\GoogleUserAuthenticator
+    arguments: ['@service_container']
+
+  app.google_user.mail:
+      class: AppBundle\Services\GoogleUserMail
+      arguments: ['@service_container']

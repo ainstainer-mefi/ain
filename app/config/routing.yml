@@ -1,3 +1,16 @@
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation
+homepage:
+    path:      /
+    defaults:  { _controller: AppBundle:Default:index }
+
+authentication:
+    path: /api/authentication
+    defaults:  { _controller: AppBundle:Authentication:authentication }
+
+secure_resource:
+    path:      /api/secure-resource
+    defaults:  { _controller: AppBundle:User:secureResource }
+    methods:  [POST]
+
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /ainstainer/doc
