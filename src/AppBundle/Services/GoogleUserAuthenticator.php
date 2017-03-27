@@ -34,7 +34,10 @@ class GoogleUserAuthenticator extends BaseGoogleUserService
 
     }
 
-
+    /**
+     * @param string $id_token
+     * @return array|false
+     */
     public function verifyIdToken($id_token)
     {
         $client = new \Google_Client();

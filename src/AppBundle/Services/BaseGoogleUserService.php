@@ -27,7 +27,7 @@ class BaseGoogleUserService
     }
 
 
-    protected function verifyToken2($token)
+    protected function verifyToken($token)
     {
         return true;
     }

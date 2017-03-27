@@ -23,11 +23,11 @@ class UserRepository extends \Doctrine\ORM\EntityRepository implements UserLoade
     }
 
 
-    public function loadUserByEmail($email)
+    public function loadUserByIdentity($identityField, $identityValue)
     {
         return $this->createQueryBuilder('u')
-            ->where('u.email = :email')
-            ->setParameter('email', $email)
+            ->where('u.'.$identityField.' = :identity')
+            ->setParameter('identity', $identityValue)
             ->getQuery()
             ->getOneOrNullResult();
     }

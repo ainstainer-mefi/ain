@@ -34,7 +34,7 @@ class AuthenticationController extends BaseApiController
 
         #todo need refactoring
         if (empty($tokenPayload['hd']) || $tokenPayload['hd'] != 'ainstainer.de'){
-            //throw $this->createNotFoundException('Email domain is not supported');
+            throw $this->createNotFoundException('Email domain is not supported');
         }
 
         $email = $tokenPayload['email'];

@@ -2,27 +2,42 @@
 
 namespace AppBundle\Security;
 
+use AppBundle\Security\Encoder\DefaultEncoder;
 use Doctrine\ORM\EntityManager;
 use KofeinStyle\Helper\Dumper;
-use Lexik\Bundle\JWTAuthenticationBundle\Encoder\DefaultEncoder as JWTEncoder;
-use Lexik\Bundle\JWTAuthenticationBundle\TokenExtractor\AuthorizationHeaderTokenExtractor;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
+use Lexik\Bundle\JWTAuthenticationBundle\TokenExtractor\AuthorizationHeaderTokenExtractor;
+use Lexik\Bundle\JWTAuthenticationBundle\Security\Guard\JWTTokenAuthenticator;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use Lexik\Bundle\JWTAuthenticationBundle\Exception\InvalidPayloadException;
+use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserProvider;
 
 class JwtAuthenticator extends AbstractGuardAuthenticator
 {
+
+    /**
+     * @var JWTTokenManagerInterface
+     */
+    private $jwtManager;
+
     private $em;
+
     private $jwtEncoder;
+
+    /**
+     * @var bool
+     */
     private $isDebug;
 
-    public function __construct(EntityManager $em, JWTEncoder $jwtEncoder, $isDebug = false)
+    public function __construct(EntityManager $em, DefaultEncoder $jwtEncoder, JWTTokenManagerInterface $jwtManager,$isDebug = false)
     {
+        $this->jwtManager = $jwtManager;
         $this->em = $em;
         $this->jwtEncoder = $jwtEncoder;
         $this->isDebug = $isDebug;
@@ -30,10 +45,7 @@ class JwtAuthenticator extends AbstractGuardAuthenticator
 
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        return new JsonResponse([
-            'message' => 'Auth header required'
-        ], 401);
-
+        return new JsonResponse(['message' => 'Auth header required'], 401);
     }
 
     public function getCredentials(Request $request)
@@ -43,10 +55,7 @@ class JwtAuthenticator extends AbstractGuardAuthenticator
             return;
         }
 
-        $extractor = new AuthorizationHeaderTokenExtractor(
-            'Bearer',
-            'Authorization'
-        );
+        $extractor = new AuthorizationHeaderTokenExtractor('Bearer', 'Authorization');
 
         $token = $extractor->extract($request);
 
@@ -57,23 +66,35 @@ class JwtAuthenticator extends AbstractGuardAuthenticator
         return $token;
     }
 
+    /**
+     * @param mixed $credentials
+     * @param UserProviderInterface $userProvider
+     * @return mixed|void
+     */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
 
         if($this->isDebug && strpos($credentials,'@ainstainer.de') !== false) {
-            $data = ['email' => trim($credentials)];
+            $payload = ['email' => trim($credentials)];
         } else {
-            $data = $this->jwtEncoder->decode($credentials);
+            $payload = $this->jwtEncoder->decode($credentials);
         }
 
-
-        if(!$data){
+        if(!$payload){
             return;
         }
 
-        $email = $data['email'];
+        $identityField = $this->jwtManager->getUserIdentityField();
 
-        $user = $this->em->getRepository('AppBundle:User')->loadUserByEmail($email);
+        if (!isset($payload[$identityField])) {
+            throw new InvalidPayloadException($identityField);
+        }
+
+        /*if ($userProvider instanceof JWTUserProvider) {
+            $u =  $userProvider->loadUserByUsername($identityField, $payload);
+        }*/
+
+        $user = $this->em->getRepository('AppBundle:User')->loadUserByIdentity($identityField, $payload[$identityField]);
 
         if(!$user){
             return;
@@ -90,9 +111,7 @@ class JwtAuthenticator extends AbstractGuardAuthenticator
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        return new JsonResponse([
-            'message' => $exception->getMessage()
-        ], 401);
+        return new JsonResponse(['message' => $exception->getMessage()], 401);
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
