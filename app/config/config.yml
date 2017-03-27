@@ -84,8 +84,10 @@ lexik_jwt_authentication:
     token_ttl:        '%jwt_token_ttl%'
     user_identity_field: email
 
+nelmio_api_doc: ~
 
 fos_rest:
+    param_fetcher_listener: true
     body_listener:
       enabled: true
     view:
