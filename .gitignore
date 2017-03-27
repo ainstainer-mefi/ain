@@ -16,3 +16,11 @@
 /web/images/
 /web/bundles/
 .idea/
+.credentials/
+client_secret.json
+client_secret_951933054664-u2fh085f2769o1qm7ab9ev66rgqufjv8.apps.googleusercontent.com.json
+quickstart.php
+src/RestApi/TestBundle/Controller/DefaultController.php
+src/RestApi/TestBundle/Resources/config/routing.yml
+src/RestApi/TestBundle/Resources/views/Default/index.html.twig
+
