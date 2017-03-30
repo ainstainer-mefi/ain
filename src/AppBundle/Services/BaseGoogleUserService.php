@@ -3,7 +3,7 @@
 namespace AppBundle\Services;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use AppBundle\Entity\GoogleServiceConfig;
+use AppBundle\Entity\GoogleConfig;
 
 class BaseGoogleUserService
 {
@@ -13,7 +13,7 @@ class BaseGoogleUserService
     protected $container;
 
     /**
-     * @var GoogleServiceConfig|null
+     * @var GoogleConfig|null
      */
     protected $googleParams = null;
 
@@ -24,7 +24,7 @@ class BaseGoogleUserService
     public function __construct(ContainerInterface $container = null)
     {
         $this->container = $container;
-        $this->googleParams =  new GoogleServiceConfig($this->container->getParameter('google'));
+        $this->googleParams =  new GoogleConfig($this->container->getParameter('google'));
     }
 
 
