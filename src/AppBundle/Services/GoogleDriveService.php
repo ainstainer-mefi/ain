@@ -8,95 +8,202 @@
 
 namespace AppBundle\Services;
 
+use AppBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Google_Client;
 use Google_Service_Drive;
+use Google_Service_Drive_DriveFile;
+use Google_Service_Drive_Permission;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class GoogleDriveService
+class GoogleDriveService extends BaseGoogleUserService
 {
     protected $client;
     protected $driveService;
-    protected $container;
-    protected $accessToken;
-    protected $googleParams = [];
 
     public function __construct(ContainerInterface $container = null)
     {
-        $this->container = $container;
-        $this->googleParams = $this->container->getParameter('google');
-
+        parent::__construct($container);
         $this->client = new Google_Client();
-        $this->client->setApplicationName($this->googleParams['app_name']);
-        $this->client->setScopes($this->googleParams['scopes']);
-        $this->client->setAuthConfig($this->googleParams['client_secret_path']);
+        $this->client->setApplicationName($this->googleParams->getAppName());
+        $this->client->setScopes($this->googleParams->getScopes());
+        $this->client->setAuthConfig($this->googleParams->getClientSecretPath());
         $this->client->setAccessType('offline');
-        $this->accessToken = json_decode(file_get_contents($this->googleParams['credentials_path']), true);
-        $this->client->setAccessToken($this->accessToken);
+        $this->client->setAccessToken($this->googleParams->getCredentialsPath());
 
         $this->driveService = new Google_Service_Drive($this->client);
     }
 
-    public function createFolder($email)
+    /**
+     * Create new folder for user in google drive
+     *
+     * @param User $user
+     * @return string
+     */
+    public function createFolder(User $user)
     {
+        $email = $user->getEmail();
+        $userName = strstr($email, '@', true);
 
+        $folderMetaData = new Google_Service_Drive_DriveFile([
+            'name' => $userName,
+            'mimeType' => 'application/vnd.google-apps.folder'
+        ]);
+
+        $folder = $this->driveService->files->create($folderMetaData, [
+            'fields' => 'id'
+        ]);
+        return $folder->id;
     }
 
-    public function listFilesOnDisc()
+    /**
+     * List files in user folder in google drive.
+     *
+     * @param User $user
+     * @return array
+     */
+    public function listFilesInFolder(User $user)
     {
+        $folderId = $user->getFolderId();
+
         $params = [
-            'pageSize' => 10,
-            'fields' => 'nextPageToken, files(id, name)'
+            'fields' => 'nextPageToken, files(id, name, webViewLink, webContentLink, thumbnailLink, mimeType)',
+            'q' => "'$folderId' in parents"
         ];
 
-        $results = $this->driveService->files->listFiles($params);
-        if (count($results->getFiles()) == 0) {
-            return print "No files found.\n";
-        } else {
-            print "Files:\n";
-            foreach ($results->getFiles() as $file) {
-               return printf("%s (%s)\n", $file->getName(), $file->getId()) . '<br />';
-            }
+        $list = $this->driveService->files->listFiles($params);
+        $files = [];
+        foreach ($list->getFiles() as $key => $value) {
+            $files[$key][] = $value->getId();
+            $files[$key][] = $value->getName();
+            $files[$key][] = $value->getMimeType();
+            $files[$key][] = $value->getWebViewLink();
+            $files[$key][] = $value->getWebContentLink();
+            $files[$key][] = $value->getThumbnailLink();
+        }
+        return $files;
+    }
 
+    /**
+     * Upload any file to google drive in user folder
+     *
+     * @param User $user
+     * @param UploadedFile $file
+     * @return bool
+     */
+    public function uploadFile(User $user,UploadedFile $file)
+    {
+        $folderId = $user->getFolderId();
+        $fileName = $file->getClientOriginalName();
+        $fileMetaData = new Google_Service_Drive_DriveFile([
+            'name' => $fileName,
+            'parents' => [$folderId]
+        ]);
+
+        $content = file_get_contents($file);
+        $this->driveService->files->create($fileMetaData, [
+            'data' => $content,
+            'uploadType' => 'multipart',
+            'fields' => 'id'
+        ]);
+        return true;
+    }
+
+    /**
+     * Delete file from google drive.
+     * Permanently deletes a file owned by the user without moving it to the trash.
+     * If the target is a folder, all descendants owned by the user are also
+     * deleted.
+     *
+     * @param $fileId string
+     * @return bool
+     */
+    public function deleteFile($fileId)
+    {
+        $this->driveService->files->delete($fileId);
+        return true;
+    }
+
+    /**
+     * Set permission on user folder by domain.
+     * Permission - only read files.
+     * Domain - ainstainer.de
+     *
+     * @param User $user
+     * @return bool
+     */
+    public function setPermissionFolder(User $user)
+    {
+        $folderId = $user->getFolderId();
+        $this->driveService->getClient()->setUseBatch(true);
+
+        try {
+            $batch = $this->driveService->createBatch();
+
+            $domainPermission = new Google_Service_Drive_Permission([
+                'type' => 'domain',
+                'role' => 'reader',
+                'domain' => 'ainstainer.de'
+            ]);
+
+            $request = $this->driveService->permissions->create($folderId, $domainPermission, ['fields' => 'id']);
+            $batch->add($request, 'domain');
+            $batch->execute();
+            return true;
+        } finally {
+            $this->driveService->getClient()->setUseBatch(false);
         }
     }
 
-    public function listFiles($userId)
+    /**
+     * Get shared link for one file.
+     *
+     * @param $fileId string
+     * @return string
+     */
+    public function getSharedLink($fileId)
     {
+        $params = [
+            'fields' => 'webViewLink'
+        ];
 
+        $file = $this->driveService->files->get($fileId, $params);
+
+        return $file->getWebViewLink();
     }
 
-    public function getFile()
+    /**
+     * Get content link for download file.
+     *
+     * @param $fileId string
+     * @return string
+     */
+    public function getContentLink($fileId)
     {
+        $param = [
+            'fields' => 'webContentLink'
+        ];
 
+        $file = $this->driveService->files->get($fileId, $param);
+
+        return $file->getWebContentLink();
     }
 
-    public function uploadFile()
+    /**
+     * A short-lived link to the file's thumbnail, if available.
+     * Typically lasts on the order of hours.
+     * Only populated when the requesting app can access the file's content.
+     *
+     * @param $fileId string
+     * @return string
+     */
+    public function getThumbnailLink($fileId)
     {
+        $params = [
+            'fields' => 'thumbnailLink'
+        ];
+        $file = $this->driveService->files->get($fileId, $params);
 
-    }
-
-    public function deleteFile($fileId)
-    {
-
-    }
-
-    public function getPermissionFolder()
-    {
-
-    }
-
-    public function getPermissionUser()
-    {
-
-    }
-
-    public function deletePermission()
-    {
-
-    }
-
-    public function getSharedLink()
-    {
-
+        return $file->getThumbnailLink();
     }
 }
