@@ -3,6 +3,7 @@
 namespace AppBundle\Services;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use AppBundle\Entity\GoogleConfig;
 
 class BaseGoogleUserService
 {
@@ -12,9 +13,9 @@ class BaseGoogleUserService
     protected $container;
 
     /**
-     * @var array|mixed
+     * @var GoogleConfig|null
      */
-    protected $googleParams = [];
+    protected $googleParams = null;
 
     /**
      * Parser constructor.
@@ -23,7 +24,7 @@ class BaseGoogleUserService
     public function __construct(ContainerInterface $container = null)
     {
         $this->container = $container;
-        $this->googleParams =  $this->container->getParameter('google');
+        $this->googleParams =  new GoogleConfig($this->container->getParameter('google'));
     }
 
 
@@ -46,6 +47,19 @@ class BaseGoogleUserService
     }
 
     /**
+     * @return mixed
+     * @throws \Exception
+     */
+    protected function getServerSecretFilePath()
+    {
+        if (empty($this->googleParams['client_secret_path'])) {
+            throw new \Exception('Google server secret path web can\'t be empty');
+        }
+
+        return $this->googleParams['client_secret_path'];
+    }
+
+    /**
      * @return string
      * @throws \Exception
      */
@@ -58,6 +72,10 @@ class BaseGoogleUserService
         return implode(' ', $this->googleParams['scopes']);
     }
 
+    /**
+     * @return mixed
+     * @throws \Exception
+     */
     protected function getRedirectUrl()
     {
         if (empty($this->googleParams['redirect_url'])) {
@@ -65,5 +83,31 @@ class BaseGoogleUserService
         }
 
         return $this->googleParams['redirect_url'];
+    }
+
+    /**
+     * @return mixed
+     * @throws \Exception
+     */
+    protected function getServerAccessToken()
+    {
+        if (empty($this->googleParams['credentials_path'])) {
+            throw new \Exception('Google server credentials path can\'t be empty');
+        }
+
+        return json_decode(file_get_contents($this->googleParams['credentials_path']), true);
+    }
+
+    /**
+     * @return mixed
+     * @throws \Exception
+     */
+    protected function getServerAppName()
+    {
+        if (empty($this->googleParams['app_name'])) {
+            throw new \Exception('Google server application name can\'t be empty');
+        }
+
+        return $this->googleParams['app_name'];
     }
 }

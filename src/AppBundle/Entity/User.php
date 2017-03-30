@@ -80,7 +80,14 @@ class User implements JWTUserInterface, \Serializable
      *
      * @ORM\Column(name="google_id_token", type="string", length=3000, unique=false, nullable = true)
      */
+
     private $google_id_token;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="folder_id", type="string", length=100, unique=true, nullable = true)
+     */
+    private $folder_id;
 
       /**
      * Get id
@@ -288,6 +295,22 @@ class User implements JWTUserInterface, \Serializable
     public function unserialize($serialized)
     {
         list ($this->id, $this->username, $this->password,) = unserialize($serialized);
+    }
+
+    /**
+     * @param $folder_id
+     */
+    public function setFolderId($folder_id)
+    {
+        $this->folder_id = $folder_id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFolderId()
+    {
+        return $this->folder_id;
     }
 }
 
