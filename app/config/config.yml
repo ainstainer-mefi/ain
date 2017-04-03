@@ -132,3 +132,11 @@ nelmio_cors:
             allow_headers: ['*']
             allow_methods: ['POST', 'PUT', 'GET', 'DELETE']
             max_age: 3600
+
+services:
+    gedmo.listener.tree:
+            class: Gedmo\Tree\TreeListener
+            tags:
+                - { name: doctrine.event_subscriber, connection: default }
+            calls:
+                - [ setAnnotationReader, [ "@annotation_reader" ] ]

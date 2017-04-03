@@ -1,0 +1,52 @@
+AppBundle\Entity\Category:
+    type: entity
+    repositoryClass: Gedmo\Tree\Entity\Repository\NestedTreeRepository
+    table: categories
+    gedmo:
+      tree:
+        type: nested
+    id:
+      id:
+        type: integer
+        generator:
+          strategy: AUTO
+    fields:
+      title:
+        type: string
+        length: 64
+      lft:
+        type: integer
+        gedmo:
+          - treeLeft
+      rgt:
+        type: integer
+        gedmo:
+          - treeRight
+      lvl:
+        type: integer
+        gedmo:
+          - treeLevel
+    manyToOne:
+      root:
+        targetEntity: AppBundle\Entity\Category
+        joinColumn:
+          name: tree_root
+          referencedColumnName: id
+          onDelete: CASCADE
+        gedmo:
+          - treeRoot
+      parent:
+        targetEntity: AppBundle\Entity\Category
+        inversedBy: children
+        joinColumn:
+          name: parent_id
+          referencedColumnName: id
+          onDelete: CASCADE
+        gedmo:
+          - treeParent
+    oneToMany:
+      children:
+        targetEntity: AppBundle\Entity\Category
+        mappedBy: parent
+        orderBy:
+          lft: ASC
