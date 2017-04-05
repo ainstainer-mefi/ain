@@ -10,3 +10,7 @@ authentication:
 secure_resource:
     path:      /api/secure-resource
     defaults:  { _controller: AppBundle:User:secureResource }
+
+calendar:
+    path:     /calendar
+    defaults: { _controller: AppBundle:Calendar:calendar }

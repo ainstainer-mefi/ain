@@ -19,3 +19,7 @@ services:
   app.google_user.mail:
       class: AppBundle\Services\GoogleUserMail
       arguments: ['@service_container']
+
+  app.google_calendar:
+      class: AppBundle\Services\GoogleCalendar
+      arguments: ['@service_container']
