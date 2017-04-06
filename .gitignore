@@ -18,5 +18,6 @@
 /var/jwt/*
 /vendor/
 /web/bundles/
+/web/images/
 .idea/
 /web/uploads/
