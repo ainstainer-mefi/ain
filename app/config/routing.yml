@@ -11,6 +11,3 @@ secure_resource:
     defaults:  { _controller: AppBundle:User:secureResource }
     methods:  [POST]
 
-NelmioApiDocBundle:
-    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
-    prefix:   /ainstainer/doc
