@@ -35,7 +35,7 @@ class JwtAuthenticator extends AbstractGuardAuthenticator
      */
     private $isDebug;
 
-    public function __construct(EntityManager $em, DefaultEncoder $jwtEncoder, JWTTokenManagerInterface $jwtManager,$isDebug = false)
+    public function __construct(EntityManager $em, DefaultEncoder $jwtEncoder, JWTTokenManagerInterface $jwtManager, $isDebug = false)
     {
         $this->jwtManager = $jwtManager;
         $this->em = $em;
@@ -73,8 +73,13 @@ class JwtAuthenticator extends AbstractGuardAuthenticator
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
+        $domains = ['ainstainer.de','gmail.com'];
+        $domain = false;
+        if(strpos($credentials,'@') !== false) {
+            $domain = preg_replace('/.*@/', '', $credentials);
+        }
 
-        if($this->isDebug && strpos($credentials,'@ainstainer.de') !== false) {
+        if($this->isDebug && $domain && in_array($domain,$domains)) {
             $payload = ['email' => trim($credentials)];
         } else {
             $payload = $this->jwtEncoder->decode($credentials);
