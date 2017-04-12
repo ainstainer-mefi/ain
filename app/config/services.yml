@@ -19,3 +19,7 @@ services:
   app.google_user.mail:
       class: AppBundle\Services\GoogleUserMail
       arguments: ['@service_container']
+
+  app.google_drive.service:
+        class: AppBundle\Services\GoogleDriveService
+        arguments: ['@service_container']
