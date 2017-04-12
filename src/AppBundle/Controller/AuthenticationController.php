@@ -39,12 +39,19 @@ class AuthenticationController extends BaseApiController
 
         $email = $tokenPayload['email'];
 
+
         // Use LexikJWTAuthenticationBundle to create JWT token that hold only information about user name
-        $encodeAdditionalData = ['email' => $email];
+        $encodeAdditionalData = [
+            'email' => $tokenPayload['email'],
+            'name' =>  $tokenPayload['name'],
+            'picture' =>  $tokenPayload['picture'],
+            'given_name' =>  $tokenPayload['given_name'],
+            'family_name' =>  $tokenPayload['family_name'],
+        ];
         $apiToken = $this->get('lexik_jwt_authentication.encoder')->encode($encodeAdditionalData);
 
         $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('AppBundle:User')->loadUserByEmail($email);
+        $user = $em->getRepository('AppBundle:User')->loadUserByUsername($email);
 
 
         if(!$user) { // create new user
