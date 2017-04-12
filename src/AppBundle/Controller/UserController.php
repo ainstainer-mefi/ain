@@ -10,7 +10,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
-class UserController extends FOSRestController
+class UserController extends BaseApiController
 {
 
     /**
@@ -26,10 +26,13 @@ class UserController extends FOSRestController
     public function secureResourceAction(Request $request)
     {
 
-        $message = \Swift_Message::newInstance('Hello ','Hello Max'. date('H:i'));
+        /*$message = \Swift_Message::newInstance('Hello ','Hello Max'. date('H:i'));
         $message->setTo([$request->get('email')]);
 
-        $data  = $this->get('app.google_user.mail')->send($this->getUser(), $message);
-        return $this->handleView($this->view($data, 200));
+        $data  = $this->get('app.google_user.mail')->send($this->getUser(), $message);*/
+
+        //$data  = $this->get('app.google_drive.service')->createFolder($this->getUser());
+        $data  = $this->get('app.google_drive.service')->getUserFiles($this->getUser());
+        return $this->prepareAnswer($data);
     }
 }

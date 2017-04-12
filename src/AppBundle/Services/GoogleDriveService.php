@@ -9,6 +9,7 @@
 namespace AppBundle\Services;
 
 use AppBundle\Entity\User;
+use KofeinStyle\Helper\Dumper;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Google_Client;
 use Google_Service_Drive;
@@ -29,7 +30,9 @@ class GoogleDriveService extends BaseGoogleUserService
         $this->client->setScopes($this->googleParams->getScopes());
         $this->client->setAuthConfig($this->googleParams->getClientSecretPath());
         $this->client->setAccessType('offline');
-        $this->client->setAccessToken($this->googleParams->getCredentialsPath());
+        $this->client->setAccessToken($this->googleParams->getCredentialsData());
+
+        $this->verifyServerToken($this->client);
 
         $this->driveService = new Google_Service_Drive($this->client);
     }
@@ -42,17 +45,15 @@ class GoogleDriveService extends BaseGoogleUserService
      */
     public function createFolder(User $user)
     {
-        $email = $user->getEmail();
-        $userName = strstr($email, '@', true);
-
         $folderMetaData = new Google_Service_Drive_DriveFile([
-            'name' => $userName,
+            'name' => $user->getEmail(),
             'mimeType' => 'application/vnd.google-apps.folder'
         ]);
 
         $folder = $this->driveService->files->create($folderMetaData, [
             'fields' => 'id'
         ]);
+
         return $folder->id;
     }
 
@@ -62,7 +63,7 @@ class GoogleDriveService extends BaseGoogleUserService
      * @param User $user
      * @return array
      */
-    public function listFilesInFolder(User $user)
+    public function getUserFiles(User $user)
     {
         $folderId = $user->getFolderId();
 
@@ -74,12 +75,12 @@ class GoogleDriveService extends BaseGoogleUserService
         $list = $this->driveService->files->listFiles($params);
         $files = [];
         foreach ($list->getFiles() as $key => $value) {
-            $files[$key][] = $value->getId();
-            $files[$key][] = $value->getName();
-            $files[$key][] = $value->getMimeType();
-            $files[$key][] = $value->getWebViewLink();
-            $files[$key][] = $value->getWebContentLink();
-            $files[$key][] = $value->getThumbnailLink();
+            $files[$key]['id'] = $value->getId();
+            $files[$key]['name'] = $value->getName();
+            $files[$key]['mimeType'] = $value->getMimeType();
+            $files[$key]['webViewLink'] = $value->getWebViewLink();
+            $files[$key]['webContentLink'] = $value->getWebContentLink();
+            $files[$key]['thumbnailLink'] = $value->getThumbnailLink();
         }
         return $files;
     }

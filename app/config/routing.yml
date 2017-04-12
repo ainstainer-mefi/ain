@@ -9,5 +9,5 @@ authentication:
 secure_resource:
     path:      /api/secure-resource
     defaults:  { _controller: AppBundle:User:secureResource }
-    methods:  [POST]
+    methods:  [POST, GET]
 

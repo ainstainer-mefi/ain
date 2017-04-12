@@ -2,6 +2,7 @@
 
 namespace AppBundle\Services;
 
+use KofeinStyle\Helper\Dumper;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use AppBundle\Entity\GoogleConfig;
 
@@ -27,10 +28,20 @@ class BaseGoogleUserService
         $this->googleParams =  new GoogleConfig($this->container->getParameter('google'));
     }
 
-
-    protected function verifyToken($token)
+    /**
+     * @param $client \Google_Client
+     * @return bool
+     */
+    protected function verifyServerToken($client)
     {
-        return true;
+        if ($client->isAccessTokenExpired()) {
+            $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
+            file_put_contents($this->googleParams->getCredentialsPath(), json_encode($client->getAccessToken()));
+            return true;
+        }
+
+        return false;
+
     }
 
     /**

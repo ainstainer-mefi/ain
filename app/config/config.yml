@@ -130,4 +130,4 @@ nelmio_cors:
             allow_origin: ['*']
             allow_headers: ['*']
             allow_methods: ['POST', 'PUT', 'GET', 'DELETE']
-            max_age: 3600
+            max_age: 86400

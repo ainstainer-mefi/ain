@@ -1,22 +1,24 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ausenko
- * Date: 30.03.17
- * Time: 10:18
- */
-
 namespace AppBundle\Entity;
 
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class GoogleConfig
 {
+    /**
+     * @var \Symfony\Component\PropertyAccess\PropertyAccessor
+     */
     protected $accessor;
+
+    /**
+     * @var array
+     */
     protected $config = [];
 
-
-
+    /**
+     * GoogleConfig constructor.
+     * @param $googleParams
+     */
     public function __construct($googleParams)
     {
         $this->accessor = PropertyAccess::createPropertyAccessor();
@@ -52,7 +54,15 @@ class GoogleConfig
      */
     public function getCredentialsPath()
     {
-        return json_decode(file_get_contents($this->accessor->getValue($this->config, '[credentials_path]')), true);
+        return $this->accessor->getValue($this->config, '[credentials_path]');
+    }
+
+    /**
+     * @return array
+     */
+    public function getCredentialsData()
+    {
+        return json_decode(file_get_contents($this->getCredentialsPath()), true);
     }
 
     /**
