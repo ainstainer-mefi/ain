@@ -19,8 +19,8 @@ class GoogleUserMail extends BaseGoogleUserService
         $message->setFrom($userFrom->getEmail(),$userFrom->getUsername());
 
         $client = new \Google_Client();
-        $client->setScopes($this->getScopes());
-        $client->setAuthConfig($this->getClientSecretFilePath());
+        $client->setScopes($this->googleParams->getScopes());
+        $client->setAuthConfig($this->googleParams->getClientSecretPathWeb());
         $client->setAccessType('offline');
         $client->setAccessToken($accessToken);
 

@@ -15,18 +15,20 @@ class GoogleUserAuthenticator extends BaseGoogleUserService
      */
     public function getAccessTokenWithAuthCode($authCode = '')
     {
-        $appName = empty($this->googleParams['app_name']) ? 'My Application' : $this->googleParams['app_name'];
 
         $client = new \Google_Client();
-        $client->setApplicationName($appName);
+        $client->setApplicationName($this->googleParams->getAppName());
         $client->setAccessType('offline');
-        $client->setAuthConfig($this->getClientSecretFilePath());
-        $client->setRedirectUri($this->getRedirectUrl());
-        $client->addScope($this->getScopes());
+        $client->setAuthConfig($this->googleParams->getClientSecretPathWeb());
+        $client->setRedirectUri($this->googleParams->getRedirectUrl());
+        $client->addScope($this->googleParams->getScopes());
         $client->setApprovalPrompt('force');
         $token = $client->fetchAccessTokenWithAuthCode($authCode);
 
-        if (empty($token) || !empty($token['error'])) {
+        if (empty($token) ) {
+            throw new \Exception('Google checkAuthCode. Token is empty');
+        }
+        if (!empty($token['error'])) {
             throw new \Exception('Google checkAuthCode. '.$token['error']);
         }
         //$info = $client->verifyIdToken($tok['id_token']);
@@ -41,9 +43,8 @@ class GoogleUserAuthenticator extends BaseGoogleUserService
     public function verifyIdToken($id_token)
     {
         $client = new \Google_Client();
-        $client->setAuthConfig($this->getClientSecretFilePath());
+        $client->setAuthConfig($this->googleParams->getClientSecretPathWeb());
         return $client->verifyIdToken($id_token);
     }
-
 
 }
