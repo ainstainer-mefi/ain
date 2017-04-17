@@ -75,6 +75,7 @@ class JwtAuthenticator extends AbstractGuardAuthenticator
     {
         $domains = ['ainstainer.de','gmail.com'];
         $domain = false;
+
         if(strpos($credentials,'@') !== false) {
             $domain = preg_replace('/.*@/', '', $credentials);
         }
@@ -94,10 +95,6 @@ class JwtAuthenticator extends AbstractGuardAuthenticator
         if (!isset($payload[$identityField])) {
             throw new InvalidPayloadException($identityField);
         }
-
-        /*if ($userProvider instanceof JWTUserProvider) {
-            $u =  $userProvider->loadUserByUsername($identityField, $payload);
-        }*/
 
         $user = $this->em->getRepository('AppBundle:User')->loadUserByIdentity($identityField, $payload[$identityField]);
 

@@ -14,7 +14,7 @@ parameters:
         credentials_path : "%kernel.root_dir%/../var/google-keys/credentials.json"
         client_secret_path : "%kernel.root_dir%/../var/google-keys/client_server.json"
         client_secret_path_web : "%kernel.root_dir%/../var/google-keys/client_web.json"
-
+    allow_domains: ['ainstainer.de', 'gmail.com']
 framework:
     #esi:             ~
     #translator:      { fallbacks: ["%locale%"] }
@@ -128,6 +128,6 @@ nelmio_cors:
     paths:
         '^/api/':
             allow_origin: ['*']
-            allow_headers: ['*']
+            allow_headers: ['Origin', 'Content-Type',  'Authorization','Accept']
             allow_methods: ['POST', 'PUT', 'GET', 'DELETE']
-            max_age: 86400
+            max_age: 3600

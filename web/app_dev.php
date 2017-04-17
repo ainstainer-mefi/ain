@@ -3,6 +3,10 @@
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Debug\Debug;
 
+//header('Access-Control-Allow-Origin: *');
+//header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE');
+//header('Access-Control-Allow-Headers: Origin, Content-Type,  Authorization');
+
 // If you don't want to setup permissions the proper way, just uncomment the following PHP line
 // read http://symfony.com/doc/current/setup.html#checking-symfony-application-configuration-and-setup
 // for more information

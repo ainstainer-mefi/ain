@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\User;
 
 
+use KofeinStyle\Helper\Dumper;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\Annotations\View;
@@ -32,8 +33,11 @@ class AuthenticationController extends BaseApiController
             throw $this->createNotFoundException('Google email_verified error.');
         }
 
-        #todo need refactoring
-        if (empty($tokenPayload['hd']) || $tokenPayload['hd'] != 'ainstainer.de'){
+        $allowDomains = $this->getParameter('allow_domains');
+
+        $domain = preg_replace('/.*@/', '', $tokenPayload['email']);
+
+        if (empty($tokenPayload['email_verified']) || !in_array($domain, $allowDomains)){
             throw $this->createNotFoundException('Email domain is not supported');
         }
 
@@ -42,7 +46,7 @@ class AuthenticationController extends BaseApiController
 
         // Use LexikJWTAuthenticationBundle to create JWT token that hold only information about user name
         $encodeAdditionalData = [
-
+            'email' => $email,
         ];
         $apiToken = $this->get('lexik_jwt_authentication.encoder')->encode($encodeAdditionalData);
 

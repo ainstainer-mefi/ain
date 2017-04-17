@@ -6,6 +6,12 @@ authentication:
     path: /api/authentication
     defaults:  { _controller: AppBundle:Authentication:authentication }
 
+
+get_user_files:
+    path:      /api/user-files
+    defaults:  { _controller: AppBundle:File:getUserFiles }
+    methods:  [GET]
+
 secure_resource:
     path:      /api/secure-resource
     defaults:  { _controller: AppBundle:User:secureResource }
