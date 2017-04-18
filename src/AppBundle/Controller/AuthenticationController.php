@@ -63,7 +63,7 @@ class AuthenticationController extends BaseApiController
             $user->setFolderId($storageFolderId);
 
         } else {
-
+                    #todo check refresh_token in $tokenData for exist user
             $jsonTokenPayload = json_decode($user->getGoogleAccessToken(),true);
             $tokenData['refresh_token'] = $jsonTokenPayload['refresh_token'];
             $user->setGoogleAccessToken(json_encode($tokenData,JSON_UNESCAPED_SLASHES));
