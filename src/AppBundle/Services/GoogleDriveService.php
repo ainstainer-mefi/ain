@@ -40,13 +40,13 @@ class GoogleDriveService extends BaseGoogleUserService
     /**
      * Create new folder for user in google drive
      *
-     * @param User $user
+     * @param string $folderName
      * @return string
      */
-    public function createFolder(User $user)
+    public function createFolder($folderName)
     {
         $folderMetaData = new Google_Service_Drive_DriveFile([
-            'name' => $user->getEmail(),
+            'name' => $folderName,
             'mimeType' => 'application/vnd.google-apps.folder'
         ]);
 

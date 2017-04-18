@@ -55,11 +55,12 @@ class AuthenticationController extends BaseApiController
 
 
         if(!$user) { // create new user
-
+            $storageFolderId = $this->get('app.google_drive.service')->createFolder($email);
             $user = new User();
             $user->setEmail($email);
             $user->setRole('ROLE_USER');
             $user->setGoogleAccessToken(json_encode($tokenData,JSON_UNESCAPED_SLASHES));
+            $user->setFolderId($storageFolderId);
 
         } else {
 
