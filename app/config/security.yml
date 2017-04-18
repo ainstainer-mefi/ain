@@ -31,6 +31,6 @@ security:
         - { path: ^/api/authentication, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api, roles: [IS_AUTHENTICATED_FULLY ] }
-        - { path: ^/(css|js), roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/(_wdt|_profiler), roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/(css|js|client), roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/(_wdt|_profile|client), roles: IS_AUTHENTICATED_ANONYMOUSLY }
 #        - { path: ^/, roles: ROLE_USER }

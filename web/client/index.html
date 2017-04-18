@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Ain4</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="/client/favicon.ico">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" rel="stylesheet">
+  <script src="https://apis.google.com/js/api:client.js"></script>
+  <!--<script src="https://apis.google.com/js/platform.js"></script>-->
+  <style>
+
+    @-webkit-keyframes spin {
+      0% {
+        transform: rotate(0deg)
+      }
+      to {
+        transform: rotate(1turn)
+      }
+    }
+
+    @-moz-keyframes spin {
+      0% {
+        -moz-transform: rotate(0deg)
+      }
+      to {
+        -moz-transform: rotate(1turn)
+      }
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg)
+      }
+      to {
+        transform: rotate(1turn)
+      }
+    }
+
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1003;
+      background: #fff
+    }
+
+    #preloader > div {
+      display: block;
+      position: relative;
+      left: 50%;
+      top: 50%;
+      width: 150px;
+      height: 150px;
+      margin: -75px 0 0 -75px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-top-color: #f95372;
+      transform: translateZ(0);
+      animation: spin 2s linear infinite
+    }
+
+    #preloader > div:before {
+      content: "";
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      right: 5px;
+      bottom: 5px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-top-color: #00abff;
+      -webkit-animation: spin 3s linear infinite;
+      animation: spin 3s linear infinite
+    }
+
+    #preloader > div:after {
+      content: "";
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      right: 15px;
+      bottom: 15px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-top-color: #e7ba08;
+      animation: spin 1.5s linear infinite
+    }
+
+  </style>
+<link href="http://ain.test/client/styles.8222f91b40dcad220a3f.bundle.css" rel="stylesheet"/></head>
+<body>
+  <app-root>
+    <div id="preloader">
+      <div></div>
+    </div>
+
+  </app-root>
+  <div style="z-index: 30000"><dialog-outlet></dialog-outlet></div>
+<script type="text/javascript" src="http://ain.test/client/inline.a488a7b27aeaa1d9a798.bundle.js"></script><script type="text/javascript" src="http://ain.test/client/polyfills.0ff51893bf8b41bfcd3f.bundle.js"></script><script type="text/javascript" src="http://ain.test/client/vendor.3b8485b88c38593a2274.bundle.js"></script><script type="text/javascript" src="http://ain.test/client/main.e01333d6e57d962d245a.bundle.js"></script></body>
+</html>
