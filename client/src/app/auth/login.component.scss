@@ -1,0 +1,27 @@
+.container {
+    background-image:url('/assets/modules/img/login/1.jpg');
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    background-size: cover;
+    background-color: #f2f4f8;
+}
+
+.login-page {
+    padding: 20rem 2.85rem;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+
+}
+
+.mat-card-actions {
+    text-align: center;
+}
+
+.full-width {
+    width: 100%;
+}

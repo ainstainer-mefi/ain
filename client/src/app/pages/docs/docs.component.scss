@@ -1,0 +1,47 @@
+//#animated-example {
+//  background: #cd4436;
+//  height: 200px;
+//  margin: 20px auto;
+//  width: 300px;
+//  box-shadow: inset 0 0 7px rgba(0,0,0,0.7);
+//}
+//
+//.animated {
+//  animation-duration: 3s;
+//
+//  animation-fill-mode: both;
+//  animation-timing-function: ease-in-out;
+//  animation-iteration-count:infinite;
+//}
+//
+//
+//@keyframes bounceIn {
+//  0% {
+//    opacity: 0;
+//    transform: scale(.3);
+//  }
+//
+//  50% {
+//    opacity: 1;
+//    transform: scale(1.05);
+//  }
+//
+//  70% {
+//    transform: scale(.9);
+//  }
+//
+//  100% {
+//    transform: scale(1);
+//  }
+//}
+//
+//.bounceIn {
+//  animation-name: bounceIn;
+//}
+.card{
+  width: 300px;
+
+}
+.card img{
+
+}

@@ -1,0 +1,35 @@
+<!--<md-nav-list>-->
+  <!--<a class="mdl-navigation__link" [routerLink]="['/page/home']">-->
+    <!--<i class="material-icons">dashboard</i>-->
+    <!--Main</a><br>-->
+  <!--<a class="mdl-navigation__link" [routerLink]="['/page/home1']">User files</a><br>-->
+<!--</md-nav-list>-->
+<nav>
+  <ul class="sidebar-list">
+    <!--<h3>Form Controls</h3>-->
+    <li class="sidebar-list-item">
+      <a [routerLink]="['/page/home']" routerLinkActive="active"><md-icon>home</md-icon><div>Home</div></a>
+    </li>
+    <li class="sidebar-list-item" (mouseover)="navExpand($event);" >
+      <a [routerLink]="['/page/docs']" routerLinkActive="active"> <md-icon>description</md-icon><div>Documents</div></a>
+    </li>
+    <!--<li class="sidebar-list-item">-->
+      <!--<a (click)="isCollapsed = !isCollapsed"> <md-icon>description</md-icon><div>sub-menu</div></a>-->
+
+      <!--<ul class="sidebar-list" [collapse]="isCollapsed">-->
+
+        <!--<li class="sidebar-list-item">-->
+          <!--<a [routerLink]="['/page/home2']" routerLinkActive="active"><md-icon>home</md-icon><div>Home2</div></a>-->
+        <!--</li>-->
+        <!--<li class="sidebar-list-item">-->
+          <!--<a [routerLink]="['/page/docs2']" routerLinkActive="active"> <md-icon>description</md-icon><div>Documents2</div></a>-->
+        <!--</li>-->
+
+      <!--</ul>-->
+    <!--</li>-->
+
+  </ul>
+
+
+</nav>
+

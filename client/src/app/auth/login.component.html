@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="row login-page">
+        <div class="col-md-4 col-md-offset-4">
+
+            <md-card  class="z-depth-5">
+                <md-card-header>
+                    <md-icon>perm_identity</md-icon><md-card-title>PLEASE LOG IN</md-card-title>
+                </md-card-header>
+
+                <md-card-content>
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <md-input-container class="full-width">
+                                <input mdInput placeholder="Email" value="">
+                            </md-input-container>
+                        </div>
+                        <div class="form-group">
+                            <md-input-container class="full-width">
+                                <input mdInput type="password" placeholder="Password" value="">
+                            </md-input-container>
+                        </div>
+                    </form>
+                </md-card-content>
+                <md-card-actions>
+                    <button md-raised-button  class="z-depth-5">
+                        Sign in
+                    </button>
+                    <button md-raised-button  color="primary" class="z-depth-5" (click)="grand()">
+                    SingIn with Google
+                        </button>
+                </md-card-actions>
+                <md-card-footer></md-card-footer>
+            </md-card>
+        </div>
+    </div>
+</div>

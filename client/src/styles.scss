@@ -1,0 +1,74 @@
+@import 'main';
+
+.z-depth-1 {
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+
+.z-depth-1-half {
+  box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.14), 0 1px 7px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -1px rgba(0, 0, 0, 0.2);
+}
+
+.z-depth-2 {
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+}
+
+.z-depth-3 {
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.3);
+}
+
+.z-depth-4 {
+  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.3);
+}
+
+.z-depth-5 {
+  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3);
+}
+
+html, body{
+  margin: 0;
+  width: 100%;
+  height: 100%;
+
+}
+
+a {
+  text-decoration: none !important;
+  transition: color 0.2s ease;
+}
+
+
+.mat-toolbar{
+  box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
+  position: relative;
+  z-index:10;
+  background-color: #282828 !important;
+}
+
+.fa-108x {
+  font-size: 0.8em;
+}
+
+.fa-107x {
+  font-size: 0.7em;
+}
+
+.app-spinner{
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  width: 120px;
+  top: 20%;
+  z-index:10000;
+}
+.app-progress-bar{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top:1px;
+
+
+
+}
+

@@ -1,0 +1,27 @@
+<!--<div id="animated-example" class="animated bounceIn"></div>-->
+<app-spinner [isRunning]="isRequesting"></app-spinner>
+
+<div *ngIf="!isRequesting">
+  <div class="col-md-6">
+    <table class="table">
+      <thead class="thead-default">
+      <tr>
+        <th>#</th>
+        <th>File</th>
+        <th>Name</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of items; let i = index">
+        <th scope="row">{{i+1}}</th>
+        <td><img src="{{item.thumbnailLink | proxy}}"></td>
+        <td>{{item.name}}</td>
+        <td>
+          <a md-raised-button color="primary" class="z-depth-5" target="_blank" href="{{item.webViewLink}}">View</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

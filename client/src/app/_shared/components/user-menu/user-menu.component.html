@@ -1,0 +1,31 @@
+<div class="btn-group user-menu" dropdown placement="bottom right">
+    <div class="avatar" dropdownToggle>
+        <span><img src="{{userPicture | proxy}}"></span>
+    </div>
+    <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
+        <li class="dropdown-item"><i class="dropdown-arr"></i></li>
+        <li role="menuitem">
+            <a class="dropdown-item" href="#">
+                <i fa [name]="'user'" [size]=1></i>Profile
+            </a>
+        </li>
+        <li class="divider dropdown-divider"></li>
+        <div class="dropdown-header">Home</div>
+        <li role="menuitem">
+            <a class="dropdown-item" href="#">
+                <i fa [name]="'gear'" [size]=1></i>Settings
+            </a>
+        </li>
+        <li role="menuitem">
+            <a class="dropdown-item" href="#">
+                <i fa [name]="'envelope-open'" [size]=1></i>Messages
+            </a>
+        </li>
+        <li class="divider dropdown-divider"></li>
+        <li role="menuitem">
+            <a class="dropdown-item" href="javascript:void(0);" (click)="logout()">
+                <i fa [name]="'sign-out'" [size]=1></i>Logout
+            </a>
+        </li>
+    </ul>
+</div>

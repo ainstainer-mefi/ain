@@ -2,6 +2,11 @@ homepage:
     path:      /
     defaults:  { _controller: AppBundle:Default:index }
 
+proxy_files:
+    path:      /proxy
+    defaults:  { _controller: AppBundle:File:proxy }
+    methods:  [GET]
+
 authentication:
     path: /api/authentication
     defaults:  { _controller: AppBundle:Authentication:authentication }

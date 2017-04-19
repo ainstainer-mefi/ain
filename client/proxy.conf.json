@@ -1,0 +1,14 @@
+{
+  "/api/authentication": {
+    "target": "http://localhost:8000",
+    "secure": false
+  },
+  "/api/user-files": {
+    "target": "http://localhost:8000",
+    "secure": false
+  },
+  "/proxy": {
+    "target": "http://localhost:8000",
+    "secure": false
+  }
+}
