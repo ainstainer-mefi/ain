@@ -10,6 +10,7 @@ import {Options, ViewObject} from "fullcalendar";
 })
 export class CalendarComponent{
 
+    listDayChecked = false;
     @Input() options: Options;
     @Input() calendarClass:string;
 
@@ -22,12 +23,14 @@ export class CalendarComponent{
 
 
     ngAfterViewInit(){
-        setTimeout(()=>{
-            //console.log("100ms after ngAfterViewInit ");
-            //$('app-fullcalendar').fullCalendar(this.options);
-            let calendar = $(this._selector.nativeElement).fullCalendar(this.options);
-            this.onCalendarReady.emit(calendar);
-        }, 100);
+        this.options.navLinkDayClick = (date, jsEvent) => this.linkDayClick(date, jsEvent);
+        let calendar = $(this._selector.nativeElement).fullCalendar(this.options);
+        this.onCalendarReady.emit(calendar);
+        // setTimeout(()=>{
+        //     //console.log("100ms after ngAfterViewInit ");
+        //     //$('app-fullcalendar').fullCalendar(this.options);
+        //
+        // }, 100);
 
     }
 
@@ -43,7 +46,17 @@ export class CalendarComponent{
         $(this._selector.nativeElement).fullCalendar(value);
     }
 
-    view(value) {
+    changeView(value) {
+        if(value !== 'listDay'){
+            this.listDayChecked = false;
+        }
         $(this._selector.nativeElement).fullCalendar('changeView',value);
+    }
+
+    linkDayClick(date, jsEvent){
+        this.listDayChecked = true;
+        $(this._selector.nativeElement).fullCalendar('changeView','listDay', date.format());
+        //console.log('day', date.format()); // date is a moment
+        //console.log('day', jsEvent); // date is a moment
     }
 }

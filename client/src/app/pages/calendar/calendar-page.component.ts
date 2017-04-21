@@ -9,20 +9,17 @@ import { Options } from "fullcalendar";
 })
 export class CalendarPageComponent implements OnInit {
 
-  private _calendar:Object;
-
+  private _calendar: Object;
+  public eventData:any = false;
   constructor() {
     this.calendarOptions.select = (start, end) => this._onSelect(start, end);
   }
 
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   public onCalendarReady(calendar):void {
     this._calendar = calendar;
-    console.log('calendarReady')
   }
 
   calendarOptions:Options = {
@@ -32,13 +29,13 @@ export class CalendarPageComponent implements OnInit {
       center: 'title',
       right: false
     },
+    navLinks: true,
     nowIndicator: true,
     fixedWeekCount: false,
     firstDay: 1,
     selectable: true,
     selectHelper: true,
     businessHours: true, // display business hours
-    locale: 'en',
     editable: true,
     eventLimit: true, // allow "more" link when too many events
     events: [
@@ -79,7 +76,16 @@ export class CalendarPageComponent implements OnInit {
   private _onSelect(start, end):void {
 
     if (this._calendar != null) {
-      let title = prompt('Event Title:');
+      //eventData.end.subtract(1, 'day').format('DD.MM.YYYY')
+      this.eventData = {
+        start: start,
+        end: end,
+        displayStart: start.format('DD.MM.YYYY'),
+        displayEnd: end.subtract(1, 'day').format('DD.MM.YYYY')
+
+      };
+      console.log(this.eventData);
+      /*let title = prompt('Event Title:');
       let eventData;
       if (title) {
         eventData = {
@@ -87,9 +93,10 @@ export class CalendarPageComponent implements OnInit {
           start: start,
           end: end
         };
+        console.log(eventData);
         $(this._calendar).fullCalendar('renderEvent', eventData, true);
       }
-      $(this._calendar).fullCalendar('unselect');
+      $(this._calendar).fullCalendar('unselect');*/
     }
   }
 }

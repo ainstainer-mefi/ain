@@ -1,24 +1,27 @@
 <md-card>
-    <button md-raised-button class="z-depth-5" (click)="navigate('prev')">
-        <md-icon>keyboard_arrow_left</md-icon>
-    </button>
-    <button md-raised-button class="z-depth-5" (click)="navigate('next')">
-        <md-icon>keyboard_arrow_right</md-icon>
-    </button>
-    <button md-raised-button color="primary" class="z-depth-5" (click)="navigate('today')">
-        Today
-    </button>
-    <md-button-toggle-group #group="mdButtonToggleGroup" >
-        <md-button-toggle (click)="view('listDay')">
-            list Day
-        </md-button-toggle>
-        <md-button-toggle (click)="view('listWeek')">
-            list Week
-        </md-button-toggle>
-        <md-button-toggle (click)="view('month')" checked="true">
-            month
-        </md-button-toggle>
-    </md-button-toggle-group>
-    <div style="clear: both"></div>
+    <div class="row">
+    <div class="col-md-6 left-group">
+        <button md-mini-fab color="primary" (click)="navigate('prev')"><md-icon>keyboard_arrow_left</md-icon></button>
+        <button md-mini-fab color="primary" (click)="navigate('next')"><md-icon>keyboard_arrow_right</md-icon></button>
+        <button md-raised-button color="primary" class="z-depth-5" (click)="navigate('today')">Today</button>
+    </div>
+
+    <div class="col-md-6 right-group">
+        <md-button-toggle-group #group="mdButtonToggleGroup" >
+            <md-button-toggle (click)="changeView('listDay')" checked="{{listDayChecked}}">
+                list Day
+            </md-button-toggle>
+            <md-button-toggle (click)="changeView('listWeek')">
+                list Week
+            </md-button-toggle>
+            <md-button-toggle (click)="changeView('month')" checked="true">
+                month
+            </md-button-toggle>
+        </md-button-toggle-group>
+    </div>
+    </div>
+
 </md-card>
-<div #appFullCalendar class="app-full-calendar z-depth-5 {{fullCalendarClass || ''}}"></div>
+<div #appFullCalendar class="app-full-calendar z-depth-5 {{calendarClass || ''}}"></div>
+
+

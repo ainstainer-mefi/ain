@@ -1,13 +1,24 @@
 md-button-toggle-group{
   height: 37px;
-  float: right;
 }
 
 button{
-  float: left;
   margin-right: 5px;
 }
 
+button.prev, button.next{
+  width: 30px;
+}
+
+
 md-card{
   margin-bottom: 10px;
+}
+
+md-card .right-group{
+  text-align: right;
+}
+md-card .left-group{
+  display: flex;
+  align-items: center;
 }
