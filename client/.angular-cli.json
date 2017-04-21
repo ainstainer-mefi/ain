@@ -19,9 +19,10 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
+        "styles.scss",
         "../node_modules/bootstrap/dist/css/bootstrap.min.css",
         "../node_modules/font-awesome/css/font-awesome.css",
-        "styles.scss"
+        "../node_modules/fullcalendar/dist/fullcalendar.min.css"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",

@@ -8,10 +8,19 @@
   <ul class="sidebar-list">
     <!--<h3>Form Controls</h3>-->
     <li class="sidebar-list-item">
-      <a [routerLink]="['/page/home']" routerLinkActive="active"><md-icon>home</md-icon><div>Home</div></a>
+      <a [routerLink]="['/page/home']" routerLinkActive="active">
+        <md-icon>home</md-icon><div>Home</div>
+      </a>
     </li>
     <li class="sidebar-list-item" (mouseover)="navExpand($event);" >
-      <a [routerLink]="['/page/docs']" routerLinkActive="active"> <md-icon>description</md-icon><div>Documents</div></a>
+      <a [routerLink]="['/page/docs']" routerLinkActive="active">
+        <md-icon>description</md-icon><div>Documents</div>
+      </a>
+    </li>
+    <li class="sidebar-list-item" >
+      <a [routerLink]="['/page/calendar']" routerLinkActive="active">
+        <md-icon>perm_contact_calendar</md-icon><div>Calendar</div>
+      </a>
     </li>
     <!--<li class="sidebar-list-item">-->
       <!--<a (click)="isCollapsed = !isCollapsed"> <md-icon>description</md-icon><div>sub-menu</div></a>-->

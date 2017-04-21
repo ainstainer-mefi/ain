@@ -32,7 +32,8 @@ class UserController extends BaseApiController
         $data  = $this->get('app.google_user.mail')->send($this->getUser(), $message);*/
 
         //$data  = $this->get('app.google_drive.service')->createFolder($this->getUser());
-        $data  = $this->get('app.google_drive.service')->getUserFiles($this->getUser());
+        //$data  = $this->get('app.google_drive.service')->getUserFiles($this->getUser());
+        $data  = $this->get('app.google_drive.service')->createFolder($this->getUser()->getEmail());
         return $this->prepareAnswer($data);
     }
 }

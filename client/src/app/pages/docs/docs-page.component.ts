@@ -1,18 +1,18 @@
 import {Component, OnInit} from '@angular/core';
 import {UserDocsService,ConfigService} from '../../_shared/services/index';
-//import {SpinnerComponent} from '../../_shared/components/index';
-
 
 @Component({
     selector: 'app-docs',
-    templateUrl: './docs.component.html',
-    styleUrls: ['./docs.component.scss'],
+    templateUrl: './docs-page.component.html',
+    styleUrls: ['./docs-page.component.scss'],
     providers: [UserDocsService]
 })
-export class DocsComponent implements OnInit {
+export class DocsPageComponent implements OnInit {
+
     public isRequesting: boolean;
     public items: Array<any>;
     public apiUrl;
+
     constructor(private userDocs: UserDocsService, private config: ConfigService) {
         this.isRequesting = true;
         this.apiUrl = config.getConfig('apiUrl')

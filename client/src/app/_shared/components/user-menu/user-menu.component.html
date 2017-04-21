@@ -1,11 +1,11 @@
 <div class="btn-group user-menu" dropdown placement="bottom right">
     <div class="avatar" dropdownToggle>
-        <span><img src="{{userPicture | proxy}}"></span>
+        <span><img referrerPolicy="no-referrer" src="{{userPicture}}"></span>
     </div>
     <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
         <li class="dropdown-item"><i class="dropdown-arr"></i></li>
         <li role="menuitem">
-            <a class="dropdown-item" href="#">
+            <a class="dropdown-item" [routerLink]="['/page/profile']">
                 <i fa [name]="'user'" [size]=1></i>Profile
             </a>
         </li>

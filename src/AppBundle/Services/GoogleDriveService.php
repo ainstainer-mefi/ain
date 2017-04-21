@@ -45,6 +45,15 @@ class GoogleDriveService extends BaseGoogleUserService
      */
     public function createFolder($folderName)
     {
+        $parameters = [
+            'q' => "name = '$folderName' and trashed = false and mimeType = 'application/vnd.google-apps.folder'",
+        ];
+        $files = $this->driveService->files->listFiles($parameters);
+        if($files->count() == 1){ // if folder exist
+            $folderData = $files->current();
+            return $folderData->getId();
+        }
+
         $folderMetaData = new Google_Service_Drive_DriveFile([
             'name' => $folderName,
             'mimeType' => 'application/vnd.google-apps.folder'
@@ -53,6 +62,8 @@ class GoogleDriveService extends BaseGoogleUserService
         $folder = $this->driveService->files->create($folderMetaData, [
             'fields' => 'id'
         ]);
+
+        $this->setPermissionFolder(null, $folder->id);
 
         return $folder->id;
     }
@@ -131,11 +142,19 @@ class GoogleDriveService extends BaseGoogleUserService
      * Domain - ainstainer.de
      *
      * @param User $user
+     * @param string $folderId
      * @return bool
      */
-    public function setPermissionFolder(User $user)
+    public function setPermissionFolder(User $user = null, $folderId = null)
     {
-        $folderId = $user->getFolderId();
+        if (is_null($user) && is_null($folderId)) {
+            throw new \Exception('Error setPermissionFolder in Google drive. $user and $folderId is empty');
+        }
+
+        if (!is_null($user)) {
+            $folderId = $user->getFolderId();
+        }
+
         $this->driveService->getClient()->setUseBatch(true);
 
         try {

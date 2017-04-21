@@ -29,13 +29,11 @@ import {  trigger,
     ]
 })
 export class PagesComponent {
-    title = 'AIN';
-    title2 = 'STAINER';
     state = 'inactive';
     currentUser;
 
     constructor(private userService: UserService) {
-        console.log('PagesComponent');
+        //console.log('PagesComponent');
         this.currentUser = userService.getCurrentUser();
         console.log( this.currentUser);
     }

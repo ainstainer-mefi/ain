@@ -10,7 +10,7 @@ export class ProxyPipe implements PipeTransform {
   }
 
   transform(value: any, args?: any): any {
-    return value;
+     return value;
     //return this.config.getConfig('apiUrl') + '/proxy?url='+ value;
   }
 

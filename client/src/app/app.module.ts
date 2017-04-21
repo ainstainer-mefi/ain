@@ -3,6 +3,8 @@ import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {Angular2FontawesomeModule} from 'angular2-fontawesome/angular2-fontawesome';
+import 'hammerjs';
 import {
     MdSnackBar,
     MdSidenavModule,
@@ -15,18 +17,18 @@ import {
     MdSnackBarModule,
     MdTabsModule,
     MdProgressSpinnerModule,
-    MdProgressBarModule
+    MdProgressBarModule,
+    MdButtonToggleModule
 } from '@angular/material';
+
 import {
     // CollapseModule,
     BsDropdownModule,
-    CarouselModule,
+    // CarouselModule,
+    //ModalModule
 } from 'ngx-bootstrap';
-import {Angular2FontawesomeModule} from 'angular2-fontawesome/angular2-fontawesome';
-import 'hammerjs';
 
 import {routing} from './app.routing';
-
 
 /*services**/
 import {
@@ -39,21 +41,46 @@ import {
 import {AuthGuard} from './_guards/index';
 
 /*components**/
-import {AppComponent} from './app.component';
-import {PagesComponent, NotFoundComponent, HomeComponent, DocsComponent} from './pages/index';
-import {LoginComponent} from './auth/index';
-import {SidebarComponent} from './_shared/components/index';
-import {UserMenuComponent} from './_shared/components/user-menu/user-menu.component';
-import { SpinnerComponent } from './_shared/components/spinner/spinner.component';
+import { AppComponent } from './app.component';
+import { LoginComponent } from './auth/index';
+import {
+    PagesComponent,
+    NotFoundPageComponent,
+    HomePageComponent,
+    DocsPageComponent,
+    ProfilePageComponent,
+    CalendarPageComponent
+} from './pages/index';
+
+export const PAGE_COMPONENTS = [
+    ProfilePageComponent,
+    NotFoundPageComponent,
+    HomePageComponent,
+    DocsPageComponent,
+    CalendarPageComponent,
+    PagesComponent
+];
+
+import {
+    SidebarComponent,
+    ProgressBarComponent,
+    SpinnerComponent,
+    UserMenuComponent,
+    CalendarComponent
+} from './_shared/components/index';
+
+/*pipes*/
 import { ProxyPipe } from './_shared/pipes/proxy.pipe';
+
+
 
 @NgModule({
     imports: [
         routing,
         BrowserModule,
+        HttpModule,
         FormsModule,
         ReactiveFormsModule,
-        HttpModule,
         BrowserAnimationsModule,
         Angular2FontawesomeModule,
         MdToolbarModule,
@@ -67,21 +94,20 @@ import { ProxyPipe } from './_shared/pipes/proxy.pipe';
         MdButtonModule,
         MdProgressSpinnerModule,
         MdProgressBarModule,
-        // CollapseModule.forRoot(),
-        BsDropdownModule.forRoot(),
-        CarouselModule.forRoot()
+        MdButtonToggleModule,
+        //ModalModule.forRoot(),
+        BsDropdownModule.forRoot()
     ],
     declarations: [
         AppComponent,
-        NotFoundComponent,
-        PagesComponent,
-        HomeComponent,
         LoginComponent,
+        PAGE_COMPONENTS,
         SidebarComponent,
-        DocsComponent,
         UserMenuComponent,
         SpinnerComponent,
         ProxyPipe,
+        ProgressBarComponent,
+        CalendarComponent,
     ],
     providers: [
         AuthGuard,
@@ -90,8 +116,7 @@ import { ProxyPipe } from './_shared/pipes/proxy.pipe';
         AuthenticationService,
         MdSnackBar,
         SnackbarService,
-        UserService,
-
+        UserService
     ],
     bootstrap: [AppComponent]
 })

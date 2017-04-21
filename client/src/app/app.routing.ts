@@ -3,7 +3,14 @@ import { ModuleWithProviders } from '@angular/core';
 
 import { LoginComponent } from './auth/index';
 import { AuthGuard } from './_guards/index';
-import { PagesComponent, HomeComponent, NotFoundComponent, DocsComponent } from './pages/index';
+import {
+    PagesComponent,
+    NotFoundPageComponent,
+    HomePageComponent,
+    DocsPageComponent,
+    ProfilePageComponent,
+    CalendarPageComponent
+} from './pages/index';
 
 
 export const appRoutes: Routes = [
@@ -12,10 +19,12 @@ export const appRoutes: Routes = [
         path: 'page',
         component: PagesComponent,
         children: [
-            { path: '', redirectTo: 'home', pathMatch: 'full'},
-            { path: 'home', component: HomeComponent},
-            { path: 'docs', component: DocsComponent},
-            { path: 'not-found', component: NotFoundComponent},
+            { path: '', redirectTo: 'home', pathMatch: 'full' },
+            { path: 'home', component: HomePageComponent },
+            { path: 'docs', component: DocsPageComponent },
+            { path: 'profile', component: ProfilePageComponent },
+            { path: 'calendar', component: CalendarPageComponent },
+            { path: 'not-found', component: NotFoundPageComponent },
         ],
         canActivate: [AuthGuard]
     },
