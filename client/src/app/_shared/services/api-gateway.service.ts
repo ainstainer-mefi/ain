@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http, Response, RequestOptions, RequestMethod, URLSearchParams, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
+import { SnackbarService} from './snackbar.service';
 
 export class ApiGatewayOptions {
   method: RequestMethod;
@@ -20,7 +21,7 @@ export class ApiGatewayService {
   // Provide the *public* Observable that clients can subscribe to
   public errors: Observable<any>;
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private alert: SnackbarService) {
     // Create our observables from the subjects
     this.errors = this.errorsSubject.asObservable();
   }
@@ -81,7 +82,8 @@ export class ApiGatewayService {
 
     const stream = this.http.request(options.url, requestOptions)
       .catch((error: any) => {
-        console.log(error);
+        //console.log(error.status);
+        //console.log(error);
         this.errorsSubject.next(error);
         return Observable.throw(error);
       })
@@ -124,7 +126,9 @@ export class ApiGatewayService {
 
   private unwrapHttpError(error: any): any {
     try {
-      return (error.json());
+      const er = error.json();
+      this.alert.show(er.error.code +'#'+er.error.message);
+      return er;
     } catch (jsonError) {
       return ({
         code: -1,

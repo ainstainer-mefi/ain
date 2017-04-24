@@ -82,7 +82,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
                     // this.router.navigate(['']);
                 },
                 (error: any) => {
-                    this.alert.show('Server connection problem');
                     console.warn('Server connection problem');
                     console.dir(error);
                 });
