@@ -4,36 +4,26 @@ import {AuthenticationService, ConfigService} from '../../services/index';
 import {
 	UserService
 } from '../../services/index';
-// import {  trigger,
-// 	state,
-// 	style,
-// 	transition,
-// 	animate,
-// 	keyframes} from '@angular/animations';
+import {  trigger,
+	state,
+	style,
+	transition,
+	animate,
+	keyframes} from '@angular/animations';
 
 @Component({
 	selector: 'app-user-menu',
 	templateUrl: './user-menu.component.html',
 	styleUrls: ['./user-menu.component.scss'],
 	//encapsulation: ViewEncapsulation.None
-	// animations: [
-	// 	trigger('transformMenu', [
-	// 		state('showing', style({
-	// 			opacity: 1,
-	// 			transform: `scale(1)`
-	// 		})),
-	// 		transition('void => *', [
-	// 			style({
-	// 				opacity: 0,
-	// 				transform: `scale(0)`
-	// 			}),
-	// 			animate(`200ms cubic-bezier(0.25, 0.8, 0.25, 1)`)
-	// 		]),
-	// 		transition('* => void', [
-	// 			animate('50ms 100ms linear', style({opacity: 0}))
-	// 		])
-	// 	])
-	// ]
+	/*animations: [
+		trigger('toggleState', [
+			state('true' , style({  })),
+			state('false', style({ maxHeight: 0, padding: 0, display: 'none' })),
+			// transition
+			transition('* => *', animate('300ms')),
+		])
+	]*/
 })
 export class UserMenuComponent implements AfterViewInit {
 

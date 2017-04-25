@@ -15,9 +15,9 @@ export class AvatarComponent{
     constructor() {
 
     }
+
     ngAfterViewInit(){
-        console.log(this.avatarClass);
-        console.log(typeof this.useRound);
+
     }
 
 }
