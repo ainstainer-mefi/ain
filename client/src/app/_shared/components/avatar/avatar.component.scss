@@ -1,0 +1,11 @@
+span{
+  display: inline-block;
+  overflow: hidden;
+  & img {
+    width: 100%;
+    height: auto;
+  }
+  &.round {
+    border-radius: 500px;
+  }
+}

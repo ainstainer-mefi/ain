@@ -55,36 +55,45 @@
   height: 40px;
   width: 40px;
   position: absolute;
-  top: 13px;
-  right: 61px;
+  top: -8px;
+  right: -9px;
   animation: pulsate 8s ease-out;
   animation-iteration-count: infinite;
-  opacity: 0.0
+  opacity: 0.0;
+  z-index: 20;
+
 }
+
 .toolbar-icon {
-  margin-right: 20px;
+  margin-right: 60px;
 }
+
 .toolbar-icon a{
   color: #fff;
   text-decoration: none;
   position: relative;
   margin-left: 20px;
+  & span {
+    display: inline-block;
+    min-width: 10px;
+    padding: 2px 4px 2px 4px;
+    color: #fff;
+    vertical-align: baseline;
+    white-space: nowrap;
+    text-align: center;
+    border-radius: 13px;
+    text-shadow: none;
+    line-height: 11px;
+    position: absolute;
+    top: -5px;
+    right: -14px;
+    font-size: 11px;
+  }
+  & span.notify{
+    background-color:mat-color($candy-app-warn);
+  }
+  & span.messages{
+    background-color:mat-color($candy-app-primary);
+  }
 }
 
-.toolbar-icon a span {
-  display: inline-block;
-  min-width: 10px;
-  padding: 2px 4px 2px 4px;
-  color: #fff;
-  vertical-align: baseline;
-  white-space: nowrap;
-  text-align: center;
-  border-radius: 13px;
-  text-shadow: none;
-  line-height: 11px;
-  background-color: #f95372;
-  position: absolute;
-  top: -5px;
-  right: -14px;
-  font-size: 11px;
-}

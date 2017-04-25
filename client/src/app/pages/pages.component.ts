@@ -29,18 +29,16 @@ import {  trigger,
     ]
 })
 export class PagesComponent {
-    state = 'inactive';
+    //state = 'inactive';
     currentUser;
 
     constructor(private userService: UserService) {
-        //console.log('PagesComponent');
         this.currentUser = userService.getCurrentUser();
-        console.log( this.currentUser);
     }
 
-    toggleMove() {
+    /*toggleMove() {
         this.state = (this.state === 'inactive' ? 'active' : 'inactive');
-    }
+    }*/
 
 
 }

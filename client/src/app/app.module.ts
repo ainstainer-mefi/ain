@@ -4,6 +4,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Angular2FontawesomeModule} from 'angular2-fontawesome/angular2-fontawesome';
+
 import 'hammerjs';
 import {
     MdSnackBar,
@@ -24,7 +25,7 @@ import {
 import {
     // CollapseModule,
     BsDropdownModule,
-    // CarouselModule,
+     CarouselModule,
     //ModalModule
 } from 'ngx-bootstrap';
 
@@ -66,7 +67,8 @@ import {
     ProgressBarComponent,
     SpinnerComponent,
     UserMenuComponent,
-    CalendarComponent
+    CalendarComponent,
+    AvatarComponent,
 } from './_shared/components/index';
 
 /*pipes*/
@@ -96,7 +98,8 @@ import { ProxyPipe } from './_shared/pipes/proxy.pipe';
         MdProgressBarModule,
         MdButtonToggleModule,
         //ModalModule.forRoot(),
-        BsDropdownModule.forRoot()
+        CarouselModule.forRoot(),
+        BsDropdownModule.forRoot(),
     ],
     declarations: [
         AppComponent,
@@ -108,6 +111,7 @@ import { ProxyPipe } from './_shared/pipes/proxy.pipe';
         ProxyPipe,
         ProgressBarComponent,
         CalendarComponent,
+        AvatarComponent
     ],
     providers: [
         AuthGuard,

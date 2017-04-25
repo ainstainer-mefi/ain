@@ -52,6 +52,14 @@ $candy-app-accent:  mat-palette($mat-grey2,750);
 // The warn palette is optional (defaults to red).
 $candy-app-warn: mat-palette($mat-red);
 
+@mixin mat-menu-base() {
+        @include mat-elevation(8);
+        min-width: $mat-menu-overlay-min-width;
+        max-width: 400px;
+
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;   // for momentum scroll on mobile
+}
 
 
 // Create the theme object (a Sass map containing all of the palettes).
