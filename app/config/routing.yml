@@ -20,5 +20,10 @@ get_user_files:
 secure_resource:
     path:      /api/secure-resource
     defaults:  { _controller: AppBundle:User:secureResource }
+
+calendar:
+    path:     /calendar
+    defaults: { _controller: AppBundle:Calendar:calendar }
+    methods:  [POST]
     methods:  [POST, GET]
 

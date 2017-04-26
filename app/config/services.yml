@@ -23,3 +23,7 @@ services:
   app.google_drive.service:
         class: AppBundle\Services\GoogleDriveService
         arguments: ['@service_container']
+
+  app.google_calendar:
+      class: AppBundle\Services\GoogleCalendar
+      arguments: ['@service_container']
