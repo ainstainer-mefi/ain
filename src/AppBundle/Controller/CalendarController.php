@@ -6,15 +6,15 @@ use AppBundle\Services\CalendarGoogle;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 
-class CalendarController extends Controller
+class CalendarController extends BaseApiController
 {
     public function calendarAction()
     {
        $service = $this->get('app.google_calendar');
        if(isset($_GET['p'])  && $_GET['p'] == 'list'){
            $data = $_POST;
-           $aa = $service->getListEvents($data)->getItems();
-           var_dump($aa);
+           $aa = $service->getListEvents($this->getUser(),[])->getItems();
+           return $this->prepareAnswer($aa);
 
        }elseif (isset($_GET['p'])&& $_GET['p'] == 'newevent' ){
 

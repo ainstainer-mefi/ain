@@ -10,8 +10,6 @@ proxy_files:
 authentication:
     path: /api/authentication
     defaults:  { _controller: AppBundle:Authentication:authentication }
-
-
 get_user_files:
     path:      /api/user-files
     defaults:  { _controller: AppBundle:File:getUserFiles }
@@ -22,8 +20,7 @@ secure_resource:
     defaults:  { _controller: AppBundle:User:secureResource }
 
 calendar:
-    path:     /calendar
+    path:     /api/calendar
     defaults: { _controller: AppBundle:Calendar:calendar }
-    methods:  [POST]
     methods:  [POST, GET]
 

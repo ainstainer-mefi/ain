@@ -7,7 +7,8 @@ export const environment = {
       'profile',
       'email',
       'https://www.googleapis.com/auth/drive',
-      'https://mail.google.com/'
+      'https://www.googleapis.com/auth/gmail.compose',
+      'https://www.googleapis.com/auth/calendar'
     ],
   }
 };

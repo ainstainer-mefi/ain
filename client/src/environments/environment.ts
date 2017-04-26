@@ -12,7 +12,8 @@ export const environment = {
       'profile',
       'email',
       'https://www.googleapis.com/auth/drive',
-      'https://www.googleapis.com/auth/gmail.compose'
+      'https://www.googleapis.com/auth/gmail.compose',
+      'https://www.googleapis.com/auth/calendar'
     ],
   }
 };

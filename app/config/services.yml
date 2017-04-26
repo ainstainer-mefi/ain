@@ -17,13 +17,13 @@ services:
     arguments: ['@service_container']
 
   app.google_user.mail:
-      class: AppBundle\Services\GoogleUserMail
-      arguments: ['@service_container']
+    class: AppBundle\Services\GoogleUserMail
+    arguments: ['@service_container']
 
   app.google_drive.service:
-        class: AppBundle\Services\GoogleDriveService
-        arguments: ['@service_container']
+    class: AppBundle\Services\GoogleDriveService
+    arguments: ['@service_container']
 
   app.google_calendar:
-      class: AppBundle\Services\GoogleCalendar
-      arguments: ['@service_container']
+    class: AppBundle\Services\GoogleCalendar
+    arguments: ['@service_container']

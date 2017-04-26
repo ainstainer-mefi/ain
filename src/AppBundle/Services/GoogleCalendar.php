@@ -2,14 +2,72 @@
 
 namespace AppBundle\Services;
 
-use Symfony\Component\Filesystem\Filesystem;
+
 use Google_Client;
 use Google_Service_Calendar;
 use Google_Service_Calendar_Event;
+use KofeinStyle\Helper\Dumper;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 
 class GoogleCalendar extends BaseGoogleUserService
 {
+    /**
+     * @var Google_Client
+     */
+    protected $client;
+
+    /**
+     * @var Google_Service_Calendar
+     */
+    protected $calendarService;
+
+    public function __construct(ContainerInterface $container = null)
+    {
+        parent::__construct($container);
+        /*$this->client = new Google_Client();
+        $this->client->setApplicationName($this->googleParams->getAppName());
+        $this->client->setScopes($this->googleParams->getScopes());
+        $this->client->setAuthConfig($this->googleParams->getClientSecretPath());
+        $this->client->setAccessType('offline');
+        $this->client->setAccessToken($this->googleParams->getCredentialsData());
+
+        $this->verifyServerToken($this->client);*/
+
+    }
+
+
+    /**
+     * @return Google_Client
+     * @throws \Exception
+     */
+    public function getClient()
+    {
+        /*$filesystem = new Filesystem();
+        $appName = empty($this->googleParams['app_name']) ? 'My Application' : $this->googleParams['app_name'];
+        $client = new Google_Client();
+        $client->setApplicationName($appName);
+        $client->setScopes($this->getScopes());
+        $client->setAuthConfig($this->getClientSecretPath());
+        $client->setAccessType('offline');
+        $credentialsPath = $this->getCredentialsPath();
+
+        if ($filesystem->exists($credentialsPath)) {
+            $accessToken = json_decode(file_get_contents($credentialsPath), true);
+        } else {
+            throw new \Exception('Credentials not exist');
+        }
+        $client->setAccessToken($accessToken);
+
+        // Refresh the token if it's expired.
+        if ($client->isAccessTokenExpired()) {
+            $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
+            file_put_contents($credentialsPath, json_encode($client->getAccessToken()));
+        }
+        return $client;*/
+    }
+
+
     /**
      * Returns events on the calendar
      *
@@ -19,15 +77,23 @@ class GoogleCalendar extends BaseGoogleUserService
      * @param array $data
      * @return \Google_Service_Calendar_Events
      */
-    public function getListEvents($data)
+    public function getListEvents($user , $data)
     {
-        // Get the API client and construct the service object.
-        $client = $this->getClient();
-        $service = new Google_Service_Calendar($client);
+
+        ########WORKING RIGHT NOW
+        $accessToken = $user->getGoogleAccessTokenDecoded();
+
+        $this->client = new \Google_Client();
+        $this->client->setScopes($this->googleParams->getScopes());
+        $this->client->setAuthConfig($this->googleParams->getClientSecretPathWeb());
+        $this->client->setAccessType('offline');
+        $this->client->setAccessToken($accessToken);
+
+        $this->calendarService = new Google_Service_Calendar($this->client);
 
         // Print the next 10 events on the user's calendar.
         if(!isset($data['calendarId'])) $data['calendarId'] = 'primary';
-        $results = $service->events->listEvents($data['calendarId'], $data);
+        $results = $this->calendarService->events->listEvents($data['calendarId'], $data);
         return $results;
 
     }
@@ -183,35 +249,6 @@ class GoogleCalendar extends BaseGoogleUserService
 
     }
 
-    /**
-     * @return Google_Client
-     * @throws \Exception
-     */
-    public function getClient()
-    {
-        $filesystem = new Filesystem();
-        $appName = empty($this->googleParams['app_name']) ? 'My Application' : $this->googleParams['app_name'];
-        $client = new Google_Client();
-        $client->setApplicationName($appName);
-        $client->setScopes($this->getScopes());
-        $client->setAuthConfig($this->getClientSecretPath());
-        $client->setAccessType('offline');
-        $credentialsPath = $this->getCredentialsPath();
-
-        if ($filesystem->exists($credentialsPath)) {
-            $accessToken = json_decode(file_get_contents($credentialsPath), true);
-        } else {
-            throw new \Exception('Credentials not exist');
-        }
-        $client->setAccessToken($accessToken);
-
-        // Refresh the token if it's expired.
-        if ($client->isAccessTokenExpired()) {
-            $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
-            file_put_contents($credentialsPath, json_encode($client->getAccessToken()));
-        }
-        return $client;
-    }
 
 
 }
