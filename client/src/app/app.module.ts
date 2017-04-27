@@ -1,11 +1,13 @@
+import 'hammerjs';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Angular2FontawesomeModule} from 'angular2-fontawesome/angular2-fontawesome';
+import { CovalentCoreModule } from '@covalent/core';
 
-import 'hammerjs';
+
 import {
     MdSnackBar,
     MdSidenavModule,
@@ -79,6 +81,7 @@ import { ProxyPipe } from './_shared/pipes/proxy.pipe';
 @NgModule({
     imports: [
         routing,
+        CovalentCoreModule,
         BrowserModule,
         HttpModule,
         FormsModule,

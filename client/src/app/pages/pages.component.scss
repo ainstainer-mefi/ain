@@ -3,25 +3,24 @@
 .app-sidenav-toggle {
   cursor: pointer;
 }
+.app-content {
+  padding: 10px;
+}
 
 .app-toolbar-filler {
   flex: 1 1 auto;
 }
 
 .project-title span {
-  color: mat-color($candy-app-primary);
+  color: mat-color($primary);
   margin-left: 20px;
 }
 
 .mat-sidenav {
   box-shadow: 3px 0 6px rgba(0, 0, 0, .24);
-  background-color: mat-color($candy-app-accent);
+  background-color: mat-color($accent);
   width: 200px;
   padding: 0;
-}
-
-.app-content {
-  padding: 10px;
 }
 
 .mat-sidenav-container {
@@ -30,9 +29,16 @@
   top: 64px;
   bottom: 0px;
   position: absolute !important;
+  background-color: #ffffff;
 }
 
 
+.mat-toolbar{
+  box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
+  position: relative;
+  z-index:10;
+
+}
 
 /* msg center */
 @-webkit-keyframes pulsate {
@@ -90,10 +96,10 @@
     font-size: 11px;
   }
   & span.notify{
-    background-color:mat-color($candy-app-warn);
+    background-color:mat-color($warn);
   }
   & span.messages{
-    background-color:mat-color($candy-app-primary);
+    background-color:mat-color($primary);
   }
 }
 

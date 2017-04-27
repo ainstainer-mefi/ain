@@ -6,7 +6,7 @@
 
 }
 .sidebar-list-item a {
-  color: mat-color($candy-app-accent,A100);
+  color: mat-color($accent,A100);
   display: block;
   height: 42px;
   padding-left: 18px;
@@ -40,7 +40,7 @@
 }
 
 .sidebar-list-item a:hover {
-  color: mat-color($candy-app-primary);
+  color: mat-color($primary);
 }
 .sidebar-list-item a:hover:after{
   position: absolute;
@@ -48,16 +48,16 @@
   display: inline-block;
   vertical-align: middle;
   content: "";
-  background-color: mat-color($candy-app-primary);
+  background-color: mat-color($primary);
   width: 3px;
   height: 42px;
 }
 .sidebar-list-item a.active:hover {
-  color: mat-color($candy-app-accent,A100);
+  color: mat-color($accent,A100);
 }
 
 .sidebar-list-item a.active{
-  background-color: mat-color($candy-app-primary);
+  background-color: mat-color($primary);
 }
 
 .sidebar-list-item a md-icon {

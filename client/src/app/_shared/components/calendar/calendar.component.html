@@ -1,4 +1,5 @@
 <md-card>
+    <md-card-content>
     <div class="row">
     <div class="col-md-6 left-group">
         <button md-mini-fab color="primary" (click)="navigate('prev')"><md-icon>keyboard_arrow_left</md-icon></button>
@@ -20,8 +21,13 @@
         </md-button-toggle-group>
     </div>
     </div>
-
+    </md-card-content>
+    <md-divider _ngcontent-c39="" class="mat-divider"></md-divider>
+    <md-card-content>
+        <div #appFullCalendar class="app-full-calendar z-depth-5 {{calendarClass || ''}}"></div>
+    </md-card-content>
 </md-card>
-<div #appFullCalendar class="app-full-calendar z-depth-5 {{calendarClass || ''}}"></div>
 
 
+
+<button md-raised-button  >Today</button>
