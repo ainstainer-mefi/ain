@@ -1,38 +1,24 @@
-<div class="btn-group user-menu" dropdown placement="bottom right">
-    <div class="avatar" dropdownToggle>
-        <app-avatar [imageUrl]="currentUser.picture" avatarClass="top-profile-avatar"></app-avatar>
-    </div>
-    <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
-        <li class="dropdown-item"><i class="dropdown-arr"></i></li>
-        <li role="menuitem">
-            <app-avatar [imageUrl]="currentUser.picture" [useRound]="false" size="100px"></app-avatar>
-            <div class="title">{{currentUser.name}}</div>
-            <div class="subtitle">USER</div>
-        </li>
-        <li class="divider dropdown-divider"></li>
-        <li role="menuitem" class="actions">
-            <button md-raised-button  color="primary" class="z-depth-5" (click)="logout()">
-                Logout <i fa [name]="'sign-out'" [size]=1></i>
-            </button>
-        </li>
-        <!--<div class="dropdown-header">Home</div>-->
+<!--<div class="btn-group user-menu" dropdown placement="bottom right">-->
+    <!--<div class="avatar" dropdownToggle>-->
+        <!--<app-avatar [imageUrl]="currentUser.picture" avatarClass="top-profile-avatar"></app-avatar>-->
+    <!--</div>-->
+    <!--<ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">-->
+        <!--<li class="dropdown-item"><i class="dropdown-arr"></i></li>-->
         <!--<li role="menuitem">-->
-            <!--<a class="dropdown-item" href="#">-->
-                <!--<i fa [name]="'gear'" [size]=1></i>Settings-->
-            <!--</a>-->
-        <!--</li>-->
-        <!--<li role="menuitem">-->
-            <!--<a class="dropdown-item" href="#">-->
-                <!--<i fa [name]="'envelope-open'" [size]=1></i>Messages-->
-            <!--</a>-->
+            <!--<app-avatar [imageUrl]="currentUser.picture" [useRound]="false" size="100px"></app-avatar>-->
+            <!--<div class="title">{{currentUser.name}}</div>-->
+            <!--<div class="subtitle">USER</div>-->
         <!--</li>-->
         <!--<li class="divider dropdown-divider"></li>-->
-        <!--<li role="menuitem">-->
-            <!--<a class="dropdown-item" href="javascript:void(0);" (click)="logout()">-->
-                <!--<i fa [name]="'sign-out'" [size]=1></i>Logout-->
-            <!--</a>-->
+        <!--<li role="menuitem" class="actions">-->
+            <!--<button md-raised-button  color="primary" class="z-depth-5" (click)="logout()">-->
+                <!--Logout <i fa [name]="'sign-out'" [size]=1></i>-->
+            <!--</button>-->
         <!--</li>-->
-    </ul>
-</div>
+    <!--</ul>-->
+<!--</div>-->
 
 
+<button md-raised-button  color="primary" class="z-depth-5" (click)="logout()">
+Logout <i fa [name]="'sign-out'" [size]=1></i>
+</button>

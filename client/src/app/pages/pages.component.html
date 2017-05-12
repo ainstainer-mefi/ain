@@ -1,45 +1,73 @@
-<md-toolbar color="accent">
-    <md-icon class="app-sidenav-toggle" (click)="mainsidenav.toggle()">reorder</md-icon>
-    <div class="project-title"><span>AIN</span>STAINER</div>
-    <span class="app-toolbar-filler"></span>
-    <div class="toolbar-icon">
-        <a>
-            <i fa [name]="'bell-o'" [size]='107'></i><span class="notify">5</span>
-            <div class="notification-ring"></div>
-        </a>
-        <a>
-            <i fa [name]="'envelope-o'" [size]='107'></i>
-            <span class="messages">2</span>
-            <div class="notification-ring"></div>
-        </a>
-    </div>
+<!--<md-toolbar color="accent">-->
+    <!--<md-icon class="app-sidenav-toggle" (click)="mainsidenav.toggle()">reorder</md-icon>-->
+    <!--<div class="project-title"><span>AIN</span>STAINER</div>-->
+    <!--<span class="app-toolbar-filler"></span>-->
+    <!--<div class="toolbar-icon">-->
+        <!--<a>-->
+            <!--<i fa [name]="'bell-o'" [size]='107'></i><span class="notify">5</span>-->
+            <!--<div class="notification-ring"></div>-->
+        <!--</a>-->
+        <!--<a>-->
+            <!--<i fa [name]="'envelope-o'" [size]='107'></i>-->
+            <!--<span class="messages">2</span>-->
+            <!--<div class="notification-ring"></div>-->
+        <!--</a>-->
+    <!--</div>-->
 
-    <app-user-menu></app-user-menu>
-</md-toolbar>
-<md-sidenav-container>
-    <md-sidenav #mainsidenav mode="side" opened="true">
-        <app-sidebar></app-sidebar>
-    </md-sidenav>
-    <div class="app-content">
-        <!--<ol class="breadcrumb">-->
-            <!--<li class="breadcrumb-item"><a href="#">Home</a></li>-->
-            <!--<li class="breadcrumb-item"><a href="#">Library</a></li>-->
-            <!--<li class="breadcrumb-item active">Data</li>-->
-        <!--</ol>-->
+    <!--<app-user-menu></app-user-menu>-->
+<!--</md-toolbar>-->
+<!--<md-sidenav-container>-->
+    <!--<md-sidenav #mainsidenav mode="side" opened="true">-->
+        <!--<app-sidebar></app-sidebar>-->
+    <!--</md-sidenav>-->
+    <!--<div class="app-content">-->
+        <!--&lt;!&ndash;<div class="row">&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="columns">&ndash;&gt;-->
+                <!--&lt;!&ndash;<button (click)="toggleMove()">Press me for animation</button>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="columns">&ndash;&gt;-->
+                <!--&lt;!&ndash;<div id="content" [@focusPanel]='state'>Look at me animate</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--<app-progress-bar></app-progress-bar>-->
+        <!--<router-outlet></router-outlet>-->
+    <!--</div>-->
+<!--</md-sidenav-container>-->
 
-        <!--<div class="row">-->
-            <!--<div class="columns">-->
-                <!--<button (click)="toggleMove()">Press me for animation</button>-->
-            <!--</div>-->
-            <!--<div class="columns">-->
-                <!--<div id="content" [@focusPanel]='state'>Look at me animate</div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <router-outlet></router-outlet>
-
-
-
-    </div>
-</md-sidenav-container>
-
-
+<td-layout #layout>
+    <td-navigation-drawer logo="assets:covalent" sidenavTitle="Quickstart" name="Firstname Lastname" email="firstname.lastname@company.com">
+        <md-nav-list>
+            <ng-template let-item let-last="last" ngFor [ngForOf]="routes">
+                <a md-list-item [routerLink]="[item.route]" (click)="layout.close()"><md-icon>{{item.icon}}</md-icon>{{item.title}}</a>
+            </ng-template>
+        </md-nav-list>
+        <md-nav-list td-navigation-drawer-menu>
+            <!--<a md-list-item (click)="logout()"><md-icon>exit_to_app</md-icon>Sign out</a>-->
+            <app-user-menu></app-user-menu>
+        </md-nav-list>
+    </td-navigation-drawer>
+    <td-layout-nav toolbarTitle="AINSTAINER DEMO">
+        <td-layout-manage-list #manageList
+                               [opened]="media.registerQuery('gt-sm') | async"
+                               [mode]="(media.registerQuery('gt-sm') | async) ? 'side' :  'over'"
+                               [sidenavWidth]="(media.registerQuery('gt-xs') | async) ? '257px' : '100%'">
+            <!--<md-toolbar td-sidenav-content>-->
+                <!--<span>Optional Title</span>-->
+            <!--</md-toolbar>-->
+            <md-nav-list td-sidenav-content (click)="!media.query('gt-sm') && manageList.close()">
+                <a md-list-item><md-icon>folder</md-icon>Item Name</a>
+                <a md-list-item><md-icon>people</md-icon>Item Name</a>
+            </md-nav-list>
+            <div td-toolbar-content layout="row" layout-align="start center" flex>
+                <span>Optional Subtitle</span>
+                <span flex></span>
+                <button md-icon-button><md-icon class="md-24">settings</md-icon></button>
+                <button md-icon-button><md-icon class="md-24">more_vert</md-icon></button>
+            </div>
+            <router-outlet></router-outlet>
+            <td-layout-footer-inner>
+                Optional inner footer
+            </td-layout-footer-inner>
+        </td-layout-manage-list>
+    </td-layout-nav>
+</td-layout>

@@ -5,7 +5,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Angular2FontawesomeModule} from 'angular2-fontawesome/angular2-fontawesome';
-import { CovalentCoreModule } from '@covalent/core';
+import {CovalentCoreModule} from '@covalent/core';
 
 
 import {
@@ -24,12 +24,12 @@ import {
     MdButtonToggleModule
 } from '@angular/material';
 
-import {
+/*import {
     // CollapseModule,
-    BsDropdownModule,
-     CarouselModule,
+    //BsDropdownModule,
+    //CarouselModule,
     //ModalModule
-} from 'ngx-bootstrap';
+} from 'ngx-bootstrap';*/
 
 import {routing} from './app.routing';
 
@@ -39,13 +39,14 @@ import {
     AuthenticationService,
     SnackbarService,
     ApiGatewayService,
-    UserService
+    UserService,
+    PreloaderService
 } from './_shared/services/index';
 import {AuthGuard} from './_guards/index';
 
 /*components**/
-import { AppComponent } from './app.component';
-import { LoginComponent } from './auth/index';
+import {AppComponent} from './app.component';
+import {LoginComponent} from './auth/index';
 import {
     PagesComponent,
     NotFoundPageComponent,
@@ -74,8 +75,7 @@ import {
 } from './_shared/components/index';
 
 /*pipes*/
-import { ProxyPipe } from './_shared/pipes/proxy.pipe';
-
+import {ProxyPipe} from './_shared/pipes/proxy.pipe';
 
 
 @NgModule({
@@ -99,10 +99,7 @@ import { ProxyPipe } from './_shared/pipes/proxy.pipe';
         MdButtonModule,
         MdProgressSpinnerModule,
         MdProgressBarModule,
-        MdButtonToggleModule,
-        //ModalModule.forRoot(),
-        CarouselModule.forRoot(),
-        BsDropdownModule.forRoot(),
+        MdButtonToggleModule
     ],
     declarations: [
         AppComponent,
@@ -123,7 +120,8 @@ import { ProxyPipe } from './_shared/pipes/proxy.pipe';
         AuthenticationService,
         MdSnackBar,
         SnackbarService,
-        UserService
+        UserService,
+        PreloaderService
     ],
     bootstrap: [AppComponent]
 })
