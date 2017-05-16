@@ -24,12 +24,12 @@ import {
     MdButtonToggleModule
 } from '@angular/material';
 
-import {
-    // CollapseModule,
-    BsDropdownModule,
-     CarouselModule,
-    //ModalModule
-} from 'ngx-bootstrap';
+// import {
+//      CollapseModule,
+//     BsDropdownModule,
+//      CarouselModule,
+//     ModalModule
+// } from 'ngx-bootstrap';
 
 import {routing} from './app.routing';
 
@@ -39,7 +39,8 @@ import {
     AuthenticationService,
     SnackbarService,
     ApiGatewayService,
-    UserService
+    UserService,
+    PreloaderService
 } from './_shared/services/index';
 import {AuthGuard} from './_guards/index';
 
@@ -99,10 +100,7 @@ import { ProxyPipe } from './_shared/pipes/proxy.pipe';
         MdButtonModule,
         MdProgressSpinnerModule,
         MdProgressBarModule,
-        MdButtonToggleModule,
-        //ModalModule.forRoot(),
-        CarouselModule.forRoot(),
-        BsDropdownModule.forRoot(),
+        MdButtonToggleModule
     ],
     declarations: [
         AppComponent,
@@ -123,7 +121,8 @@ import { ProxyPipe } from './_shared/pipes/proxy.pipe';
         AuthenticationService,
         MdSnackBar,
         SnackbarService,
-        UserService
+        UserService,
+        PreloaderService
     ],
     bootstrap: [AppComponent]
 })

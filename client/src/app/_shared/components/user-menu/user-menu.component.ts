@@ -1,5 +1,7 @@
-import {Input, Component,  AfterViewInit, ViewEncapsulation} from '@angular/core';
-import {Router} from '@angular/router';
+import { Input, Component,  AfterViewInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { MdMenuTrigger } from '@angular/material';
+
 import {AuthenticationService, ConfigService} from '../../services/index';
 import {
 	UserService
@@ -28,13 +30,17 @@ import {  trigger,
 export class UserMenuComponent implements AfterViewInit {
 
 	currentUser;
-
+	@ViewChild(MdMenuTrigger) trigger: MdMenuTrigger;
 	constructor(private router: Router,
 	            private auth: AuthenticationService,
 	            private config: ConfigService,
 				private user: UserService) {
 		this.currentUser = user.getCurrentUser();
 		console.log(this.currentUser)
+	}
+
+	openMenu() {
+		this.trigger.openMenu();
 	}
 
 	ngAfterViewInit() {

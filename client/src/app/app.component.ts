@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
-import {ConfigService} from './_shared/services/index';
-
+import { Component } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MdIconRegistry } from '@angular/material';
 
 
 @Component({
@@ -11,9 +11,13 @@ import {ConfigService} from './_shared/services/index';
 
 export class AppComponent {
 
-  constructor(private config: ConfigService) {
+  constructor(
+      private _iconRegistry: MdIconRegistry,
+      private _domSanitizer: DomSanitizer) {
     console.log('AppComponent');
-    //console.log(config.getConfig('apiUrl'));
+    // this._iconRegistry.addSvgIconInNamespace('assets', 'teradata',
+    //     this._domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/teradata.svg'));
+
   }
 
 }

@@ -1,4 +1,5 @@
 import { Component,  Input, OnInit } from '@angular/core';
+import {PreloaderService} from '../../services/index';
 
 @Component({
   selector: 'app-progress-bar',
@@ -11,17 +12,28 @@ export class ProgressBarComponent implements OnInit {
   color = 'primary'; // warn, accent, primary
   mode = 'indeterminate';
 
-  @Input()
-  public set isRunning(value: boolean) {
+  private loaderSubject;
 
-    if (!value) {
-      this.show = false;
-    } else {
-      this.show = true;
-    }
-
+  constructor(private _preloaderService: PreloaderService) {
+    this.loaderSubject = this._preloaderService.getSubject();
   }
+  ngOnInit() {
+    this.loaderSubject.subscribe(
+        (show) => (this.show = show)
+    );
+  }
+  //
+  // @Input()
+  // public set isRunning(value: boolean) {
+  //
+  //   if (!value) {
+  //     this.show = false;
+  //   } else {
+  //     this.show = true;
+  //   }
+  //
+  // }
 
-  ngOnInit() {}
+
 
 }

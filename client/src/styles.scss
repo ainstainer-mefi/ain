@@ -7,16 +7,11 @@ html, body{
 
 }
 
+
 a {
   text-decoration: none !important;
   transition: color 0.2s ease;
 }
-
-
-
-
-
-
 
 .fa-108x {
   font-size: 0.8em
@@ -42,4 +37,14 @@ a {
   left: 0;
   right: 0;
   top:1px;
+}
+
+.toolbar-user-menu{
+  max-width:400px !important;
+  width:400px;
+}
+
+.toolbar-user-menu .mat-menu-content{
+  padding: 0px;
+
 }

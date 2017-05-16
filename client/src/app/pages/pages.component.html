@@ -1,4 +1,4 @@
-<md-toolbar color="accent">
+<md-toolbar color="accent" >
     <md-icon class="app-sidenav-toggle" (click)="mainsidenav.toggle()">reorder</md-icon>
     <div class="project-title"><span>AIN</span>STAINER</div>
     <span class="app-toolbar-filler"></span>
@@ -13,7 +13,6 @@
             <div class="notification-ring"></div>
         </a>
     </div>
-
     <app-user-menu></app-user-menu>
 </md-toolbar>
 <md-sidenav-container>
@@ -21,24 +20,8 @@
         <app-sidebar></app-sidebar>
     </md-sidenav>
     <div class="app-content">
-        <!--<ol class="breadcrumb">-->
-            <!--<li class="breadcrumb-item"><a href="#">Home</a></li>-->
-            <!--<li class="breadcrumb-item"><a href="#">Library</a></li>-->
-            <!--<li class="breadcrumb-item active">Data</li>-->
-        <!--</ol>-->
-
-        <!--<div class="row">-->
-            <!--<div class="columns">-->
-                <!--<button (click)="toggleMove()">Press me for animation</button>-->
-            <!--</div>-->
-            <!--<div class="columns">-->
-                <!--<div id="content" [@focusPanel]='state'>Look at me animate</div>-->
-            <!--</div>-->
-        <!--</div>-->
+        <app-progress-bar></app-progress-bar>
         <router-outlet></router-outlet>
-
-
-
     </div>
 </md-sidenav-container>
 
