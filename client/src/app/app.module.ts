@@ -5,7 +5,12 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Angular2FontawesomeModule} from 'angular2-fontawesome/angular2-fontawesome';
-import { CovalentCoreModule } from '@covalent/core';
+import {
+    CovalentCommonModule,
+    CovalentMessageModule,
+    CovalentExpansionPanelModule,
+    CovalentNotificationsModule
+} from '@covalent/core';
 
 
 import {
@@ -15,13 +20,15 @@ import {
     MdToolbarModule,
     MdMenuModule,
     MdIconModule,
+    MdIconRegistry,
     MdCardModule,
     MdButtonModule,
     MdSnackBarModule,
     MdTabsModule,
     MdProgressSpinnerModule,
     MdProgressBarModule,
-    MdButtonToggleModule
+    MdButtonToggleModule,
+    MdListModule,
 } from '@angular/material';
 
 // import {
@@ -53,7 +60,7 @@ import {
     HomePageComponent,
     DocsPageComponent,
     ProfilePageComponent,
-    CalendarPageComponent
+    CalendarPageComponent,
 } from './pages/index';
 
 export const PAGE_COMPONENTS = [
@@ -65,6 +72,7 @@ export const PAGE_COMPONENTS = [
     PagesComponent
 ];
 
+/*Shared components*/
 import {
     SidebarComponent,
     ProgressBarComponent,
@@ -72,17 +80,33 @@ import {
     UserMenuComponent,
     CalendarComponent,
     AvatarComponent,
+    PageWrapperComponent
 } from './_shared/components/index';
+export const SHARED_COMPONENTS = [
+    SidebarComponent,
+    ProgressBarComponent,
+    SpinnerComponent,
+    UserMenuComponent,
+    CalendarComponent,
+    AvatarComponent,
+    PageWrapperComponent
+];
+
 
 /*pipes*/
 import { ProxyPipe } from './_shared/pipes/proxy.pipe';
 
+/*directives*/
+import { BgColorDirective} from './_shared/directives/BgColorDirective';
 
 
 @NgModule({
     imports: [
         routing,
-        CovalentCoreModule,
+        CovalentCommonModule,
+        CovalentMessageModule,
+        CovalentExpansionPanelModule,
+        CovalentNotificationsModule,
         BrowserModule,
         HttpModule,
         FormsModule,
@@ -98,6 +122,7 @@ import { ProxyPipe } from './_shared/pipes/proxy.pipe';
         MdIconModule,
         MdCardModule,
         MdButtonModule,
+        MdListModule,
         MdProgressSpinnerModule,
         MdProgressBarModule,
         MdButtonToggleModule
@@ -106,13 +131,9 @@ import { ProxyPipe } from './_shared/pipes/proxy.pipe';
         AppComponent,
         LoginComponent,
         PAGE_COMPONENTS,
-        SidebarComponent,
-        UserMenuComponent,
-        SpinnerComponent,
+        SHARED_COMPONENTS,
         ProxyPipe,
-        ProgressBarComponent,
-        CalendarComponent,
-        AvatarComponent
+        BgColorDirective,
     ],
     providers: [
         AuthGuard,

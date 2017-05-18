@@ -14,9 +14,9 @@ export class AppComponent {
   constructor(
       private _iconRegistry: MdIconRegistry,
       private _domSanitizer: DomSanitizer) {
-    console.log('AppComponent');
-    // this._iconRegistry.addSvgIconInNamespace('assets', 'teradata',
-    //     this._domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/teradata.svg'));
+     this._iconRegistry.addSvgIconInNamespace('assets', 'jira',
+         this._domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/jira3.svg'));
+
 
   }
 

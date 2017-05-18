@@ -12,6 +12,21 @@ export class SidebarComponent implements OnInit {
   ngOnInit() {
   }
 
+  routes: Object[] = [{
+    icon: 'home',
+    route: '/page/home',
+    title: 'Home',
+  }, {
+    icon: 'description',
+    route: '/page/docs',
+    title: 'Documentation',
+  }, {
+    icon: 'perm_contact_calendar',
+    route: '/page/calendar',
+    title: 'Calendar',
+  }
+  ];
+
   public isCollapsed: boolean = true;
 
   public collapsed(event:any):void {

@@ -36,4 +36,20 @@ class UserController extends BaseApiController
         $data  = $this->get('app.google_drive.service')->createFolder($this->getUser()->getEmail());
         return $this->prepareAnswer($data);
     }
+
+    public function getProfileAction(Request $request)
+    {
+        $data = [
+            'jira_accounts' => [],
+            'lang' => 'en',
+        ];
+        $data['jira_accounts'][] = ['id'=> 1,'name' => 'Ainstainer', 'active' => 0];
+        $data['jira_accounts'][] = ['id'=> 2, 'name' => 'Kopiki', 'active' => 0];
+        return $this->prepareAnswer($data);
+    }
+
+    public function bindJiraAccountAction(Request $request)
+    {
+        return $this->prepareAnswer(['ok']);
+    }
 }

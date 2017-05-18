@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {ApiGatewayService} from '../api-gateway.service';
 
 export class User {
     name: string;
@@ -11,9 +12,10 @@ export class User {
 @Injectable()
 export class UserService {
 
+    private url = '/api/user-profile';
     private currentUser: User;
 
-    constructor() {
+    constructor(private apiGatewayService: ApiGatewayService) {
         if (!this.currentUser && localStorage.getItem('currentUser')) {
             this.currentUser = this.createUserModel(JSON.parse(localStorage.getItem('currentUser')));
         }
@@ -35,5 +37,22 @@ export class UserService {
         user.family_name = data.family_name;
         user.given_name = data.given_name;
         return user;
+    }
+
+
+    getProfile() {
+        return this.apiGatewayService.get(this.url, {})
+            .map((response: any) => {
+                return response;
+            });
+    }
+
+
+    bindJiraAccount(account) {
+        let params = {'id': account.id};
+        return this.apiGatewayService.post(this.url, false, params, false)
+            .map((response: any) => {
+                return response;
+            });
     }
 }

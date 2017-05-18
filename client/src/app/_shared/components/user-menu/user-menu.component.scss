@@ -3,18 +3,35 @@
 
 .avatar:hover {
   cursor: pointer;
-  position: relative;
 }
+
 .toolbarUserMenuTrigger{
   position: absolute;
-  left: -80px;
-  height: 65px;
+  top: 64px;
+  right: 10px;
 }
 
 .mat-card{
   padding: 0px;
   margin: 0px !important;
 }
+.mat-card-actions{
+  background-color: mat-color($block-bg);
+  border-top: solid 1px;
+  border-top-color: mat-color($block-bg2);
+}
+
+.username{
+  font-weight: bold;
+  margin: -4px 0 1px 0;
+}
+
+.email{
+  color: #666;
+  margin-bottom: 20px;
+}
+
+
 
 //.dropdown-menu{
 //  width: 400px;

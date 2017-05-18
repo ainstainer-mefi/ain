@@ -1,14 +1,12 @@
-<div class="row" >
-<div class="col-md-5">
-    <div style="height: 400px; width: 100%;">
-        <app-fullcalendar [options]="calendarOptions" calendarClass="blurCalendar" (onCalendarReady)="onCalendarReady($event)"></app-fullcalendar>
-    </div>
-</div>
-<div class="col-md-7">
-    <div *ngIf="eventData">
-    {{eventData.displayStart }} - {{eventData.displayEnd }}
-    </div>
-</div>
-</div>
-
-
+<app-page-wrapper title="Calendar">
+        <div class="row">
+            <div class="col-md-5">
+                <app-fullcalendar [options]="calendarOptions" calendarClass="blurCalendar" (onCalendarReady)="onCalendarReady($event)"></app-fullcalendar>
+            </div>
+            <div class="col-md-7">
+                <div *ngIf="eventData">
+                    {{eventData.displayStart }} - {{eventData.displayEnd }}
+                </div>
+            </div>
+        </div>
+</app-page-wrapper>

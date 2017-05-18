@@ -7,7 +7,7 @@
 
 @include mat-core();
 
-$mat-grey2: (
+$mat-grey-custom: (
         0: #ffffff,
         50: #fafafa,
         100: #f5f5f5,
@@ -15,6 +15,7 @@ $mat-grey2: (
         300: #e0e0e0,
         400: #bdbdbd,
         500: #9e9e9e,
+        550: #cccccc,
         600: #757575,
         700: #616161,
         750: #282828,
@@ -60,13 +61,29 @@ $mat-grey2: (
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue.
 $primary: mat-palette($mat-light-blue,600);
-$accent:  mat-palette($mat-grey2,750);
+$accent:  mat-palette($mat-grey-custom,750);
+
+$block-bg:  mat-palette($mat-grey-custom,100);
+$block-bg2:  mat-palette($mat-grey-custom,550);
+
 // The warn palette is optional (defaults to red).
 $warn: mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
 //$theme: mat-light-theme($primary, $accent, $warn);
 $theme: mat-light-theme($primary, $accent, $warn);
+
+
+// Defines a custom property
+@mixin define-custom-property($name, $value) {
+        #{"--theme-" + $name}: $value;
+}
+
+body {
+        @include define-custom-property('block-bg',  mat-color($block-bg));
+        @include define-custom-property('block-bg2',  mat-color($block-bg2));
+}
+
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component

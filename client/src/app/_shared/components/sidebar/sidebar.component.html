@@ -6,22 +6,19 @@
 <!--</md-nav-list>-->
 <nav>
   <ul class="sidebar-list">
-    <!--<h3>Form Controls</h3>-->
-    <li class="sidebar-list-item">
-      <a [routerLink]="['/page/home']" routerLinkActive="active">
-        <md-icon>home</md-icon><div>Home</div>
-      </a>
-    </li>
-    <li class="sidebar-list-item" (mouseover)="navExpand($event);" >
-      <a [routerLink]="['/page/docs']" routerLinkActive="active">
-        <md-icon>description</md-icon><div>Documents</div>
-      </a>
-    </li>
-    <li class="sidebar-list-item" >
-      <a [routerLink]="['/page/calendar']" routerLinkActive="active">
-        <md-icon>perm_contact_calendar</md-icon><div>Calendar</div>
+    <li class="sidebar-list-item" *ngFor="let item of routes" (mouseover)="navExpand($event);">
+      <a [routerLink]="[item.route]" routerLinkActive="active">
+        <md-icon>{{item.icon}}</md-icon>
+        <div>{{item.title}}</div>
       </a>
     </li>
   </ul>
+  <!--<md-nav-list>-->
+    <!--<md-list-item *ngFor="let item of routes">-->
+      <!--<md-icon md-list-icon>{{item.icon}}</md-icon>-->
+      <!--<span md-line [routerLink]="[item.route]" routerLinkActive="active"> {{item.title}} </span>-->
+    <!--</md-list-item>-->
+  <!--</md-nav-list>-->
+
 </nav>
 

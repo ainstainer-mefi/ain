@@ -1,25 +1,27 @@
-<div  *ngIf="!isRequesting" [@itemAnim]>
-  <table td-data-table>
-    <tr>
-      <th td-data-table-column>#</th>
-      <th td-data-table-column>File</th>
-      <th td-data-table-column>Name</th>
-      <th td-data-table-column></th>
-    </tr>
-    <tr td-data-table-row *ngFor="let item of items; let i = index">
-      <td td-data-table-cell >
-        {{i+1}}
-      </td>
-      <td td-data-table-cell >
-        <img referrerPolicy="no-referrer" src="{{item.thumbnailLink}}">
-      </td>
-      <td td-data-table-cell>{{item.name}}</td>
-      <td td-data-table-cell>
-        <a md-raised-button color="primary" class="z-depth-5" target="_blank" href="{{item.webViewLink}}">View</a>
-      </td>
-    </tr>
-    <tr td-data-table-row  *ngIf="items?.length == 0">
-      <td td-data-table-cell colspan="4">No files</td>
-    </tr>
-  </table>
-</div>
+<app-page-wrapper title="Documents">
+  <div  *ngIf="!isRequesting" [@itemAnim]>
+    <table td-data-table>
+      <tr>
+        <th td-data-table-column>#</th>
+        <th td-data-table-column>File</th>
+        <th td-data-table-column>Name</th>
+        <th td-data-table-column></th>
+      </tr>
+      <tr td-data-table-row *ngFor="let item of items; let i = index">
+        <td td-data-table-cell >
+          {{i+1}}
+        </td>
+        <td td-data-table-cell >
+          <img referrerPolicy="no-referrer" src="{{item.thumbnailLink}}">
+        </td>
+        <td td-data-table-cell>{{item.name}}</td>
+        <td td-data-table-cell>
+          <a md-raised-button color="primary" class="z-depth-5" target="_blank" href="{{item.webViewLink}}">View</a>
+        </td>
+      </tr>
+      <tr td-data-table-row  *ngIf="items?.length == 0">
+        <td td-data-table-cell colspan="4">No files</td>
+      </tr>
+    </table>
+  </div>
+</app-page-wrapper>

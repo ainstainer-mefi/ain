@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 
-// localStorage.setItem('apiUrl','http://localhost:2000')
-
 @Injectable()
 export class ConfigService {
 

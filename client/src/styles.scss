@@ -7,7 +7,6 @@ html, body{
 
 }
 
-
 a {
   text-decoration: none !important;
   transition: color 0.2s ease;
@@ -46,5 +45,34 @@ a {
 
 .toolbar-user-menu .mat-menu-content{
   padding: 0px;
+}
 
+.mat-divider {
+  display: block;
+  border-top-style: solid;
+  border-top-width: 1px;
+  margin: 0;
+}
+
+.mat-sidenav-container  .page-card{
+  margin: 0px;
+  width: 100%;
+}
+
+.page-card .mat-card-title {
+  font-size: 24px !important;
+  font-weight: 400;
+}
+
+.active-notifications .td-notification-count{
+  background-color:#66dd66;
+}
+
+button.mat-raised-button_small_30 {
+  line-height: 30px;
+  min-width: 70px;
+}
+
+.profile-page .mat-list-item-content{
+  height: 80px !important;
 }

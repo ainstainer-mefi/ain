@@ -3,15 +3,18 @@
     <div class="project-title"><span>AIN</span>STAINER</div>
     <span class="app-toolbar-filler"></span>
     <div class="toolbar-icon">
-        <a>
-            <i fa [name]="'bell-o'" [size]='107'></i><span class="notify">5</span>
-            <div class="notification-ring"></div>
-        </a>
-        <a>
-            <i fa [name]="'envelope-o'" [size]='107'></i>
-            <span class="messages">2</span>
-            <div class="notification-ring"></div>
-        </a>
+        <!--<a>-->
+            <!--<i fa [name]="'bell-o'" [size]='107'></i><span class="notify">5</span>-->
+            <!--<div class="notification-ring"></div>-->
+        <!--</a>-->
+        <!--<a>-->
+            <!--<i fa [name]="'envelope-o'" [size]='107'></i>-->
+            <!--<span class="messages">2</span>-->
+            <!--<div class="notification-ring"></div>-->
+        <!--</a>-->
+        <td-notification-count color="primary" [notifications]="101">
+            <md-icon>notifications</md-icon>
+        </td-notification-count>
     </div>
     <app-user-menu></app-user-menu>
 </md-toolbar>
