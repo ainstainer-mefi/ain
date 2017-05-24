@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Exceptions\ApiException;
 use KofeinStyle\Helper\Dumper;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -11,7 +12,6 @@ class FileController extends BaseApiController
     public function getUserFilesAction()
     {
         $data  = $this->get('app.google_drive.service')->getUserFiles($this->getUser());
-
         return $this->prepareAnswer($data);
     }
 

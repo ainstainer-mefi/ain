@@ -7,7 +7,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Angular2FontawesomeModule} from 'angular2-fontawesome/angular2-fontawesome';
 import {
     CovalentCommonModule,
-    CovalentMessageModule,
     CovalentExpansionPanelModule,
     CovalentNotificationsModule
 } from '@covalent/core';
@@ -20,7 +19,6 @@ import {
     MdToolbarModule,
     MdMenuModule,
     MdIconModule,
-    MdIconRegistry,
     MdCardModule,
     MdButtonModule,
     MdSnackBarModule,
@@ -53,6 +51,7 @@ import {AuthGuard} from './_guards/index';
 
 /*components**/
 import { AppComponent } from './app.component';
+import { JiraAccountComponent } from './pages/profile/jira-account.component';
 import { LoginComponent } from './auth/index';
 import {
     PagesComponent,
@@ -61,6 +60,7 @@ import {
     DocsPageComponent,
     ProfilePageComponent,
     CalendarPageComponent,
+    MembersPageComponent
 } from './pages/index';
 
 export const PAGE_COMPONENTS = [
@@ -69,7 +69,8 @@ export const PAGE_COMPONENTS = [
     HomePageComponent,
     DocsPageComponent,
     CalendarPageComponent,
-    PagesComponent
+    PagesComponent,
+    MembersPageComponent
 ];
 
 /*Shared components*/
@@ -104,7 +105,6 @@ import { BgColorDirective} from './_shared/directives/BgColorDirective';
     imports: [
         routing,
         CovalentCommonModule,
-        CovalentMessageModule,
         CovalentExpansionPanelModule,
         CovalentNotificationsModule,
         BrowserModule,
@@ -130,6 +130,7 @@ import { BgColorDirective} from './_shared/directives/BgColorDirective';
     declarations: [
         AppComponent,
         LoginComponent,
+        JiraAccountComponent,
         PAGE_COMPONENTS,
         SHARED_COMPONENTS,
         ProxyPipe,

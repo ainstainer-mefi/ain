@@ -1,8 +1,10 @@
-import {Injectable} from '@angular/core';
-import {Http, Response, RequestOptions, RequestMethod, URLSearchParams, Headers} from '@angular/http';
-import {Observable} from 'rxjs/Observable';
-import {Subject} from 'rxjs/Subject';
-import { SnackbarService} from './snackbar.service';
+import { Injectable } from '@angular/core';
+import { Http, Response, RequestOptions, RequestMethod, URLSearchParams, Headers } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+import { SnackbarService } from './snackbar.service';
+import { Router } from '@angular/router';
+
 
 export class ApiGatewayOptions {
   method: RequestMethod;
@@ -21,7 +23,12 @@ export class ApiGatewayService {
   // Provide the *public* Observable that clients can subscribe to
   public errors: Observable<any>;
 
-  constructor(private http: Http, private alert: SnackbarService) {
+  constructor(
+      private http: Http,
+      private alert: SnackbarService,
+      private router: Router
+  ) {
+
     // Create our observables from the subjects
     this.errors = this.errorsSubject.asObservable();
   }
@@ -50,6 +57,21 @@ export class ApiGatewayService {
     }
     const options = new ApiGatewayOptions();
     options.method = RequestMethod.Post;
+    options.url = url;
+    options.params = params;
+    options.data = data;
+
+    return this.request(options, sendAuthToken);
+  }
+
+
+  delete(url: string, params: any, data: any, sendAuthToken: boolean = true): Observable<Response> {
+    if (!data) {
+      data = params;
+      params = {};
+    }
+    const options = new ApiGatewayOptions();
+    options.method = RequestMethod.Delete;
     options.url = url;
     options.params = params;
     options.data = data;
@@ -127,7 +149,10 @@ export class ApiGatewayService {
   private unwrapHttpError(error: any): any {
     try {
       const er = error.json();
-      this.alert.show(er.error.code +'#'+er.error.message);
+      this.alert.show(error.status +'#'+er.error.originMessage);
+      if(error.status == 401){
+        this.router.navigate(['/login']);
+      }
       return er;
     } catch (jsonError) {
       return ({

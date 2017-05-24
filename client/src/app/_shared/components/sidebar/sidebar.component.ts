@@ -24,6 +24,10 @@ export class SidebarComponent implements OnInit {
     icon: 'perm_contact_calendar',
     route: '/page/calendar',
     title: 'Calendar',
+  },{
+    icon: 'supervisor_account',
+    route: '/page/members',
+    title: 'Members',
   }
   ];
 

@@ -44,25 +44,29 @@ export class UserMenuComponent implements AfterViewInit {
 	}
 
 	ngAfterViewInit() {
-		gapi.load('auth2', () => {
-			gapi.auth2.init({client_id: this.config.getGoogleClientId(), fetch_basic_profile: true});
-		});
+		/*gapi.load('auth2', () => {
+			gapi.auth2.init({
+				client_id: this.config.getGoogleClientId(),
+				fetch_basic_profile: true
+			});
+		});*/
 	}
 
 	logout() {
-		const auth2 = gapi.auth2.getAuthInstance();
+		this.router.navigate(['/login']);
+		/*const auth2 = gapi.auth2.getAuthInstance();
 		auth2.signOut().then(() => {
 			this.auth.logout();
 			this.router.navigate(['/login']);
-		});
+		});*/
 	}
 
-	singOut() {
+	/*singOut() {
 		const auth2 = gapi.auth2.getAuthInstance();
 		auth2.disconnect().then(() => {
 			this.router.navigate(['/login'])
 		});
-	}
+	}*/
 
 }
 

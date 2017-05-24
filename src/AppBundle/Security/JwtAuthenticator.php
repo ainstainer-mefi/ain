@@ -2,6 +2,7 @@
 
 namespace AppBundle\Security;
 
+use AppBundle\Exceptions\ApiException;
 use AppBundle\Security\Encoder\DefaultEncoder;
 use Doctrine\ORM\EntityManager;
 use KofeinStyle\Helper\Dumper;
@@ -83,7 +84,12 @@ class JwtAuthenticator extends AbstractGuardAuthenticator
         if($this->isDebug && $domain && in_array($domain,$domains)) {
             $payload = ['email' => trim($credentials)];
         } else {
-            $payload = $this->jwtEncoder->decode($credentials);
+            try{
+                $payload = $this->jwtEncoder->decode($credentials);
+            }catch (\Exception $e){
+                throw new ApiException(401,$e->getMessage());
+            }
+
         }
 
         if(!$payload){

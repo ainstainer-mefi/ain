@@ -9,7 +9,8 @@ import {
     HomePageComponent,
     DocsPageComponent,
     ProfilePageComponent,
-    CalendarPageComponent
+    CalendarPageComponent,
+    MembersPageComponent
 } from './pages/index';
 
 
@@ -24,6 +25,7 @@ export const appRoutes: Routes = [
             { path: 'docs', component: DocsPageComponent },
             { path: 'profile', component: ProfilePageComponent },
             { path: 'calendar', component: CalendarPageComponent },
+            { path: 'members', component: MembersPageComponent },
             { path: 'not-found', component: NotFoundPageComponent },
         ],
         canActivate: [AuthGuard]

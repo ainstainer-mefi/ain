@@ -1,5 +1,5 @@
 import {Component, OnInit, NgZone, AfterViewInit} from '@angular/core';
-// import {Router} from '@angular/router';
+ import {Router} from '@angular/router';
 // import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {AuthenticationService, ConfigService, SnackbarService} from '../_shared/services/index';
 
@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
                 private auth: AuthenticationService,
                 private alert: SnackbarService,
                 //private _zone: NgZone,
+                private router: Router,
                 private config: ConfigService) {
 
         this.redirectUrl = window.location.protocol + '//' + window.location.host;
@@ -51,8 +52,16 @@ export class LoginComponent implements OnInit, AfterViewInit {
                 client_id: this.config.getGoogleClientId(),
                 scope: this.config.getGoogleScope(),
                 fetch_basic_profile: true,
+            }).then(() => {
+                const auth2 = gapi.auth2.getAuthInstance();
+                auth2.signOut();
+            },() => {
+                console.dir('Error signOut');
             });
+
         });
+
+
     }
 
     grand() {
@@ -79,6 +88,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
                 (user) => {
                     console.log(user);
                     window.location.href = this.redirectUrl;
+
                     // this.router.navigate(['']);
                 },
                 (error: any) => {

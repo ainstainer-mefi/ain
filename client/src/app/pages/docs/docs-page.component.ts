@@ -49,8 +49,6 @@ export class DocsPageComponent implements OnInit {
                 (error: any) => {
                     this._preloaderService.resolve();
                     this.isRequesting = false;
-                    console.warn('Server connection problem');
-                    console.dir(error);
                 });
     }
 }

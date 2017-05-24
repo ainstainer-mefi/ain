@@ -47,12 +47,4 @@ export class UserService {
             });
     }
 
-
-    bindJiraAccount(account) {
-        let params = {'id': account.id};
-        return this.apiGatewayService.post(this.url, false, params, false)
-            .map((response: any) => {
-                return response;
-            });
-    }
 }

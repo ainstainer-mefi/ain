@@ -1,5 +1,4 @@
 import { Component,  Input, OnInit } from '@angular/core';
-import {PreloaderService} from '../../services/index';
 
 @Component({
     selector: 'app-page-wrapper',

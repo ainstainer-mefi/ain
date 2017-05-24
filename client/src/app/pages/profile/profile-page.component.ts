@@ -1,77 +1,55 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { UserService, PreloaderService } from '../../_shared/services/index';
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UserService, PreloaderService} from '../../_shared/services/index';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile-page.component.html',
-  styleUrls: ['./profile-page.component.scss']
+    selector: 'app-profile',
+    templateUrl: './profile-page.component.html',
+    styleUrls: ['./profile-page.component.scss']
+
 })
 export class ProfilePageComponent implements OnInit {
 
-  public isRequesting: boolean = false;
-  public jiraAccounts: Array<any> = [];
-  private EMAIL_REGEXP = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-  //
-  //'^\s*[a-zA-Z0-9.-_]+@ainstainer.de'
+    public isRequesting: boolean = false;
+    public jiraAccounts: Array<any> = [];
+    private EMAIL_REGEXP = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
 
-  constructor(private _userService: UserService, private _preloaderService: PreloaderService) {
-  }
 
-  ngOnInit() {
-    this.loadProfileData();
-  }
+    constructor(private _userService: UserService,
+                private _preloaderService: PreloaderService) {
+    }
 
-  private loadProfileData() {
+    ngOnInit() {
+        this.loadProfileData();
+    }
 
-    this.isRequesting = true;
-    this._preloaderService.register();
+    private loadProfileData() {
 
-    this._userService.getProfile()
-        .subscribe(
-            (data) => {
+        this.isRequesting = true;
+        this._preloaderService.register();
 
-              data.jira_accounts.map((account: any) => {
-                account.form = new FormGroup({
-                  'email': new FormControl('', [Validators.required,Validators.pattern(this.EMAIL_REGEXP)]),
-                  'password': new FormControl('', [ Validators.required, Validators.minLength(6)]),
+        this._userService.getProfile()
+            .subscribe(
+                (data) => {
+                    this.parseProfileServerData(data);
+                    this.isRequesting = false;
+                    this._preloaderService.resolve();
+                },
+                (error: any) => {
+                    this._preloaderService.resolve();
+                    this.isRequesting = false;
+                    console.warn('Server connection problem');
+                    console.dir(error);
                 });
-                this.jiraAccounts.push(account);
-              });
+    }
 
-              this.isRequesting = false;
-              this._preloaderService.resolve();
-            },
-            (error: any) => {
-              this._preloaderService.resolve();
-              this.isRequesting = false;
-              console.warn('Server connection problem');
-              console.dir(error);
-            });
-  }
+    private parseProfileServerData(data) {
 
-  onSubmit(account): void {
-    this._preloaderService.register();
 
-    this._userService.bindJiraAccount(account).subscribe(
-        (data) => {
-          console.log(data);
-          account.active = 1;
-          this._preloaderService.resolve();
-        });
-  }
+        this.jiraAccounts = data.jira_accounts;
 
-  unbind(account): void {
-    account.active = 0;
-    account.form.reset();
-  }
+    }
 
-  expandedEvent(): void {
-    console.log('expandedEvent')
-  }
 
-  collapsedEvent(): void {
-    console.log('collapsedEvent')
-  }
 
 }

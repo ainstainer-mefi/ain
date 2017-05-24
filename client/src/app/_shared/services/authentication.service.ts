@@ -13,7 +13,6 @@ import {ConfigService} from './config.service';
 
 
 @Injectable()
-
 export class AuthenticationService {
 
     private url = '/api/authentication';
@@ -35,6 +34,7 @@ export class AuthenticationService {
         localStorage.removeItem('currentUser');
         localStorage.removeItem('apiToken');
     }
+
 
     /**
      *

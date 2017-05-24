@@ -101,7 +101,9 @@ fos_rest:
       rules:
           - { path: '^/api',  priorities: ['json'], fallback_format: json, prefer_extension: true }
           - { path: '^/', priorities: [ 'html', '*/*'], fallback_format: html, prefer_extension: true }
-
+    exception:
+            enabled: true
+            exception_controller: 'AppBundle\Controller\ExceptionController::showAction'
 
 jms_serializer:
     property_naming:
@@ -109,7 +111,7 @@ jms_serializer:
         lower_case: true
     visitors:
         json:
-          options:  [JSON_UNESCAPED_SLASHES, JSON_UNESCAPED_UNICODE] # json_encode options bitmask
+          options:  [JSON_UNESCAPED_SLASHES, JSON_UNESCAPED_UNICODE, JSON_NUMERIC_CHECK] # json_encode options bitmask
     metadata:
         cache: file
         debug: "%kernel.debug%"

@@ -30,9 +30,12 @@ calendar:
     defaults: { _controller: AppBundle:Calendar:calendar }
     methods:  [POST, GET]
 
-
-
-bind_jira:
-    path:      /api/user-profile
-    defaults:  { _controller: AppBundle:User:bindJiraAccount }
+bind_jira_account:
+    path:      /api/bind-jira-account
+    defaults:  { _controller: AppBundle:Jira:bindJiraAccount }
     methods:  [POST]
+
+unbind_jira_account:
+    path:      /api/unbind-jira-account
+    defaults:  { _controller: AppBundle:Jira:unbindJiraAccount }
+    methods:  [DELETE]

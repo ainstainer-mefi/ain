@@ -22,18 +22,4 @@ export class ProgressBarComponent implements OnInit {
         (show) => (this.show = show)
     );
   }
-  //
-  // @Input()
-  // public set isRunning(value: boolean) {
-  //
-  //   if (!value) {
-  //     this.show = false;
-  //   } else {
-  //     this.show = true;
-  //   }
-  //
-  // }
-
-
-
 }

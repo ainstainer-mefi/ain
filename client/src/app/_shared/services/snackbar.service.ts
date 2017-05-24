@@ -17,7 +17,7 @@ export class SnackbarService {
       }
     };
     this.snackbarService.open(message, 'Ok', {
-      duration: 3000
+      duration: 10000
     });
   }
 
