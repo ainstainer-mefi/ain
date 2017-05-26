@@ -1,4 +1,6 @@
-<app-page-wrapper title="Documents">
+<!--<h3>{{ 'DEMO_BASIC.PIPE_MESSAGE' | translate }}</h3>-->
+<!--<h3 translate>DEMO_BASIC.DIRECTIVE_MESSAGE</h3>-->
+<app-page-wrapper title="{{ 'DOC_PAGE.TITLE' | translate }}">
   <div  *ngIf="!isRequesting" [@itemAnim]>
     <table td-data-table>
       <tr>
@@ -23,5 +25,6 @@
         <td td-data-table-cell colspan="4">No files</td>
       </tr>
     </table>
+
   </div>
 </app-page-wrapper>

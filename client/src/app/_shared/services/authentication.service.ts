@@ -2,26 +2,27 @@
 /// <reference path="../../../../node_modules/@types/gapi.auth2/index.d.ts" />
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+//import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 
 import {ApiGatewayService} from './api-gateway.service';
 import {UserService, User} from './user/user.service';
-import {ConfigService} from './config.service';
+//import {ConfigService} from './config.service';
 
 
 @Injectable()
 export class AuthenticationService {
 
-    private url = '/api/authentication';
+    private url:string = '/api/authentication';
+    private localStorageTokenKey:string = 'apiToken';
 
-    isLoginSubject = new BehaviorSubject<boolean>(this.hasUser());
+    //isLoginSubject = new BehaviorSubject<boolean>(this.hasUser());
 
     constructor(
         private apiGatewayService: ApiGatewayService,
-        private configService: ConfigService,
+        //private configService: ConfigService,
         private userService: UserService
     ) {
     }
@@ -30,9 +31,9 @@ export class AuthenticationService {
      *
      */
     logout() {
-        this.isLoginSubject.next(false);
-        localStorage.removeItem('currentUser');
-        localStorage.removeItem('apiToken');
+        //this.isLoginSubject.next(false);
+        this.userService.resetCurrentUser();
+        localStorage.removeItem(this.localStorageTokenKey);
     }
 
 
@@ -48,8 +49,7 @@ export class AuthenticationService {
             .map((response: any) => {
                 const user =  this.userService.createUserModel(response);
                 this.userService.setCurrentUser(user);
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                localStorage.setItem('apiToken', response.apiToken);
+                localStorage.setItem(this.localStorageTokenKey, response.apiToken);
                 return user;
             });
     }
@@ -59,20 +59,17 @@ export class AuthenticationService {
      * if we have user is loggedIn
      * @returns {boolean}
      */
-    private hasUser(): boolean {
+    /*private hasUser(): boolean {
 
         return !!localStorage.getItem('currentUser');
-    }
+    }*/
 
     /**
      *
      * @returns {Observable<T>}
      */
-    isLoggedIn(): Observable<boolean> {
+    /*isLoggedIn(): Observable<boolean> {
         return this.isLoginSubject.asObservable();
-    }
-
-    /*loginWithGoogle(googleUser: gapi.auth2.GoogleUser, profile: gapi.auth2.BasicProfile) {
-     }*/
+    }*/
 
 }

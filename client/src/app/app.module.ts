@@ -2,7 +2,7 @@ import 'hammerjs';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
+import {HttpModule, Http} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Angular2FontawesomeModule} from 'angular2-fontawesome/angular2-fontawesome';
 import {
@@ -11,6 +11,8 @@ import {
     CovalentNotificationsModule
 } from '@covalent/core';
 
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 import {
     MdSnackBar,
@@ -26,7 +28,7 @@ import {
     MdProgressSpinnerModule,
     MdProgressBarModule,
     MdButtonToggleModule,
-    MdListModule,
+    MdListModule
 } from '@angular/material';
 
 // import {
@@ -101,12 +103,39 @@ import { ProxyPipe } from './_shared/pipes/proxy.pipe';
 import { BgColorDirective} from './_shared/directives/BgColorDirective';
 
 
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule, AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
+// Do not import from 'firebase' as you'd lose the tree shaking benefits
+//import * as firebase from 'firebase/app';
+
+export function HttpLoaderFactory(http: Http) {
+    return new TranslateHttpLoader(http);
+}
+
 @NgModule({
     imports: [
+        AngularFireModule.initializeApp({
+            apiKey: "AIzaSyBK5rnvYmaL58nRmkAZIU6vtQtQUiWkVPg",
+            authDomain: "ain-test.firebaseapp.com",
+            databaseURL: "https://ain-test.firebaseio.com",
+            projectId: "ain-test",
+            storageBucket: "ain-test.appspot.com",
+            messagingSenderId: "615988777624"
+        }),
+        AngularFireDatabaseModule,
+        AngularFireAuthModule,
         routing,
         CovalentCommonModule,
         CovalentExpansionPanelModule,
         CovalentNotificationsModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [Http]
+            }
+        }),
         BrowserModule,
         HttpModule,
         FormsModule,

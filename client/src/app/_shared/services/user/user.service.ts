@@ -14,19 +14,31 @@ export class UserService {
 
     private url = '/api/user-profile';
     private currentUser: User;
+    private localStorageUserKey: string = 'currentUser';
 
     constructor(private apiGatewayService: ApiGatewayService) {
-        if (!this.currentUser && localStorage.getItem('currentUser')) {
-            this.currentUser = this.createUserModel(JSON.parse(localStorage.getItem('currentUser')));
+        if (!this.currentUser && localStorage.getItem(this.localStorageUserKey)) {
+            this.currentUser = this.getCurrentUserFromLocalStorage();
         }
     }
 
     public setCurrentUser(user: User) {
         this.currentUser = user;
+        localStorage.setItem(this.localStorageUserKey, JSON.stringify(user));
+    }
+
+    public resetCurrentUser(): void {
+        localStorage.removeItem(this.localStorageUserKey);
+        this.currentUser = null;
     }
 
     public getCurrentUser(): User {
         return this.currentUser;
+    }
+
+    public getCurrentUserFromLocalStorage() : User {
+        let userObject = JSON.parse(localStorage.getItem(this.localStorageUserKey));
+        return this.createUserModel(userObject);
     }
 
     public createUserModel(data: any): User {

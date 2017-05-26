@@ -1,5 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {UserDocsService, PreloaderService} from '../../_shared/services/index';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { UserDocsService, PreloaderService } from '../../_shared/services/index';
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/takeUntil';
+
 import {  trigger,
     state,
     style,
@@ -21,8 +24,9 @@ import {  trigger,
         ])
     ]
 })
-export class DocsPageComponent implements OnInit {
+export class DocsPageComponent implements OnInit, OnDestroy {
 
+    private ngUnsubscribe: Subject<void> = new Subject<void>();
     public isRequesting: boolean = false;
     public items: Array<any> = [];
 
@@ -39,6 +43,7 @@ export class DocsPageComponent implements OnInit {
         this._preloaderService.register();
 
         this._userDocs.getDocs()
+            .takeUntil(this.ngUnsubscribe)
             .subscribe(
                 (data) => {
                     this.items = data;
@@ -50,5 +55,10 @@ export class DocsPageComponent implements OnInit {
                     this._preloaderService.resolve();
                     this.isRequesting = false;
                 });
+    }
+
+    ngOnDestroy() {
+        this.ngUnsubscribe.next();
+        this.ngUnsubscribe.complete();
     }
 }

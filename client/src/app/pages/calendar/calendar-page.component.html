@@ -1,4 +1,4 @@
-<app-page-wrapper title="Calendar">
+<app-page-wrapper title="{{ 'CALENDAR_PAGE.TITLE' | translate }}">
         <div class="row">
             <div class="col-md-5">
                 <app-fullcalendar [options]="calendarOptions" calendarClass="blurCalendar" (onCalendarReady)="onCalendarReady($event)"></app-fullcalendar>
