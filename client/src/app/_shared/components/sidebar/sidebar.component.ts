@@ -16,21 +16,22 @@ export class SidebarComponent implements OnInit {
   routes: Object[] = [{
     icon: 'home',
     route: '/page/home',
-    title: 'Home',
+    title: 'HOME_PAGE.TITLE',
   }, {
     icon: 'description',
     route: '/page/docs',
-    title: 'Documentation',
+    title: 'DOC_PAGE.TITLE',
   }, {
     icon: 'perm_contact_calendar',
     route: '/page/calendar',
-    title: 'Calendar',
+    title: 'CALENDAR_PAGE.TITLE',
   },{
     icon: 'supervisor_account',
     route: '/page/members',
-    title: 'Members',
+    title: 'MEMBERS_PAGE.TITLE',
   }
   ];
+
 
   changeLang(lang):void{
     this._translateService.use(lang);

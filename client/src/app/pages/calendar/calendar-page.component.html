@@ -7,6 +7,9 @@
                 <div *ngIf="eventData">
                     {{eventData.displayStart }} - {{eventData.displayEnd }}
                 </div>
+                <div *ngIf="selectedEvent">
+                    {{selectedEvent.title }}
+                </div>
             </div>
         </div>
 </app-page-wrapper>

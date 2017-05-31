@@ -1,15 +1,23 @@
 {
+  "HOME_PAGE": {
+    "TITLE": "Home"
+  },
   "DOC_PAGE": {
     "TITLE": "Documents"
   },
   "CALENDAR_PAGE": {
     "TITLE": "Calendar"
   },
+  "MEMBERS_PAGE": {
+    "TITLE": "Members"
+  },
   "CALENDAR_COMPONENT": {
     "BTN_TODAY": "Today",
+    "BTN_TOGGLE_WEEK": "Week",
+    "BTN_TOGGLE_DAY" : "Day",
     "BTN_TOGGLE_MONTH": "Month",
-    "BTN_TOGGLE_LIST_WEEK": "Week",
-    "BTN_TOGGLE_LIST_DAY": "Day"
+    "BTN_TOGGLE_LIST_WEEK": "List Week",
+    "BTN_TOGGLE_LIST_DAY": "List Day"
   }
 
 }

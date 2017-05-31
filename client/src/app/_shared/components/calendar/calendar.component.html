@@ -17,11 +17,12 @@
             <md-button-toggle (click)="changeView('listWeek')">
                 {{ 'CALENDAR_COMPONENT.BTN_TOGGLE_LIST_WEEK' | translate }}
             </md-button-toggle>
-            <md-button-toggle (click)="changeView('agendaWeek')">
-                agendaWeek
-            </md-button-toggle>
+
             <md-button-toggle (click)="changeView('agendaDay')">
-                agendaDay
+                {{ 'CALENDAR_COMPONENT.BTN_TOGGLE_DAY' | translate }}
+            </md-button-toggle>
+            <md-button-toggle (click)="changeView('agendaWeek')">
+                {{ 'CALENDAR_COMPONENT.BTN_TOGGLE_WEEK' | translate }}
             </md-button-toggle>
             <md-button-toggle (click)="changeView('month')" checked="true">
                 {{ 'CALENDAR_COMPONENT.BTN_TOGGLE_MONTH' | translate }}

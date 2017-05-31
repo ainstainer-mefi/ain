@@ -13,7 +13,7 @@
     <li class="sidebar-list-item" *ngFor="let item of routes" (mouseover)="navExpand($event);">
       <a [routerLink]="[item.route]" routerLinkActive="active">
         <md-icon>{{item.icon}}</md-icon>
-        <div>{{item.title}}</div>
+        <div>{{item.title | translate}}</div>
       </a>
     </li>
   </ul>

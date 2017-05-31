@@ -1,12 +1,20 @@
 {
+  "HOME_PAGE": {
+    "TITLE": "Главная"
+  },
   "DOC_PAGE": {
     "TITLE": "Документы"
   },
   "CALENDAR_PAGE": {
     "TITLE": "Календарь"
   },
+  "MEMBERS_PAGE": {
+    "TITLE": "Сотрудники"
+  },
   "CALENDAR_COMPONENT": {
     "BTN_TODAY": "Сегодня",
+    "BTN_TOGGLE_WEEK": "Неделя",
+    "BTN_TOGGLE_DAY" : "День",
     "BTN_TOGGLE_MONTH": "Месяц",
     "BTN_TOGGLE_LIST_WEEK": "Повестка недели",
     "BTN_TOGGLE_LIST_DAY": "Повестка дня"

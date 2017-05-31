@@ -20,6 +20,7 @@ export class CalendarService {
             right: false
         },
         navLinks: true,
+        //titleFormat: 'MMMM D YYYY',
         nowIndicator: true,
         fixedWeekCount: false,
         firstDay: 1,

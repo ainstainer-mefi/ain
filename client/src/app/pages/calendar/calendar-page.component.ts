@@ -16,9 +16,10 @@ import {CalendarEvent} from '../../_shared/models/calendar.event.model';
 })
 export class CalendarPageComponent implements OnInit, OnDestroy {
 
-  private ngUnsubscribe: Subject<void> = new Subject<void>();
+  private _ngUnsubscribe: Subject<void> = new Subject<void>();
   private _calendar: Object;
   public eventData: any = false;
+  public selectedEvent: any = false;
   public items: Array<CalendarEvent> = [];
   public calendarOptions: Options;
 
@@ -34,21 +35,22 @@ export class CalendarPageComponent implements OnInit, OnDestroy {
   ngOnInit(){
     this.calendarOptions = this._calendarService.getCalendarOptions();
     this.calendarOptions.select = (start, end) => this._onSelect(start, end);
+    this.calendarOptions.eventClick = (calEvent, jsEvent, view) => this._eventClick(calEvent, jsEvent, view);
   }
 
   ngOnDestroy() {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this._ngUnsubscribe.next();
+    this._ngUnsubscribe.complete();
   }
 
   private loadEvents() {
 
     this._preloaderService.register();
     this._calendarService.getEvents()
-        .takeUntil(this.ngUnsubscribe)
+        .takeUntil(this._ngUnsubscribe)
         .subscribe(
             (data:Array<CalendarEvent>) => {
-              console.log(data);
+              //console.log(data);
               this.items = data;
               $(this._calendar).fullCalendar('renderEvents', this.items, true);
               this._preloaderService.resolve();
@@ -62,6 +64,11 @@ export class CalendarPageComponent implements OnInit, OnDestroy {
   public onCalendarReady(calendar):void {
     this._calendar = calendar;
     this.loadEvents();
+  }
+
+  private _eventClick(calEvent, jsEvent, view):void {
+    console.log(calEvent);
+    this.selectedEvent = calEvent;
   }
 
   private _onSelect(start, end):void {
