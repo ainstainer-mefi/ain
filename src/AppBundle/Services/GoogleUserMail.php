@@ -12,7 +12,12 @@ use AppBundle\Entity\User;
 class GoogleUserMail extends BaseGoogleUserService
 {
 
-
+    /**
+     * @param User $userFrom
+     * @param \Swift_Message $message
+     * @return \Google_Service_Gmail_Message
+     * @throws \Exception
+     */
     public function send(User $userFrom, \Swift_Message $message)
     {
         $accessToken = $userFrom->getGoogleAccessTokenDecoded();

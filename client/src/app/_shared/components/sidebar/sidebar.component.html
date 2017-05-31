@@ -4,6 +4,10 @@
     <!--Main</a><br>-->
   <!--<a class="mdl-navigation__link" [routerLink]="['/page/home1']">User files</a><br>-->
 <!--</md-nav-list>-->
+<div style="position: absolute;bottom: 5px;left:30px;">
+<a (click)="changeLang('ru')" style="cursor: pointer;color: #fff;">RU</a>&nbsp;&nbsp;&nbsp;
+<a (click)="changeLang('en')" style="cursor: pointer;color: #fff;">EN</a>
+</div>
 <nav>
   <ul class="sidebar-list">
     <li class="sidebar-list-item" *ngFor="let item of routes" (mouseover)="navExpand($event);">

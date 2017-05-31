@@ -7,15 +7,16 @@ use Google_Client;
 use Google_Service_Calendar;
 use Google_Service_Calendar_Event;
 use KofeinStyle\Helper\Dumper;
+use AppBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 
-class GoogleCalendar extends BaseGoogleUserService
+class GoogleUserCalendar extends BaseGoogleUserService
 {
     /**
      * @var Google_Client
      */
-    protected $client;
+    protected $client = null;
 
     /**
      * @var Google_Service_Calendar
@@ -25,62 +26,19 @@ class GoogleCalendar extends BaseGoogleUserService
     public function __construct(ContainerInterface $container = null)
     {
         parent::__construct($container);
-        /*$this->client = new Google_Client();
-        $this->client->setApplicationName($this->googleParams->getAppName());
-        $this->client->setScopes($this->googleParams->getScopes());
-        $this->client->setAuthConfig($this->googleParams->getClientSecretPath());
-        $this->client->setAccessType('offline');
-        $this->client->setAccessToken($this->googleParams->getCredentialsData());
-
-        $this->verifyServerToken($this->client);*/
-
     }
 
 
     /**
+     * @param User $user
      * @return Google_Client
      * @throws \Exception
      */
-    public function getClient()
+    private function initClient($user)
     {
-        /*$filesystem = new Filesystem();
-        $appName = empty($this->googleParams['app_name']) ? 'My Application' : $this->googleParams['app_name'];
-        $client = new Google_Client();
-        $client->setApplicationName($appName);
-        $client->setScopes($this->getScopes());
-        $client->setAuthConfig($this->getClientSecretPath());
-        $client->setAccessType('offline');
-        $credentialsPath = $this->getCredentialsPath();
-
-        if ($filesystem->exists($credentialsPath)) {
-            $accessToken = json_decode(file_get_contents($credentialsPath), true);
-        } else {
-            throw new \Exception('Credentials not exist');
+        if (!is_null($this->client)) {
+            return true;
         }
-        $client->setAccessToken($accessToken);
-
-        // Refresh the token if it's expired.
-        if ($client->isAccessTokenExpired()) {
-            $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
-            file_put_contents($credentialsPath, json_encode($client->getAccessToken()));
-        }
-        return $client;*/
-    }
-
-
-    /**
-     * Returns events on the calendar
-     *
-     * Show events for a certain period
-     * example: array('timeMax' => 'YYYY-mm-ddTHH:ii:ss', 'timeMin' =>'YYYY-mm-ddTHH:ii:ss');
-     *
-     * @param array $data
-     * @return \Google_Service_Calendar_Events
-     */
-    public function getListEvents($user , $data)
-    {
-
-        ########WORKING RIGHT NOW
         $accessToken = $user->getGoogleAccessTokenDecoded();
 
         $this->client = new \Google_Client();
@@ -90,12 +48,111 @@ class GoogleCalendar extends BaseGoogleUserService
         $this->client->setAccessToken($accessToken);
 
         $this->calendarService = new Google_Service_Calendar($this->client);
+    }
 
-        // Print the next 10 events on the user's calendar.
-        if(!isset($data['calendarId'])) $data['calendarId'] = 'primary';
-        $results = $this->calendarService->events->listEvents($data['calendarId'], $data);
-        return $results;
 
+    /**
+     * Returns events on the calendar
+     *
+     * Show events for a certain period
+     * example: array('timeMax' => 'YYYY-mm-ddTHH:ii:ss', 'timeMin' =>'YYYY-mm-ddTHH:ii:ss');
+     *
+     * @param User $user
+     * @param string $calendarId
+     * @return \Google_Service_Calendar_Events
+     */
+    public function getEventLists($user , $calendarId, $params = [])
+    {
+        $result = [];
+        $this->initClient($user);
+        $events = $this->calendarService->events->listEvents($calendarId, $params);
+
+        while(true) {
+            /**
+             * @var $event \Google_Service_Calendar_Event
+             */
+            foreach ($events->getItems() as $event) {
+                /*if (!empty($event->getRecurrence())) {
+                    $recurrenceResult = $this->getEventInstances($user, $calendarId, $event->getId(), $params );
+                    foreach ($recurrenceResult as $e){
+                        $result[] = $e;
+                    }
+                } else {
+                    $result[] = $event;
+                }*/
+
+                $result[] = $event;
+            }
+            $pageToken = $events->getNextPageToken();
+            if ($pageToken) {
+                $events = $this->calendarService->events->listEvents($calendarId, ['pageToken' => $pageToken]);
+            } else {
+                break;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param $user
+     * @param $calendarId
+     * @return mixed
+     */
+    public function getEventInstances($user,$calendarId, $eventId, $params)
+    {
+        $result = [];
+        $this->initClient($user);
+        $events = $this->calendarService->events->instances($calendarId, $eventId, $params);
+
+        while(true) {
+            /**
+             * @var $event \Google_Service_Calendar_Event
+             */
+            foreach ($events->getItems() as $event) {
+                $result[] = $event;
+            }
+            $pageToken = $events->getNextPageToken();
+            if ($pageToken) {
+                $events = $this->calendarService->events->instances($calendarId, $eventId, ['pageToken' => $pageToken]);
+            } else {
+                break;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param User $user
+     * @return mixed
+     */
+    public function  getCalendarList($user)
+    {
+        $this->initClient($user);
+        return $this->calendarService->calendarList->listCalendarList(['showHidden' => false])->getItems();
+    }
+
+    public function getColors($user)
+    {
+        $result = ['calendar' => [], 'event' => []];
+        $this->initClient($user);
+        $colors = $this->calendarService->colors->get();
+        foreach ($colors->getCalendar() as $key => $color) {
+            $result['calendar'][$key] = [
+                'background' => $color->getBackground(),
+                'foreground' => $color->getForeground(),
+            ];
+        }
+
+        foreach ($colors->getEvent() as $key => $color) {
+            $result['event'][$key] = [
+                'background' => $color->getBackground(),
+                'foreground' => $color->getForeground(),
+            ];
+        }
+
+        return $result;
     }
 
     /**
@@ -203,31 +260,7 @@ class GoogleCalendar extends BaseGoogleUserService
         }
     }
 
-    /**
-     * Client secret path
-     * @return mixed
-     * @throws \Exception
-     */
-    public function getClientSecretPath()
-    {
-        if (empty($secret = $this->googleParams['client_secret_path'])) {
-            throw new \Exception('Google client secret path can\'t be empty');
-        }
-        return $secret;
-    }
 
-    /**
-     * Credentials Path
-     * @return mixed
-     * @throws \Exception
-     */
-    public function getCredentialsPath()
-    {
-        if (empty($credentials = $this->googleParams['credentials_path'])) {
-            throw new \Exception('Google credential path can\'t be empty');
-        }
-        return $credentials;
-    }
 
     /**
      * Add attachments to event

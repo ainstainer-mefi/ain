@@ -27,7 +27,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
         //const itemObservable = db.object('/item');
         //itemObservable.set({ name: 'new name2!'});
-        this.items = db.list('/item');
+        //this.items = db.list('/item');
 
         // Set fallback language
         this._translateService.setDefaultLang('en');
@@ -36,17 +36,18 @@ export class AppComponent implements OnInit, AfterViewInit {
         this._translateService.addLangs(['en', 'ru']);
 
         // Get selected language and load it
-        //this._translateService.use(_translateService.getBrowserLang());
-        this._translateService.use('ru');
+        this._translateService.use(_translateService.getBrowserLang());
+        //this._translateService.use('ru');
+
 
     }
 
     ngOnInit() {
         console.log(VERSION.full);
-        this.items.  subscribe((data) => {
-
+        /*this.items.  subscribe((data) => {
             console.log(data);
-        });
+        });*/
+
     }
 
     ngAfterViewInit() {

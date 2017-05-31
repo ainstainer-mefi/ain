@@ -4,6 +4,7 @@ namespace AppBundle\Security;
 
 use AppBundle\Exceptions\ApiException;
 use AppBundle\Security\Encoder\DefaultEncoder;
+use AppBundle\Services\GoogleUserAuthenticator;
 use Doctrine\ORM\EntityManager;
 use KofeinStyle\Helper\Dumper;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -31,17 +32,25 @@ class JwtAuthenticator extends AbstractGuardAuthenticator
 
     private $jwtEncoder;
 
+    private $userAuthenticator;
+
     /**
      * @var bool
      */
     private $isDebug;
 
-    public function __construct(EntityManager $em, DefaultEncoder $jwtEncoder, JWTTokenManagerInterface $jwtManager, $isDebug = false)
-    {
+    public function __construct(
+        EntityManager $em,
+        DefaultEncoder $jwtEncoder,
+        JWTTokenManagerInterface $jwtManager,
+        GoogleUserAuthenticator $userAuthenticator,
+        $isDebug = false
+    ){
         $this->jwtManager = $jwtManager;
         $this->em = $em;
         $this->jwtEncoder = $jwtEncoder;
         $this->isDebug = $isDebug;
+        $this->userAuthenticator = $userAuthenticator;
     }
 
     public function start(Request $request, AuthenticationException $authException = null)
@@ -103,6 +112,15 @@ class JwtAuthenticator extends AbstractGuardAuthenticator
         }
 
         $user = $this->em->getRepository('AppBundle:User')->loadUserByIdentity($identityField, $payload[$identityField]);
+        $jsonTokenPayload = json_decode($user->getGoogleAccessToken(),true);
+
+        //$newAccessToken = $this->userAuthenticator->isAccessTokenExpired($jsonTokenPayload);
+        //Dumper::dumpx($newAccessToken);
+
+
+        //$this->em->persist($user);
+        //$this->em->flush();
+
 
         if(!$user){
             return;

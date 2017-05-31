@@ -10,7 +10,13 @@ services:
 
   app.jwt_token_authenticator:
     class: AppBundle\Security\JwtAuthenticator
-    arguments: ['@doctrine.orm.entity_manager', '@app.jwt_authentication.encoder','@lexik_jwt_authentication.jwt_manager','%kernel.debug%']
+    arguments: [
+      '@doctrine.orm.entity_manager',
+      '@app.jwt_authentication.encoder',
+      '@lexik_jwt_authentication.jwt_manager',
+      '@app.google_user.auth',
+      '%kernel.debug%'
+      ]
 
   app.google_user.auth:
     class: AppBundle\Services\GoogleUserAuthenticator
@@ -24,6 +30,6 @@ services:
     class: AppBundle\Services\GoogleDriveService
     arguments: ['@service_container']
 
-  app.google_calendar:
-    class: AppBundle\Services\GoogleCalendar
+  app.google_user.calendar:
+    class: AppBundle\Services\GoogleUserCalendar
     arguments: ['@service_container']

@@ -2,14 +2,14 @@ homepage:
     path:      /
     defaults:  { _controller: AppBundle:Default:index }
 
+authentication:
+    path: /api/authentication
+    defaults:  { _controller: AppBundle:Authentication:authentication }
+
 proxy_files:
     path:      /proxy
     defaults:  { _controller: AppBundle:File:proxy }
     methods:  [GET]
-
-authentication:
-    path: /api/authentication
-    defaults:  { _controller: AppBundle:Authentication:authentication }
 
 get_user_files:
     path:      /api/user-files
@@ -21,14 +21,15 @@ get_user_profile:
     defaults:  { _controller: AppBundle:User:getProfile }
     methods:  [GET]
 
-secure_resource:
-    path:      /api/secure-resource
-    defaults:  { _controller: AppBundle:User:secureResource }
+get_user_calendars:
+    path:     /api/calendar-list
+    defaults: { _controller: AppBundle:Calendar:getCalendarList }
+    methods:  [GET]
 
-calendar:
-    path:     /api/calendar
-    defaults: { _controller: AppBundle:Calendar:calendar }
-    methods:  [POST, GET]
+get_user_calendar_events:
+    path:     /api/calendar-event-list/{ids}
+    defaults: { _controller: AppBundle:Calendar:getCalendarEventList, ids: null }
+    methods:  [GET]
 
 bind_jira_account:
     path:      /api/bind-jira-account

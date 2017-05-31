@@ -1,22 +1,30 @@
 <md-card>
     <md-card-content>
     <div class="row">
-    <div class="col-md-6 left-group">
+    <div class="col-md-4 left-group">
         <button md-mini-fab color="primary" (click)="navigate('prev')"><md-icon>keyboard_arrow_left</md-icon></button>
         <button md-mini-fab color="primary" (click)="navigate('next')"><md-icon>keyboard_arrow_right</md-icon></button>
-        <button md-raised-button color="primary" class="z-depth-5" (click)="navigate('today')">Today</button>
+        <button md-raised-button color="primary" class="z-depth-5" (click)="navigate('today')">
+            {{ 'CALENDAR_COMPONENT.BTN_TODAY' | translate }}
+        </button>
     </div>
 
-    <div class="col-md-6 right-group">
+    <div class="col-md-8 right-group">
         <md-button-toggle-group #group="mdButtonToggleGroup" >
             <md-button-toggle (click)="changeView('listDay')" checked="{{listDayChecked}}">
-                list Day
+                {{ 'CALENDAR_COMPONENT.BTN_TOGGLE_LIST_DAY' | translate }}
             </md-button-toggle>
             <md-button-toggle (click)="changeView('listWeek')">
-                list Week
+                {{ 'CALENDAR_COMPONENT.BTN_TOGGLE_LIST_WEEK' | translate }}
+            </md-button-toggle>
+            <md-button-toggle (click)="changeView('agendaWeek')">
+                agendaWeek
+            </md-button-toggle>
+            <md-button-toggle (click)="changeView('agendaDay')">
+                agendaDay
             </md-button-toggle>
             <md-button-toggle (click)="changeView('month')" checked="true">
-                month
+                {{ 'CALENDAR_COMPONENT.BTN_TOGGLE_MONTH' | translate }}
             </md-button-toggle>
         </md-button-toggle-group>
     </div>

@@ -1,77 +1,68 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/takeUntil';
 import * as $ from 'jquery';
+//import * as moment from 'moment';
 import { Options } from "fullcalendar";
+import { CalendarService, PreloaderService } from '../../_shared/services/index';
+import {CalendarEvent} from '../../_shared/models/calendar.event.model';
+
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar-page.component.html',
-  styleUrls: ['./calendar-page.component.scss']
+  styleUrls: ['./calendar-page.component.scss'],
+  providers: [CalendarService]
 })
-export class CalendarPageComponent implements OnInit {
+export class CalendarPageComponent implements OnInit, OnDestroy {
 
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
   private _calendar: Object;
-  public eventData:any = false;
-  constructor() {
+  public eventData: any = false;
+  public items: Array<CalendarEvent> = [];
+  public calendarOptions: Options;
+
+
+  constructor(
+      private _calendarService: CalendarService,
+      private _preloaderService: PreloaderService
+  ) {
+
+  }
+
+
+  ngOnInit(){
+    this.calendarOptions = this._calendarService.getCalendarOptions();
     this.calendarOptions.select = (start, end) => this._onSelect(start, end);
   }
 
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
 
-  ngOnInit() {}
+  private loadEvents() {
+
+    this._preloaderService.register();
+    this._calendarService.getEvents()
+        .takeUntil(this.ngUnsubscribe)
+        .subscribe(
+            (data:Array<CalendarEvent>) => {
+              console.log(data);
+              this.items = data;
+              $(this._calendar).fullCalendar('renderEvents', this.items, true);
+              this._preloaderService.resolve();
+
+            },
+            (error: any) => {
+              this._preloaderService.resolve();
+            });
+  }
 
   public onCalendarReady(calendar):void {
     this._calendar = calendar;
+    this.loadEvents();
   }
-
-  calendarOptions:Options = {
-
-    header: {
-      left: false,
-      center: 'title',
-      right: false
-    },
-    navLinks: true,
-    nowIndicator: true,
-    fixedWeekCount: false,
-    firstDay: 1,
-    selectable: true,
-    selectHelper: true,
-    businessHours: true, // display business hours
-    editable: true,
-    eventLimit: true, // allow "more" link when too many events
-    events: [
-      {
-        title: 'Business Lunch',
-        start: '2017-04-20T13:00:00',
-        constraint: 'businessHours'
-
-      },
-      {
-        title: 'Long Event',
-        start: '2017-04-20',
-        end: '2017-04-25'
-      },
-      {
-        id: 999,
-        title: 'Repeating Event',
-        start: '2017-04-09T16:00:00'
-      },
-      {
-        id: 999,
-        title: 'Repeating Event',
-        start: '2017-04-16T16:00:00',
-
-
-      },
-      {
-        title: 'Click for Google',
-        url: 'http://google.com/',
-        start: '2017-04-28T11:00:00',
-        constraint: 'availableForMeeting', // defined below
-        color: '#257e4a'
-
-      }
-    ]
-  };
 
   private _onSelect(start, end):void {
 
@@ -84,7 +75,7 @@ export class CalendarPageComponent implements OnInit {
         displayEnd: end.subtract(1, 'day').format('DD.MM.YYYY')
 
       };
-      console.log(this.eventData);
+      //console.log(this.eventData);
       /*let title = prompt('Event Title:');
       let eventData;
       if (title) {
@@ -99,4 +90,6 @@ export class CalendarPageComponent implements OnInit {
       $(this._calendar).fullCalendar('unselect');*/
     }
   }
+
+
 }

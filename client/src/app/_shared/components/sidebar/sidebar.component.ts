@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sidebar',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _translateService: TranslateService) { }
 
   ngOnInit() {
   }
@@ -30,6 +31,10 @@ export class SidebarComponent implements OnInit {
     title: 'Members',
   }
   ];
+
+  changeLang(lang):void{
+    this._translateService.use(lang);
+  }
 
   public isCollapsed: boolean = true;
 

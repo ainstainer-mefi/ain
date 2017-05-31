@@ -4,5 +4,12 @@
   },
   "CALENDAR_PAGE": {
     "TITLE": "Calendar"
+  },
+  "CALENDAR_COMPONENT": {
+    "BTN_TODAY": "Today",
+    "BTN_TOGGLE_MONTH": "Month",
+    "BTN_TOGGLE_LIST_WEEK": "Week",
+    "BTN_TOGGLE_LIST_DAY": "Day"
   }
+
 }

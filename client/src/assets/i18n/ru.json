@@ -4,5 +4,13 @@
   },
   "CALENDAR_PAGE": {
     "TITLE": "Календарь"
+  },
+  "CALENDAR_COMPONENT": {
+    "BTN_TODAY": "Сегодня",
+    "BTN_TOGGLE_MONTH": "Месяц",
+    "BTN_TOGGLE_LIST_WEEK": "Повестка недели",
+    "BTN_TOGGLE_LIST_DAY": "Повестка дня"
+
+
   }
 }

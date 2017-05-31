@@ -1,9 +1,9 @@
 <app-page-wrapper title="{{ 'CALENDAR_PAGE.TITLE' | translate }}">
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-8">
                 <app-fullcalendar [options]="calendarOptions" calendarClass="blurCalendar" (onCalendarReady)="onCalendarReady($event)"></app-fullcalendar>
             </div>
-            <div class="col-md-7">
+            <div class="col-md-4">
                 <div *ngIf="eventData">
                     {{eventData.displayStart }} - {{eventData.displayEnd }}
                 </div>

@@ -47,4 +47,22 @@ class GoogleUserAuthenticator extends BaseGoogleUserService
         return $client->verifyIdToken($id_token);
     }
 
+
+    public function isAccessTokenExpired($jsonTokenPayload)
+    {
+        $client = new \Google_Client();
+        $client->setApplicationName($this->googleParams->getAppName());
+        $client->setAccessType('offline');
+        $client->setAuthConfig($this->googleParams->getClientSecretPathWeb());
+        $client->setRedirectUri($this->googleParams->getRedirectUrl());
+        $client->addScope($this->googleParams->getScopes());
+        $client->setApprovalPrompt('force');
+        $client->setAccessToken($jsonTokenPayload);
+
+        if ($client->isAccessTokenExpired()) {
+            $tokenData = $client->fetchAccessTokenWithRefreshToken();
+            Dumper::dumpx($tokenData);
+        }
+    }
+
 }
