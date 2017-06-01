@@ -79,9 +79,14 @@ button.mat-raised-button_small_30 {
 
 .app-full-calendar{
   .fc-day-grid-event .fc-content{
-    white-space: normal !important;
+    //white-space: normal !important;
   }
   .fc-header-toolbar {
     text-transform: capitalize
   }
+}
+
+.mat-card{
+  padding: 0px;
+  margin: 0px !important;
 }

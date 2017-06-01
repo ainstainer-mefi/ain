@@ -113,7 +113,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
                 (user) => {
                     console.log(user);
                     window.location.href = this.redirectUrl;
-                    // this.router.navigate(['']);
+                    //this.router.navigate(['']);
                 },
                 (error: any) => {
                     console.warn('Server connection problem');

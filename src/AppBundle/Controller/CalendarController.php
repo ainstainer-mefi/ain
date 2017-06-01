@@ -92,17 +92,21 @@ class CalendarController extends BaseApiController
         }
 
         $events = [];
-        $serializer = new Serializer(array(new DateTimeNormalizer()));
+        $serializer = new Serializer([new DateTimeNormalizer()]);
+        $interval = new \DateInterval('P1M');
+        $dateMin = (new \DateTime())->sub($interval);
+        $dateMax = (new \DateTime())->add($interval);
+        $dateMinAsString = $serializer->normalize($dateMin, \DateTime::RFC3339);
+        $dateMaxAsString = $serializer->normalize($dateMax, \DateTime::RFC3339);
 
-        $dateAsString = $serializer->normalize(new \DateTime('2017-05-29'), \DateTime::RFC3339);
-        //Dumper::dump($dateAsString);
         $params = [
-            'timeMin' => $dateAsString,
-            'timeMax' => '2017-05-31T23:59:59+03:00',
+            'timeMin' => $dateMinAsString,
+            'timeMax' => $dateMaxAsString,
             'orderBy' => 'startTime',
             'singleEvents' => true
 
         ];
+
 
         foreach ($ids as $calendarId => $calendarColorId) {
 
@@ -131,6 +135,7 @@ class CalendarController extends BaseApiController
 
                 $events[] = [
                     'id' => $item->getId(),
+                    'calendarId' => $calendarId,
                     'summary' => $item->getSummary(),
                     'recurringEventId' => $item->getRecurringEventId(),
                     'startDate' => $startDate->getDateTime() ? $startDate->getDateTime() : $startDate->getDate(),

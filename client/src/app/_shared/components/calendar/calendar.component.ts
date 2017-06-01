@@ -16,6 +16,9 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     @Input() options: Options;
     @Input() calendarClass: string;
     @Output() onCalendarReady = new EventEmitter<any>();
+    @Output() onSelect = new EventEmitter();
+    @Output() onEventClick = new EventEmitter();
+
 
     @ViewChild('appFullCalendar') public _selector: ElementRef;
 
@@ -24,6 +27,10 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit(){
+
+        this.options.select = (start, end) => this._onSelect(start, end);
+        this.options.eventClick = (calEvent, jsEvent, view) => this._onEventClick(calEvent, jsEvent, view);
+
         this.options.locale = this._translateService.currentLang;
         this.options.navLinkDayClick = (date, jsEvent) => this.linkDayClick(date, jsEvent);
         this._translateService.onLangChange.subscribe((params) => {
@@ -41,6 +48,14 @@ export class CalendarComponent implements OnInit, AfterViewInit {
         //
         // }, 100);
 
+    }
+
+    private _onSelect(start, end):void {
+        this.onSelect.emit({start:start, end:end})
+    }
+
+    private _onEventClick(calEvent, jsEvent, view):void {
+        this.onEventClick.emit({calEvent:calEvent, jsEvent:jsEvent, view:view})
     }
 
     updateEvent(event) {

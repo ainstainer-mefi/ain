@@ -4,6 +4,7 @@ import {MdIconRegistry} from '@angular/material';
 //import { ConfigService } from './_shared/services/index';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 import {TranslateService} from '@ngx-translate/core';
+//import {MembersPageComponent} from "./pages/members/members-page.component";
 
 @Component({
     selector: 'app-root',
@@ -14,7 +15,7 @@ import {TranslateService} from '@ngx-translate/core';
 export class AppComponent implements OnInit, AfterViewInit {
     items: FirebaseListObservable<any[]>;
     //item: FirebaseObjectObservable<any>;
-
+    //welcome = MembersPageComponent;
     constructor(
         private db: AngularFireDatabase,
         private _iconRegistry: MdIconRegistry,

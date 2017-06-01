@@ -19,6 +19,7 @@ export class CalendarService {
             center: 'title',
             right: false
         },
+
         navLinks: true,
         //titleFormat: 'MMMM D YYYY',
         nowIndicator: true,
@@ -30,7 +31,9 @@ export class CalendarService {
         editable: true,
         eventLimit: true, // allow "more" link when too many events
         events:[],
-        aspectRatio: 2
+        aspectRatio: 2,
+        timeFormat: 'H:mm', // uppercase H for 24-hour clock
+
     };
 
     constructor(private apiGatewayService: ApiGatewayService) {}

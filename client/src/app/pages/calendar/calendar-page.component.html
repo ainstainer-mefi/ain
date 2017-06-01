@@ -1,11 +1,42 @@
 <app-page-wrapper title="{{ 'CALENDAR_PAGE.TITLE' | translate }}">
         <div class="row">
             <div class="col-md-8">
-                <app-fullcalendar [options]="calendarOptions" calendarClass="blurCalendar" (onCalendarReady)="onCalendarReady($event)"></app-fullcalendar>
+                <app-fullcalendar
+                        [options]="calendarOptions"
+                        calendarClass="blurCalendar"
+                        (onCalendarReady)="onCalendarReady($event)"
+                        (onSelect)="onSelect($event)"
+                        (onEventClick)="onEventClick($event)">
+
+                </app-fullcalendar>
             </div>
             <div class="col-md-4">
+                <div>
+                    <button md-raised-button color="primary" class="z-depth-5" (click)="refreshEvents()">
+                        REFRESH
+                    </button>
+                </div>
                 <div *ngIf="eventData">
-                    {{eventData.displayStart }} - {{eventData.displayEnd }}
+
+
+                    <md-card class="example-card">
+                        <md-card-header>
+                            <md-card-title>New event</md-card-title>
+                            <md-card-subtitle>{{eventData.range | uppercase}}</md-card-subtitle>
+                        </md-card-header>
+                        <md-card-content>
+                            <form #myForm="ngForm" novalidate>
+                                <div class="form-group">
+                                    <label>Имя</label>
+                                    <input class="form-control" name="name" [(ngModel)]="name" required />
+                                </div>
+                            </form>
+                        </md-card-content>
+                        <md-card-actions>
+                            <button md-button (click)="submit(myForm)">ADD</button>
+                        </md-card-actions>
+                    </md-card>
+
                 </div>
                 <div *ngIf="selectedEvent">
                     {{selectedEvent.title }}

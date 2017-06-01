@@ -6,6 +6,8 @@ export * from './calendar/calendar.component';
 export * from './avatar/avatar.component';
 export * from './page-wrapper/page-wrapper.component';
 
+export * from './dialogs/example-dialog';
+
 
 
 

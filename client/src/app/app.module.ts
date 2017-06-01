@@ -28,7 +28,8 @@ import {
     MdProgressSpinnerModule,
     MdProgressBarModule,
     MdButtonToggleModule,
-    MdListModule
+    MdListModule,
+    MdDialogModule
 } from '@angular/material';
 
 // import {
@@ -62,8 +63,10 @@ import {
     DocsPageComponent,
     ProfilePageComponent,
     CalendarPageComponent,
-    MembersPageComponent
+    MembersPageComponent,
 } from './pages/index';
+
+
 
 export const PAGE_COMPONENTS = [
     ProfilePageComponent,
@@ -72,7 +75,7 @@ export const PAGE_COMPONENTS = [
     DocsPageComponent,
     CalendarPageComponent,
     PagesComponent,
-    MembersPageComponent
+    MembersPageComponent,
 ];
 
 /*Shared components*/
@@ -83,7 +86,8 @@ import {
     UserMenuComponent,
     CalendarComponent,
     AvatarComponent,
-    PageWrapperComponent
+    PageWrapperComponent,
+    ExampleDialog
 } from './_shared/components/index';
 export const SHARED_COMPONENTS = [
     SidebarComponent,
@@ -114,6 +118,9 @@ export function HttpLoaderFactory(http: Http) {
 }
 
 @NgModule({
+    entryComponents: [
+        ExampleDialog
+    ],
     imports: [
         AngularFireModule.initializeApp({
             apiKey: "AIzaSyBK5rnvYmaL58nRmkAZIU6vtQtQUiWkVPg",
@@ -154,7 +161,8 @@ export function HttpLoaderFactory(http: Http) {
         MdListModule,
         MdProgressSpinnerModule,
         MdProgressBarModule,
-        MdButtonToggleModule
+        MdButtonToggleModule,
+        MdDialogModule
     ],
     declarations: [
         AppComponent,
@@ -164,6 +172,7 @@ export function HttpLoaderFactory(http: Http) {
         SHARED_COMPONENTS,
         ProxyPipe,
         BgColorDirective,
+        ExampleDialog
     ],
     providers: [
         AuthGuard,
