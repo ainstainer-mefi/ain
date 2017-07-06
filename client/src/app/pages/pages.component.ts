@@ -1,7 +1,5 @@
-import { Component, OnInit,  OnDestroy, ChangeDetectionStrategy} from '@angular/core';
-import {
-    UserService
-} from '../_shared/services/index';
+import {Component} from '@angular/core';
+import {UserService} from '../_shared/services/index';
 
 import {  trigger,
     state,

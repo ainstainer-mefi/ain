@@ -11,36 +11,56 @@
                 </app-fullcalendar>
             </div>
             <div class="col-md-4">
-                <div>
-                    <button md-raised-button color="primary" class="z-depth-5" (click)="refreshEvents()">
-                        REFRESH
-                    </button>
-                </div>
                 <div *ngIf="eventData">
-
-
-                    <md-card class="example-card">
+                    <md-card >
                         <md-card-header>
                             <md-card-title>New event</md-card-title>
                             <md-card-subtitle>{{eventData.range | uppercase}}</md-card-subtitle>
                         </md-card-header>
                         <md-card-content>
-                            <form #myForm="ngForm" novalidate>
+                            <form #addForm="ngForm" novalidate>
                                 <div class="form-group">
-                                    <label>Имя</label>
-                                    <input class="form-control" name="name" [(ngModel)]="name" required />
+                                    <label>Title</label>
+                                    <input mdInput name="name" [(ngModel)]="name" required />
                                 </div>
                             </form>
                         </md-card-content>
                         <md-card-actions>
-                            <button md-button (click)="submit(myForm)">ADD</button>
+                            <button md-raised-button color="primary"(click)="submitAdd(addForm)">ADD</button>
                         </md-card-actions>
                     </md-card>
 
                 </div>
+
                 <div *ngIf="selectedEvent">
-                    {{selectedEvent.title }}
+
+
+                    <md-card >
+                        <md-card-header>
+                            <md-card-title>Event info</md-card-title>
+                            <md-card-subtitle>{{selectedEvent.title}}</md-card-subtitle>
+                        </md-card-header>
+                        <md-card-content>
+                            <form #deleteForm="ngForm" novalidate>
+                                <div class="form-group">
+                                    <label>Id</label>
+                                    <md-input-container>
+                                        <input mdInput name="id" [(ngModel)]="selectedEvent.id">
+                                    </md-input-container>
+                                </div>
+                            </form>
+                        </md-card-content>
+                        <md-card-actions>
+                            <button md-raised-button color="danger"(click)="submitAdd(deleteForm)">ADD</button>
+                        </md-card-actions>
+                    </md-card>
+
                 </div>
             </div>
+        </div>
+        <div class="row">
+            <button md-raised-button color="primary" class="z-depth-5" (click)="refreshEvents()">
+                REFRESH
+            </button>
         </div>
 </app-page-wrapper>

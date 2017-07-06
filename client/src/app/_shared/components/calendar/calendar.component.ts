@@ -1,4 +1,4 @@
-import {Component, ViewChild, Input, Output, AfterViewInit, OnInit, ElementRef, EventEmitter, ViewEncapsulation} from '@angular/core';
+import {Component, ViewChild, Input, Output, AfterViewInit, OnInit, ElementRef, EventEmitter} from '@angular/core';
 import * as $ from 'jquery';
 import 'fullcalendar';
 import {Options} from "fullcalendar";
@@ -7,8 +7,7 @@ import {TranslateService} from '@ngx-translate/core';
 @Component({
     templateUrl: './calendar.component.html',
     styleUrls: ['./calendar.component.scss'],
-    selector: 'app-fullcalendar',
-    encapsulation: ViewEncapsulation.Emulated
+    selector: 'app-fullcalendar'
 })
 export class CalendarComponent implements OnInit, AfterViewInit {
 

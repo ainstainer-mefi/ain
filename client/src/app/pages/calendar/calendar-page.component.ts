@@ -1,15 +1,13 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Subject} from 'rxjs/Subject';
-import {MdDialog} from '@angular/material';
 import {NgForm} from '@angular/forms';
 import 'rxjs/add/operator/takeUntil';
 import * as $ from 'jquery';
 
-//import * as moment from 'moment';
+import * as moment from 'moment';
 import {Options} from "fullcalendar";
 import {CalendarService, PreloaderService} from '../../_shared/services/index';
-import  {CalendarEvent} from '../../_shared/models/calendar.event.model';
-import {ExampleDialog} from "../../_shared/components/dialogs/example-dialog";
+import {CalendarEvent} from '../../_shared/models/calendar.event.model';
 
 
 @Component({
@@ -19,7 +17,11 @@ import {ExampleDialog} from "../../_shared/components/dialogs/example-dialog";
     providers: [CalendarService]
 })
 export class CalendarPageComponent implements OnInit, OnDestroy {
-
+    foods = [
+        {value: 'steak-0', viewValue: 'Steak'},
+        {value: 'pizza-1', viewValue: 'Pizza'},
+        {value: 'tacos-2', viewValue: 'Tacos'}
+    ];
     private _ngUnsubscribe: Subject<void> = new Subject<void>();
     private _calendar: Object;
     public eventData: any = false;
@@ -27,16 +29,13 @@ export class CalendarPageComponent implements OnInit, OnDestroy {
     public items: Array<CalendarEvent> = [];
     public calendarOptions: Options;
 
+    myFilter = 'asdasd';
 
     constructor(private _calendarService: CalendarService,
-                private _preloaderService: PreloaderService,
-                public dialog: MdDialog) {
+                private _preloaderService: PreloaderService
+    ) {
 
     }
-
-    /*openDialog() {
-     this.dialog.open(ExampleDialog);
-     }*/
 
     ngOnInit() {
         this.calendarOptions = this._calendarService.getCalendarOptions();
@@ -58,10 +57,11 @@ export class CalendarPageComponent implements OnInit, OnDestroy {
 
     onEventClick(eventClickData): void {
         this.selectedEvent = eventClickData.calEvent;
+        console.log(eventClickData.calEvent);
     }
 
     onSelect(selectedData): void {
-        //this.openDialog();
+
         if (this._calendar != null) {
             this.eventData = {
                 start: selectedData.start,
@@ -69,26 +69,36 @@ export class CalendarPageComponent implements OnInit, OnDestroy {
                 range: $.fullCalendar.formatRange(selectedData.start, selectedData.end, 'MMMM D YYYY')
 
             };
-            console.log(this.eventData);
-            /*let title = prompt('Event Title:');
-             let eventData;
-             if (title) {
-             eventData = {
-             title: title,
-             start: start,
-             end: end
-             };
-             console.log(eventData);
-             $(this._calendar).fullCalendar('renderEvent', eventData, true);
-             }
-             $(this._calendar).fullCalendar('unselect');*/
         }
     }
 
-    submit(form: NgForm){
-        console.log(form);
+    submitDelete(form: NgForm){
         console.log(form.value);
     }
+    submitAdd(form: NgForm){
+
+        let eventData = {
+            title: form.value.name,
+            start: this.eventData.start.format('YYYY-MM-DD'),
+            end: this.eventData.end.format('YYYY-MM-DD')
+        };
+
+        this._preloaderService.register();
+        this._calendarService.addEvent(eventData)
+            .subscribe(
+                (data: CalendarEvent) => {
+                    this.eventData = false;
+                    $(this._calendar).fullCalendar('renderEvent', data, true);
+                    $(this._calendar).fullCalendar('unselect');
+                    this._preloaderService.resolve();
+                },
+                (error: any) => {
+                    this._preloaderService.resolve();
+                });
+
+    }
+
+
 
     private loadEvents(type) {
 
@@ -113,4 +123,3 @@ export class CalendarPageComponent implements OnInit, OnDestroy {
 
 
 }
-

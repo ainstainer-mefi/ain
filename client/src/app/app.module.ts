@@ -5,6 +5,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule, Http} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Angular2FontawesomeModule} from 'angular2-fontawesome/angular2-fontawesome';
+import { environment } from '../environments/environment';
+
 import {
     CovalentCommonModule,
     CovalentExpansionPanelModule,
@@ -18,6 +20,7 @@ import {
     MdSnackBar,
     MdSidenavModule,
     MdInputModule,
+    MdSelectModule,
     MdToolbarModule,
     MdMenuModule,
     MdIconModule,
@@ -29,15 +32,11 @@ import {
     MdProgressBarModule,
     MdButtonToggleModule,
     MdListModule,
-    MdDialogModule
+    MdDialogModule,
+    MdDatepickerModule,
+    MdNativeDateModule,
 } from '@angular/material';
 
-// import {
-//      CollapseModule,
-//     BsDropdownModule,
-//      CarouselModule,
-//     ModalModule
-// } from 'ngx-bootstrap';
 
 import {routing} from './app.routing';
 
@@ -53,9 +52,9 @@ import {
 import {AuthGuard} from './_guards/index';
 
 /*components**/
-import { AppComponent } from './app.component';
-import { JiraAccountComponent } from './pages/profile/jira-account.component';
-import { LoginComponent } from './auth/index';
+import {AppComponent} from './app.component';
+import {JiraAccountComponent} from './pages/profile/jira-account.component';
+import {LoginComponent} from './auth/index';
 import {
     PagesComponent,
     NotFoundPageComponent,
@@ -67,7 +66,6 @@ import {
 } from './pages/index';
 
 
-
 export const PAGE_COMPONENTS = [
     ProfilePageComponent,
     NotFoundPageComponent,
@@ -75,7 +73,7 @@ export const PAGE_COMPONENTS = [
     DocsPageComponent,
     CalendarPageComponent,
     PagesComponent,
-    MembersPageComponent,
+    MembersPageComponent
 ];
 
 /*Shared components*/
@@ -87,7 +85,7 @@ import {
     CalendarComponent,
     AvatarComponent,
     PageWrapperComponent,
-    ExampleDialog
+    //ExampleDialog
 } from './_shared/components/index';
 export const SHARED_COMPONENTS = [
     SidebarComponent,
@@ -101,15 +99,16 @@ export const SHARED_COMPONENTS = [
 
 
 /*pipes*/
-import { ProxyPipe } from './_shared/pipes/proxy.pipe';
+import {ProxyPipe} from './_shared/pipes/proxy.pipe';
 
 /*directives*/
-import { BgColorDirective} from './_shared/directives/BgColorDirective';
+import {BgColorDirective} from './_shared/directives/BgColorDirective';
 
 
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule, AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
-import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
+import {AngularFireModule} from 'angularfire2';
+import {AngularFireDatabaseModule, AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
+import {AngularFireAuthModule, AngularFireAuth} from 'angularfire2/auth';
+import {MD_DATE_FORMATS} from "@angular/material/typings/core/datetime/date-formats";
 // Do not import from 'firebase' as you'd lose the tree shaking benefits
 //import * as firebase from 'firebase/app';
 
@@ -118,18 +117,11 @@ export function HttpLoaderFactory(http: Http) {
 }
 
 @NgModule({
-    entryComponents: [
-        ExampleDialog
-    ],
+    // entryComponents: [
+    //     ExampleDialog
+    // ],
     imports: [
-        AngularFireModule.initializeApp({
-            apiKey: "AIzaSyBK5rnvYmaL58nRmkAZIU6vtQtQUiWkVPg",
-            authDomain: "ain-test.firebaseapp.com",
-            databaseURL: "https://ain-test.firebaseio.com",
-            projectId: "ain-test",
-            storageBucket: "ain-test.appspot.com",
-            messagingSenderId: "615988777624"
-        }),
+        AngularFireModule.initializeApp(environment.firebase),
         AngularFireDatabaseModule,
         AngularFireAuthModule,
         routing,
@@ -137,11 +129,7 @@ export function HttpLoaderFactory(http: Http) {
         CovalentExpansionPanelModule,
         CovalentNotificationsModule,
         TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [Http]
-            }
+            loader: {provide: TranslateLoader, useFactory: HttpLoaderFactory, deps: [Http]}
         }),
         BrowserModule,
         HttpModule,
@@ -155,6 +143,7 @@ export function HttpLoaderFactory(http: Http) {
         MdSidenavModule,
         MdMenuModule,
         MdInputModule,
+        MdSelectModule,
         MdIconModule,
         MdCardModule,
         MdButtonModule,
@@ -162,7 +151,10 @@ export function HttpLoaderFactory(http: Http) {
         MdProgressSpinnerModule,
         MdProgressBarModule,
         MdButtonToggleModule,
-        MdDialogModule
+        MdDialogModule,
+        MdDatepickerModule,
+        MdNativeDateModule
+
     ],
     declarations: [
         AppComponent,
@@ -172,7 +164,7 @@ export function HttpLoaderFactory(http: Http) {
         SHARED_COMPONENTS,
         ProxyPipe,
         BgColorDirective,
-        ExampleDialog
+        //ExampleDialog
     ],
     providers: [
         AuthGuard,

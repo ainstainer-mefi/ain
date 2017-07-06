@@ -5,9 +5,3 @@ export * from './user-menu/user-menu.component';
 export * from './calendar/calendar.component';
 export * from './avatar/avatar.component';
 export * from './page-wrapper/page-wrapper.component';
-
-export * from './dialogs/example-dialog';
-
-
-
-

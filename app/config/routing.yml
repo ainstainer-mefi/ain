@@ -31,6 +31,17 @@ get_user_calendar_events:
     defaults: { _controller: AppBundle:Calendar:getCalendarEventList, ids: null }
     methods:  [GET]
 
+add_user_calendar_event:
+    path:     /api/calendar-event
+    defaults: { _controller: AppBundle:Calendar:addUserEvent }
+    methods:  [POST]
+
+delete_user_calendar_event:
+    path:     /api/calendar-event/:id
+    defaults: { _controller: AppBundle:Calendar:deleteUserEvent }
+    methods:  [DELETE]
+
+
 bind_jira_account:
     path:      /api/bind-jira-account
     defaults:  { _controller: AppBundle:Jira:bindJiraAccount }

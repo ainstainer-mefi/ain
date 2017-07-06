@@ -6,6 +6,7 @@ use AppBundle\Services\CalendarGoogle;
 use KofeinStyle\Helper\Dumper;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\HttpFoundation\Request;
 
 class CalendarController extends BaseApiController
 {
@@ -84,7 +85,7 @@ class CalendarController extends BaseApiController
             $calendarList = $service->getCalendarList($this->getUser());
             $ids = [];
             foreach ($calendarList as $item) {
-                if ( $item->getId() == '#contacts@group.v.calendar.google.com') {
+                if ( $item->getId() != $this->getUser()->getEmail()) {
                     continue;
                 }
                 $ids[$item->getId()] = $item->getColorId();
@@ -109,54 +110,85 @@ class CalendarController extends BaseApiController
 
 
         foreach ($ids as $calendarId => $calendarColorId) {
-
             $result = $service->getEventLists($this->getUser(), $calendarId, $params);
-
-            /**
-             * @var $item \Google_Service_Calendar_Event
-             */
             foreach ($result as $item) {
-                /**
-                 * @var $endDate \Google_Service_Calendar_EventDateTime
-                 * @var $startDate \Google_Service_Calendar_EventDateTime
-                 */
-
-                $endDate = $item->getEnd();
-                $startDate = $item->getStart();
-                $eventColor_id = $item->getColorId();
-                if (!empty($eventColor_id)) {
-                    $backgroundColor = $colors['event'][$eventColor_id]['background'];
-                    $foregroundColor = $colors['event'][$eventColor_id]['foreground'];
-                } else {
-                    $backgroundColor = $colors['calendar'][$calendarColorId]['background'];
-                    $foregroundColor = $colors['calendar'][$calendarColorId]['foreground'];
-                }
-
-
-                $events[] = [
-                    'id' => $item->getId(),
-                    'calendarId' => $calendarId,
-                    'summary' => $item->getSummary(),
-                    'recurringEventId' => $item->getRecurringEventId(),
-                    'startDate' => $startDate->getDateTime() ? $startDate->getDateTime() : $startDate->getDate(),
-                    'endDate' => $endDate->getDateTime() ? $endDate->getDateTime() : $endDate->getDate(),
-                    'status' => $item->getStatus(),
-                    'backgroundColor'=> $backgroundColor,
-                    'foregroundColor'=> $foregroundColor,
-                ];
+                $events[] = $this->formatEvent($item, $calendarId, $calendarColorId, $colors);
             }
-
-
         }
 
 
         return $this->prepareAnswer($events);
     }
 
+    public function addUserEventAction(Request $request)
+    {
+
+        $end = $request->get('end', null);
+        $start = $request->get('start', null);
+        $title = $request->get('title', null);
+
+        $data = [
+            'end' => [
+                'date' => $end
+            ],
+            'start' => [
+                'date' => $start
+            ],
+            'summary'     => $title,
+            'description' => 'description text',
+            'colorId' => '4',
+            'guestsCanInviteOthers' => false,
+            'attendees'=> [
+               //['email' => 'efimovmaksim@gmai.com','displayName' => 'Efimov Max','optional'=> true]
+            ]
+        ];
 
 
+        $service = $this->get('app.google_user.calendar');
+        $colors = $service->getColors($this->getUser());
+        $event = $service->insertEventsToCalendar($this->getUser(), $data);
 
+        return $this->prepareAnswer($this->formatEvent($event, $this->getUser()->getEmail(), 4, $colors));
+    }
 
+    public function deleteUserEventAction($id)
+    {
+        return $this->prepareAnswer($id);
+    }
 
+    /**
+     * @param $event \Google_Service_Calendar_Event
+      * @param $calendarId string
+     * @return array
+     */
+    private function formatEvent($event, $calendarId, $calendarColorId, $colors)
+    {
+        /**
+         * @var $endDate \Google_Service_Calendar_EventDateTime
+         * @var $startDate \Google_Service_Calendar_EventDateTime
+         */
+        $endDate = $event->getEnd();
+        $startDate = $event->getStart();
 
+        $eventColorId = $event->getColorId();
+        if (!empty($eventColorId)) {
+            $backgroundColor = $colors['event'][$eventColorId]['background'];
+            $foregroundColor = $colors['event'][$eventColorId]['foreground'];
+        } else {
+            $backgroundColor = $colors['calendar'][$calendarColorId]['background'];
+            $foregroundColor = $colors['calendar'][$calendarColorId]['foreground'];
+        }
+
+        return [
+            'id' => $event->getId(),
+            'calendarId' => $calendarId,
+            'summary' => $event->getSummary(),
+            'status' => $event->getStatus(),
+            'recurringEventId' => $event->getRecurringEventId(),
+            'startDate' => $startDate->getDateTime() ? $startDate->getDateTime() : $startDate->getDate(),
+            'endDate' => $endDate->getDateTime() ? $endDate->getDateTime() : $endDate->getDate(),
+            'backgroundColor'=> $backgroundColor,
+            'foregroundColor'=> $foregroundColor,
+        ];
+    }
 }

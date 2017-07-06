@@ -6,4 +6,4 @@ build:
 
 dev:
 	@echo "Starting dev web server..."
-	ng server --proxy-config proxy.conf.json
+	ng serve --proxy-config proxy.conf.json

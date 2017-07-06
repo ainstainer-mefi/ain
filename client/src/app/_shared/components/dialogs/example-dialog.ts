@@ -1,5 +1,4 @@
-import { Component, OnInit,  OnDestroy } from '@angular/core';
-import {MdDialog, MdDialogRef} from '@angular/material';
+import {Component} from '@angular/core';
 @Component({
     selector: 'example-dialog',
     template: 'sadasdas',

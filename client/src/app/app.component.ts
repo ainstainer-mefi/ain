@@ -1,10 +1,8 @@
 import {Component, OnInit, AfterViewInit, VERSION} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MdIconRegistry} from '@angular/material';
-//import { ConfigService } from './_shared/services/index';
-import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
+import {AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2/database';
 import {TranslateService} from '@ngx-translate/core';
-//import {MembersPageComponent} from "./pages/members/members-page.component";
 
 @Component({
     selector: 'app-root',
@@ -15,16 +13,13 @@ import {TranslateService} from '@ngx-translate/core';
 export class AppComponent implements OnInit, AfterViewInit {
     items: FirebaseListObservable<any[]>;
     //item: FirebaseObjectObservable<any>;
-    //welcome = MembersPageComponent;
-    constructor(
-        private db: AngularFireDatabase,
-        private _iconRegistry: MdIconRegistry,
-        private _domSanitizer: DomSanitizer,
-        private _translateService: TranslateService
-        //private config: ConfigService
+
+    constructor(private db: AngularFireDatabase,
+                private _iconRegistry: MdIconRegistry,
+                private _domSanitizer: DomSanitizer,
+                private _translateService: TranslateService
     ) {
-        let jiraIconUrl = this._domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/jira3.svg');
-        this._iconRegistry.addSvgIconInNamespace('assets', 'jira', jiraIconUrl);
+
 
         //const itemObservable = db.object('/item');
         //itemObservable.set({ name: 'new name2!'});
@@ -44,10 +39,12 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
+        const jiraIconUrl = this._domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/jira3.svg');
+        this._iconRegistry.addSvgIconInNamespace('assets', 'jira', jiraIconUrl);
         console.log(VERSION.full);
         /*this.items.  subscribe((data) => {
-            console.log(data);
-        });*/
+         console.log(data);
+         });*/
 
     }
 

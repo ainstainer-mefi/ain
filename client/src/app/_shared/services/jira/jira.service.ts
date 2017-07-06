@@ -12,14 +12,14 @@ export class JiraService {
     }
 
     bindJiraAccount(params) {
-        return this.apiGatewayService.post(this.urlBind, false, params, false)
+        return this.apiGatewayService.post(this.urlBind, false, params)
             .map((response: any) => {
                 return response;
             });
     }
 
     unbindJiraAccount(params) {
-        return this.apiGatewayService.delete(this.urlUnnind, false, params, false)
+        return this.apiGatewayService.delete(this.urlUnnind, false, params)
             .map((response: any) => {
                 return response;
             });

@@ -12,6 +12,8 @@ import { Options } from "fullcalendar";
 export class CalendarService {
 
     private url = '/api/calendar-event-list';
+    private urlAdd = '/api/calendar-event';
+    private urlDelete = '/api/calendar-event';
 
     private  calendarOptions:Options = {
         header: {
@@ -44,6 +46,13 @@ export class CalendarService {
                 return response.map( (event: any) => {
                     return new CalendarEvent(event);
                 });
+            });
+    }
+
+    addEvent(eventData) {
+        return this.apiGatewayService.post(this.urlAdd, false, eventData)
+            .map((response: any) => {
+                return new CalendarEvent(response);
             });
     }
 

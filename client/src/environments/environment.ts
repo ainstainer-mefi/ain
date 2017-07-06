@@ -15,5 +15,13 @@ export const environment = {
       'https://www.googleapis.com/auth/gmail.compose',
       'https://www.googleapis.com/auth/calendar'
     ],
+  },
+  firebase: {
+    apiKey: "AIzaSyBK5rnvYmaL58nRmkAZIU6vtQtQUiWkVPg",
+    authDomain: "ain-test.firebaseapp.com",
+    databaseURL: "https://ain-test.firebaseio.com",
+    projectId: "ain-test",
+    storageBucket: "ain-test.appspot.com",
+    messagingSenderId: "615988777624"
   }
 };

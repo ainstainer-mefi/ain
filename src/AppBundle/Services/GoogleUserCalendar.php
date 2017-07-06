@@ -133,6 +133,10 @@ class GoogleUserCalendar extends BaseGoogleUserService
         return $this->calendarService->calendarList->listCalendarList(['showHidden' => false])->getItems();
     }
 
+    /**
+     * @param User $user
+     * @return array
+     */
     public function getColors($user)
     {
         $result = ['calendar' => [], 'event' => []];
@@ -181,22 +185,29 @@ class GoogleUserCalendar extends BaseGoogleUserService
      *       'attendees'  =>  array(
      *          array('email'   => 'email')
      *       ),
+     * @param User $user
      * @param array $data
-     * @return \Google_Service_Calendar_Events
+     * @return \Google_Service_Calendar_Event
      */
-    public function insertEventsToCalendar($data)
+    public function insertEventsToCalendar($user, $data)
     {
-        $client  = $this->getClient();
-        $service = new Google_Service_Calendar($client);
-        $event   = new Google_Service_Calendar_Event($data);
-        if(!isset($data['calendarId'])) $data['calendarId'] = 'primary';
-        $event   = $service->events->insert($data['calendarId'], $event);
+        $this->initClient($user);
 
-        $eventId = $event->getId();
+        if (!isset($data['calendarId'])) {
+            $data['calendarId'] = $user->getEmail();
+        }
+
+        $event = new Google_Service_Calendar_Event($data);
+
+
+        $event = $this->calendarService->events->insert($data['calendarId'], $event);
+
+        return $event;
+        /*$eventId = $event->getId();
         if(isset($data['attachments']) && !empty($data['attachments'])){
             $this->addAttachment($service, $data['calendarId'], $eventId, $data['attachments']);
         }
-        return \GuzzleHttp\json_encode($event);
+        return \GuzzleHttp\json_encode($event);*/
     }
 
     /**

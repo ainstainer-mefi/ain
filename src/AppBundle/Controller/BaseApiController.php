@@ -2,7 +2,7 @@
 
 namespace AppBundle\Controller;
 
-
+use AppBundle\Entity\User;
 use FOS\RestBundle\Controller\FOSRestController;
 
 class BaseApiController extends FOSRestController
@@ -12,4 +12,11 @@ class BaseApiController extends FOSRestController
         return $this->handleView($this->view($data, $statusCode));
     }
 
+    /**
+     * @return User $user
+     */
+    protected function getUser()
+    {
+        return parent::getUser();
+    }
 }
