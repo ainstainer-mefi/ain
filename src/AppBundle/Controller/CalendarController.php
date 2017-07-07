@@ -10,45 +10,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CalendarController extends BaseApiController
 {
-    public function calendarAction()
-    {
-        $service = $this->get('app.google_user.calendar');
-        $aa = $service->getListEvents($this->getUser(),[])->getItems();
-
-
-        return $this->prepareAnswer($aa);
-       /*if(isset($_GET['p'])  && $_GET['p'] == 'list'){
-           $data = $_POST;
-           $aa = $service->getListEvents($this->getUser(),[])->getItems();
-           return $this->prepareAnswer($aa);
-
-       }elseif (isset($_GET['p'])&& $_GET['p'] == 'newevent' ){
-
-           $data = $_POST;
-           if(!isset($data['calendarId']))  $data['calendarId'] = 'primary';
-           echo $service->insertEventsToCalendar($data);
-
-       }elseif (isset($_GET['p']) && $_GET['p'] == 'deleteevent' ){
-
-           $data = $_POST;
-           $data['calendarId'] = 'primary';
-           echo $service->deleteEvent($data);
-
-       }elseif (isset($_GET['p']) && $_GET['p'] == 'updateevent'){
-
-           $data = $_POST;
-           echo $service->updateEvent($data);
-
-       }
-       elseif ($_GET['p'] == 'hello'){
-           $service->retrieveAllFiles();
-       }
-
-       return $this->render('default/calendar.html.twig', [
-            'text' => '',
-        ]);*/
-    }
-
 
     public function getCalendarListAction()
     {
@@ -153,7 +114,10 @@ class CalendarController extends BaseApiController
 
     public function deleteUserEventAction($id)
     {
-        return $this->prepareAnswer($id);
+        $service = $this->get('app.google_user.calendar');
+        $service->deleteEvent($this->getUser(), $id);
+
+        return $this->prepareAnswer();
     }
 
     /**

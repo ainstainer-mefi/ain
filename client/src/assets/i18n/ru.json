@@ -1,4 +1,9 @@
 {
+  "BTN": {
+    "DELETE" : "Удалить",
+    "ADD" : "Добавить",
+    "REFRESH" : "Обновить"
+  },
   "HOME_PAGE": {
     "TITLE": "Главная"
   },
@@ -6,7 +11,8 @@
     "TITLE": "Документы"
   },
   "CALENDAR_PAGE": {
-    "TITLE": "Календарь"
+    "MAIN_MENU_TITLE": "Календарь",
+    "MY_CALENDAR_TITLE": "Мой Календарь"
   },
   "MEMBERS_PAGE": {
     "TITLE": "Сотрудники"

@@ -1,4 +1,4 @@
-<app-page-wrapper title="{{ 'CALENDAR_PAGE.TITLE' | translate }}">
+<app-page-wrapper title="{{ 'CALENDAR_PAGE.MY_CALENDAR_TITLE' | translate }}">
         <div class="row">
             <div class="col-md-8">
                 <app-fullcalendar
@@ -21,20 +21,18 @@
                             <form #addForm="ngForm" novalidate>
                                 <div class="form-group">
                                     <label>Title</label>
-                                    <input mdInput name="name" [(ngModel)]="name" required />
+                                    <md-input-container>
+                                        <input mdInput name="name" [(ngModel)]="name" required />
+                                    </md-input-container>
                                 </div>
                             </form>
                         </md-card-content>
                         <md-card-actions>
-                            <button md-raised-button color="primary"(click)="submitAdd(addForm)">ADD</button>
+                            <button md-raised-button color="primary" (click)="submitAdd(addForm)">{{ 'BTN.ADD' | translate }}</button>
                         </md-card-actions>
                     </md-card>
-
                 </div>
-
                 <div *ngIf="selectedEvent">
-
-
                     <md-card >
                         <md-card-header>
                             <md-card-title>Event info</md-card-title>
@@ -42,19 +40,13 @@
                         </md-card-header>
                         <md-card-content>
                             <form #deleteForm="ngForm" novalidate>
-                                <div class="form-group">
-                                    <label>Id</label>
-                                    <md-input-container>
-                                        <input mdInput name="id" [(ngModel)]="selectedEvent.id">
-                                    </md-input-container>
-                                </div>
+                                <input type="hidden" name="id" [(ngModel)]="selectedEvent.id">
                             </form>
                         </md-card-content>
                         <md-card-actions>
-                            <button md-raised-button color="danger"(click)="submitAdd(deleteForm)">ADD</button>
+                            <button md-raised-button color="warn" (click)="submitDelete(deleteForm)">{{ 'BTN.DELETE' | translate }}</button>
                         </md-card-actions>
                     </md-card>
-
                 </div>
             </div>
         </div>

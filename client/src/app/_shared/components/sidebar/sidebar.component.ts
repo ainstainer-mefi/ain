@@ -12,6 +12,7 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
   }
+  public expandPanel = false;
 
   routes: Object[] = [{
     icon: 'home',
@@ -23,9 +24,16 @@ export class SidebarComponent implements OnInit {
     title: 'DOC_PAGE.TITLE',
   }, {
     icon: 'perm_contact_calendar',
-    route: '/page/calendar',
-    title: 'CALENDAR_PAGE.TITLE',
-  },{
+    title: 'CALENDAR_PAGE.MAIN_MENU_TITLE',
+    expand: true,
+    items:[
+      {
+        icon: 'perm_contact_calendar',
+        route: '/page/calendar',
+        title: 'CALENDAR_PAGE.MY_CALENDAR_TITLE',
+      }
+    ],
+  }, {
     icon: 'supervisor_account',
     route: '/page/members',
     title: 'MEMBERS_PAGE.TITLE',

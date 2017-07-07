@@ -13,7 +13,7 @@ export class CalendarService {
 
     private url = '/api/calendar-event-list';
     private urlAdd = '/api/calendar-event';
-    private urlDelete = '/api/calendar-event';
+    private urlDelete = '/api/calendar-event/';
 
     private  calendarOptions:Options = {
         header: {
@@ -53,6 +53,14 @@ export class CalendarService {
         return this.apiGatewayService.post(this.urlAdd, false, eventData)
             .map((response: any) => {
                 return new CalendarEvent(response);
+            });
+    }
+
+    delereEvent(id) {
+        let url = this.urlDelete + id;
+        return this.apiGatewayService.delete(url)
+            .map((response: any) => {
+                return response;
             });
     }
 

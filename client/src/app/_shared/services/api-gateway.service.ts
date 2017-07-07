@@ -65,7 +65,7 @@ export class ApiGatewayService {
   }
 
 
-  delete(url: string, params: any, data: any, sendAuthToken: boolean = true): Observable<Response> {
+  delete(url: string, params: any = false, data: any = false, sendAuthToken: boolean = true): Observable<Response> {
     if (!data) {
       data = params;
       params = {};

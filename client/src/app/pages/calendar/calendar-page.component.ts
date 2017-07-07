@@ -17,11 +17,7 @@ import {CalendarEvent} from '../../_shared/models/calendar.event.model';
     providers: [CalendarService]
 })
 export class CalendarPageComponent implements OnInit, OnDestroy {
-    foods = [
-        {value: 'steak-0', viewValue: 'Steak'},
-        {value: 'pizza-1', viewValue: 'Pizza'},
-        {value: 'tacos-2', viewValue: 'Tacos'}
-    ];
+
     private _ngUnsubscribe: Subject<void> = new Subject<void>();
     private _calendar: Object;
     public eventData: any = false;
@@ -29,7 +25,6 @@ export class CalendarPageComponent implements OnInit, OnDestroy {
     public items: Array<CalendarEvent> = [];
     public calendarOptions: Options;
 
-    myFilter = 'asdasd';
 
     constructor(private _calendarService: CalendarService,
                 private _preloaderService: PreloaderService
@@ -52,10 +47,11 @@ export class CalendarPageComponent implements OnInit, OnDestroy {
 
     onCalendarReady(calendar): void {
         this._calendar = calendar;
-        this.loadEvents('renderEvents');
+        this.loadEvents();
     }
 
     onEventClick(eventClickData): void {
+        this.eventData = false;
         this.selectedEvent = eventClickData.calEvent;
         console.log(eventClickData.calEvent);
     }
@@ -63,18 +59,34 @@ export class CalendarPageComponent implements OnInit, OnDestroy {
     onSelect(selectedData): void {
 
         if (this._calendar != null) {
+            this.selectedEvent = false;
             this.eventData = {
                 start: selectedData.start,
                 end: selectedData.end,
                 range: $.fullCalendar.formatRange(selectedData.start, selectedData.end, 'MMMM D YYYY')
-
             };
         }
     }
 
     submitDelete(form: NgForm){
-        console.log(form.value);
+
+
+        this._preloaderService.register();
+        this._calendarService.delereEvent(form.value.id)
+            .subscribe(
+                (data: CalendarEvent) => {
+                    this.items = this.items.filter((item: CalendarEvent, index) => {
+                        return item.id != form.value.id;
+                    });
+                    $(this._calendar).fullCalendar('removeEvents', form.value.id);
+                    this.selectedEvent = false;
+                    this._preloaderService.resolve();
+                },
+                (error: any) => {
+                    this._preloaderService.resolve();
+                });
     }
+
     submitAdd(form: NgForm){
 
         let eventData = {
@@ -100,7 +112,7 @@ export class CalendarPageComponent implements OnInit, OnDestroy {
 
 
 
-    private loadEvents(type) {
+    private loadEvents(type: string = 'renderEvents') {
 
         this._preloaderService.register();
         this._calendarService.getEvents()

@@ -1,4 +1,9 @@
 {
+  "BTN": {
+    "DELETE" : "Delete",
+    "ADD" : "Add",
+    "REFRESH" : "Refresh"
+  },
   "HOME_PAGE": {
     "TITLE": "Home"
   },
@@ -6,7 +11,8 @@
     "TITLE": "Documents"
   },
   "CALENDAR_PAGE": {
-    "TITLE": "Calendar"
+    "MAIN_MENU_TITLE": "Calendar",
+    "MY_CALENDAR_TITLE": "My calendar"
   },
   "MEMBERS_PAGE": {
     "TITLE": "Members"

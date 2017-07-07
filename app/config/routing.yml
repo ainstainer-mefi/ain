@@ -37,7 +37,7 @@ add_user_calendar_event:
     methods:  [POST]
 
 delete_user_calendar_event:
-    path:     /api/calendar-event/:id
+    path:     /api/calendar-event/{id}
     defaults: { _controller: AppBundle:Calendar:deleteUserEvent }
     methods:  [DELETE]
 

@@ -1,75 +1,12 @@
 @import '../../../../main';
 
-.sidebar-list {
-  margin-top: 10px;
-  padding: 0;
+//nav .mat-nav-list .mat-list-item span,
+//nav .mat-nav-list .td-expansion-panel,
+//nav .mat-nav-list .td-expansion-panel .mat-icon,
+//nav .mat-nav-list .mat-list-item .mat-list-icon{
+//  color: mat-color($accent,A100) !important;
+//}
 
-}
-.sidebar-list-item a {
-  color: mat-color($accent,A100);
-  display: block;
-  height: 42px;
-  padding-left: 18px;
-  text-shadow: none;
-  font-size: 13px;
-  white-space: nowrap;
-  overflow: hidden;
-  cursor: pointer;
-  box-sizing: border-box;
-  font-weight: 400;
-  line-height: 47px;
-  -webkit-transition: all .3s;
-  transition: all .3s;
-  position: relative;
 
-}
 
-.sidebar-list-item a div{
-  float: left;
-}
 
-.sidebar-list h3 {
-  border: none;
-  font-size: 10px;
-  letter-spacing: 1px;
-  line-height: 24px;
-  text-transform: uppercase;
-  font-weight: 400;
-  margin: 0;
-  padding: 0 16px;
-}
-
-.sidebar-list-item a:hover {
-  color: mat-color($primary);
-}
-.sidebar-list-item a:hover:after{
-  position: absolute;
-  right: 0;
-  display: inline-block;
-  vertical-align: middle;
-  content: "";
-  background-color: mat-color($primary);
-  width: 3px;
-  height: 42px;
-}
-.sidebar-list-item a.active:hover {
-  color: mat-color($accent,A100);
-}
-
-.sidebar-list-item a.active{
-  background-color: mat-color($primary);
-}
-
-.sidebar-list-item a md-icon {
-  margin-right: 18px;
-  font-size: 20px;
-  float: left;
-  line-height: 45px;
-}
-
-.sidebar-list-item {
-  display: block;
-  position: relative;
-  float: none;
-  padding: 0;
-}

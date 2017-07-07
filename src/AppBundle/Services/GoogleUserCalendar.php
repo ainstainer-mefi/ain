@@ -59,7 +59,7 @@ class GoogleUserCalendar extends BaseGoogleUserService
      *
      * @param User $user
      * @param string $calendarId
-     * @return \Google_Service_Calendar_Events
+     * @return \Google_Service_Calendar_Events[]
      */
     public function getEventLists($user , $calendarId, $params = [])
     {
@@ -141,7 +141,9 @@ class GoogleUserCalendar extends BaseGoogleUserService
     {
         $result = ['calendar' => [], 'event' => []];
         $this->initClient($user);
+
         $colors = $this->calendarService->colors->get();
+
         foreach ($colors->getCalendar() as $key => $color) {
             $result['calendar'][$key] = [
                 'background' => $color->getBackground(),
@@ -198,8 +200,6 @@ class GoogleUserCalendar extends BaseGoogleUserService
         }
 
         $event = new Google_Service_Calendar_Event($data);
-
-
         $event = $this->calendarService->events->insert($data['calendarId'], $event);
 
         return $event;
@@ -208,6 +208,26 @@ class GoogleUserCalendar extends BaseGoogleUserService
             $this->addAttachment($service, $data['calendarId'], $eventId, $data['attachments']);
         }
         return \GuzzleHttp\json_encode($event);*/
+    }
+
+    /**
+     * Delete Event
+     * @param User $user
+     * @param $eventId
+     * @return string
+     * @throws \Exception
+     */
+    public function deleteEvent($user, $eventId)
+    {
+
+        $this->initClient($user);
+        $calendarId = $user->getEmail();
+        try{
+            $this->calendarService->events->delete($calendarId, $eventId);
+        }catch (\Google_Service_Exception $e){
+            $error = $e->getErrors()[0];
+            throw new \Exception($error['message'] .' (' . $error['domain'] . '/' .  $error['reason'] . ')');
+        }
     }
 
     /**
@@ -220,7 +240,7 @@ class GoogleUserCalendar extends BaseGoogleUserService
      * @return string
      * @throws \Exception
      */
-    public function updateEvent($data){
+    /*public function updateEvent($data){
         if(!isset($data['calendarId'])) $data['calendarId'] = 'primary';
         if(!isset($data['eventId'])){
             throw new \Exception("Missing option 'eventId'");
@@ -243,33 +263,9 @@ class GoogleUserCalendar extends BaseGoogleUserService
             return json_encode($array);
         }
 
-    }
+    }*/
 
-    /**
-     * Delete Event
-     * Required parameters
-     * array(
-     *      'eventId' => 'event Id'
-     * )
-     * @param $data
-     * @return string
-     * @throws \Exception
-     */
-    public function deleteEvent($data)
-    {
-        $client = $this->getClient();
-        $service = new Google_Service_Calendar($client);
-        if(!isset($data['calendarId'])) $data['calendarId'] = 'primary';
-        if($service->events->delete($data['calendarId'], $data['eventId'])){
-            $array = array(
-                'status' => 'success',
-                'message'=> "Event " . $data['eventId'] . " deleted"
-            );
-            return json_encode($array);
-        }else{
-            throw new \Exception('Event not deleted');
-        }
-    }
+
 
 
 
