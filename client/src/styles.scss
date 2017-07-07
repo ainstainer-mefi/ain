@@ -92,15 +92,14 @@ button.mat-raised-button_small_30 {
 }
 
 
-
+/*Left sidebar*/
 .sidebar-list {
   margin-top: 10px;
   padding: 0;
 
 }
 .sidebar-list-item a,
-md-sidenav nav .mat-nav-list .td-expansion-panel a{
-  color: mat-color($accent,A100);
+md-sidenav .sidebar-list .sidebar-list-item .td-expansion-panel a{
   display: block;
   height: 42px;
   padding-left: 18px;
@@ -122,20 +121,11 @@ md-sidenav nav .mat-nav-list .td-expansion-panel a{
   float: left;
 }
 
-.sidebar-list h3 {
-  border: none;
-  font-size: 10px;
-  letter-spacing: 1px;
-  line-height: 24px;
-  text-transform: uppercase;
-  font-weight: 400;
-  margin: 0;
-  padding: 0 16px;
-}
-
-.sidebar-list-item a:hover {
+.sidebar-list .sidebar-list-item a:hover,
+.sidebar-list .td-expansion-panel .sidebar-list-item a:hover .mat-icon {
   color: mat-color($primary);
 }
+
 .sidebar-list-item a:hover:after{
   position: absolute;
   right: 0;
@@ -168,45 +158,22 @@ md-sidenav nav .mat-nav-list .td-expansion-panel a{
   padding: 0;
 }
 
-
-
-
-md-sidenav .sidebar-list .td-expansion-panel,
-md-sidenav .sidebar-list .td-expansion-panel .mat-icon{
-  color: mat-color($accent,A100) !important;
+.sidebar-list .sidebar-list-item .td-expansion-panel,
+.sidebar-list .sidebar-list-item .td-expansion-panel div .mat-icon,
+.sidebar-list-item a{
+  color: mat-color($accent,A100);
 }
 
-md-sidenav .td-expansion-label .mat-icon{
+.sidebar-list .sidebar-list-item .td-expansion-label .mat-icon{
   margin-right: 12px;
+  font-size: 20px;
 }
-//
-//md-sidenav nav .mat-nav-list .mat-list-item.active span:hover {
-//  color: mat-color($accent,A100) !important;
-//}
-//
-md-sidenav .td-expansion-panel .md-subhead{
+
+.sidebar-list .sidebar-list-item .td-expansion-panel .md-subhead{
   white-space: nowrap;
   font-size: 13px !important;
 }
-//
-//md-sidenav nav .mat-nav-list .mat-list-item span:hover {
-//  color: mat-color($primary);
-//}
-//
-//md-sidenav nav .mat-nav-list .mat-list-item:hover:before{
-//  position: absolute;
-//  left: 0;
-//  display: inline-block;
-//  vertical-align: middle;
-//  content: "";
-//  background-color: mat-color($primary);
-//  width: 3px;
-//  height: 47px;
-//}
-//
-//md-sidenav nav .mat-nav-list .mat-list-item.active{
-//  background-color: mat-color($primary);
-//}
-md-sidenav .sidebar-list .td-expansion-panel{
+
+.sidebar-list .sidebar-list-item .td-expansion-panel{
   background-color: mat-color($accent);
 }
